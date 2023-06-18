@@ -3,6 +3,7 @@ export const PATH = {
     LOGIN: '/login',
     LOG_OUT: '/logout',
     SYSTEM: '/system',
+    NOT_FOUND: '/*',
 
     ACCOUNT_MANAGE: '/acc-manage',
 

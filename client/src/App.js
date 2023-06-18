@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import Home from './components/Home'
 import Login from './components/login/Login'
 import FadeIn from './components/effect/FadeIn';
+import NotFoundPage from './components/notfoundpage/NotFoundPage';
 import {PATH, role} from './constant/constant';
 import SubscreenComponents from './components/subscreen/SubscreenComponents';
 
@@ -38,6 +39,8 @@ function App() {
             <Route path={PATH.DISTRIBUTION_DISPLAY} element={<SubscreenComponents.GUEST.DistributionDisplay/>}/>
             <Route path={PATH.EPIDEMIC_DISPLAY} element={<SubscreenComponents.GUEST.EpidemicDisplay/>}/>
             <Route path={PATH.SUPPLIES_DISPLAY} element={<SubscreenComponents.GUEST.SuppliesDisplay/>}/>
+
+            <Route path={PATH.NOT_FOUND} element={<NotFoundPage/>}/>
           
           </Routes>
         </Router>

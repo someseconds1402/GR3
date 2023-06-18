@@ -8,7 +8,7 @@ const Home = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    navigate(SCREEN_PATH[localStorage.getItem('role')][localStorage.getItem('menuItemOrder')]);
+    navigate(SCREEN_PATH[localStorage.getItem('role')][0]);
   });
 
   return (
