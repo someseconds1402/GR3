@@ -1,8 +1,11 @@
 import React from 'react'
+import MainFrame from '../../mainframe/MainFrame'
 
 function DistributionDisplay() {
   return (
-    <div>DistributionDisplay</div>
+    <MainFrame>
+      <h1>DistributionDisplay</h1>
+    </MainFrame>
   )
 }
 

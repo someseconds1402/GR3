@@ -2,8 +2,39 @@ export const PATH = {
     HOME: '/',
     LOGIN: '/login',
     LOG_OUT: '/logout',
-    SYSTEM: '/system'
+    SYSTEM: '/system',
+
+    ACCOUNT_MANAGE: '/acc-manage',
+
+    EPIDEMIC_ANALYSE: '/epidemic-analyse',
+    SUPPLIES_ANALYSE: '/supply-analyse',
+    DISTRIBUTION_ANALYSE: '/distribution-analyse',
+    DB_MODYFY: '/db-modify',
+
+    EPIDEMIC_DISPLAY: '/epidemic-display',
+    SUPPLIES_DISPLAY: '/supplies-display',
+    DISTRIBUTION_DISPLAY: '/distribution-display',
 };
+
+export const SCREEN_PATH = [
+    // ADMIN: 
+    [
+        '/acc-manage',
+    ],
+    // EXPERT: 
+    [
+        '/epidemic-analyse',
+        '/supply-analyse',
+        '/distribution-analyse',
+        '/db-modify',
+    ],
+    // GUEST: 
+    [
+        '/epidemic-display',
+        '/supplies-display',
+        '/distribution-display',
+    ],
+];
 
 export const PATH_API = {
     BASE_URL: 'http://localhost:8080/',
@@ -36,23 +67,26 @@ export const menuItems = {
     SUPPLIES_ANALYSE: "Phân tích khả năng hỗ trợ VTYT",
     DISTRIBUTION_ANALYSE: "Phân tích tuyến đường phân bổ VTYT",
     DB_MODYFY: "Thêm dữ liệu",
-    EPICDEMIC_DISPLAY: "Tra cứu tình hình dịch bệnh",
+    EPIDEMIC_DISPLAY: "Tra cứu tình hình dịch bệnh",
     SUPPLIES_DISPLAY: "Tra cứu khả năng cung ứng VTYT",
     DISTRIBUTION_DISPLAY: "Tra cứu tuyến đường cung ứng VTYT",
 }
 
 export const sidebarMenu = [
+    // ADMIN:
     [
         menuItems.ACCOUNT_MANAGE
     ],
+    // EXPERT:
     [
         menuItems.EPIDEMIC_ANALYSE,
         menuItems.SUPPLIES_ANALYSE,
         menuItems.DISTRIBUTION_ANALYSE,
         menuItems.DB_MODYFY
     ],
+    // GUEST:
     [
-        menuItems.EPICDEMIC_DISPLAY,
+        menuItems.EPIDEMIC_DISPLAY,
         menuItems.SUPPLIES_DISPLAY,
         menuItems.DISTRIBUTION_DISPLAY
     ],

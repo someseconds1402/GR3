@@ -1,8 +1,11 @@
 import React from 'react'
+import MainFrame from '../../mainframe/MainFrame'
 
 function SuppliesDisplay() {
   return (
-    <div>SuppliesDisplay</div>
+    <MainFrame>
+      <h1>SuppliesDisplay</h1>
+    </MainFrame>
   )
 }
 

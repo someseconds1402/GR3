@@ -6,7 +6,7 @@ import FadeIn from '../effect/FadeIn'
 import './Login.css'
 import { Form } from 'react-bootstrap';
 import { handleLoginAPI } from '../../service/userService';
-import { loginCondition, PATH, role } from '../../constant/constant';
+import { loginCondition, PATH, role, SCREEN_PATH } from '../../constant/constant';
 
 
 export default function Login() {
@@ -39,7 +39,7 @@ export default function Login() {
         localStorage.setItem('isLoggedIn', true);
         localStorage.setItem('role', data.roleId);
         localStorage.setItem('email', email);
-        navigate(PATH.HOME);
+        navigate(SCREEN_PATH[data.roleId][0]);
       }
     }else {
       setErrorMsg('Vui lòng nhập đầy đủ thông tin đăng nhập.')

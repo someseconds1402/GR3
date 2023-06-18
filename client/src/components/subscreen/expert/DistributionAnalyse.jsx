@@ -1,8 +1,11 @@
 import React from 'react'
+import MainFrame from '../../mainframe/MainFrame'
 
 function DistributionAnalyse() {
   return (
-    <div>DistributionAnalyse</div>
+    <MainFrame>
+      <h1>DistributionAnalyse</h1>
+    </MainFrame>
   )
 }
 

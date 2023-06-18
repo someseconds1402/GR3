@@ -1,8 +1,11 @@
 import React from 'react'
+import MainFrame from '../../mainframe/MainFrame'
 
 function DbModify() {
   return (
-    <div>DbModify</div>
+    <MainFrame>
+      <h1>DbModify</h1>
+    </MainFrame>
   )
 }
 

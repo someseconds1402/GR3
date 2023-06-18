@@ -3,10 +3,10 @@ import FadeIn from '../effect/FadeIn'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { logoutAction } from '../../store/reducer/changeRoleSlice';
-import {sidebarMenu, role, PATH} from './../../constant/constant'
+import {sidebarMenu, role, PATH, SCREEN_PATH} from './../../constant/constant';
 
 const MenuItem = (props) =>{
-    // console.log(props.title);
+    // console.log(props);
     return (
         <li className="no-underline flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer" onClick={props.func}>
             <h5 className="">{props.title}</h5>
@@ -39,7 +39,14 @@ const Sidebar = () => {
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 relative">
                     <ul className="space-y-2 text-lg"> 
                         {
-                            sidebarMenu[rootRole].map(e=><MenuItem title={e}/>)
+                            sidebarMenu[rootRole].map(e=><MenuItem title={e} func={
+                                // (NavigationSidebar[rootRole][sidebarMenu[rootRole].indexOf(e)])(navigate)
+                                ()=>{
+                                    const menuItemOrder = sidebarMenu[rootRole].indexOf(e);
+                                    localStorage.setItem('menuItemOrder', menuItemOrder);
+                                    navigate(SCREEN_PATH[rootRole][menuItemOrder]);
+                                }
+                            }/>)
                         }
                     </ul>
                     <ul className="space-y-2 text-lg absolute bottom-9">

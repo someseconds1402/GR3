@@ -1,8 +1,11 @@
 import React from 'react'
+import MainFrame from '../../mainframe/MainFrame'
 
 function SupplyAnalyse() {
   return (
-    <div>SupplyAnalyse</div>
+    <MainFrame>
+      <h1>SupplyAnalyse</h1>
+    </MainFrame>
   )
 }
 

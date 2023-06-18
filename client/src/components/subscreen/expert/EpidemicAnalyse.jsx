@@ -1,8 +1,11 @@
 import React from 'react'
+import MainFrame from '../../mainframe/MainFrame'
 
 function EpidemicAnalyse() {
   return (
-    <div>EpidemicAnalyse</div>
+    <MainFrame>
+      <h1>EpidemicAnalyse</h1>
+    </MainFrame>
   )
 }
 

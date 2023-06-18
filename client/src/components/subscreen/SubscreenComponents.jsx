@@ -7,7 +7,7 @@ import DistributionDisplay from "./guest/DistributionDisplay";
 import EpidemicDisplay from "./guest/EpidemicDisplay";
 import SuppliesDisplay from "./guest/SuppliesDisplay";
 
-export const SubscreenComponents = {
+const SubscreenComponents = {
     ADMIN: {
         AccManage,
     },
@@ -23,3 +23,5 @@ export const SubscreenComponents = {
         SuppliesDisplay,
     }
 };
+
+export default SubscreenComponents;
