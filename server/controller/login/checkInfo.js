@@ -6,7 +6,6 @@ const checkInfo = (email, password) => {
     return new Promise(async(resolve, reject) => {
         try {
             const account = await checkEmail(email);
-            // console.log(account);
             const result = account ? (account.password === password ? loginCondition.LOGIN_SUCCESS : loginCondition.FAILED_PASSWORD) : loginCondition.EMAIL_NOT_EXIST;
             resolve({ loginCondition: result, roleId: !result ? account.roleId : -1 });
         } catch (err) {

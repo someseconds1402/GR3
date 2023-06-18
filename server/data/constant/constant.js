@@ -2,6 +2,7 @@ const PATH = {}
 
 PATH.API = {
     LOGIN: '/api/login',
+    GET_EPIDEMIC_DATA: '/api/getepidemic'
 }
 
 const role = {

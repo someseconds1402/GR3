@@ -10,7 +10,7 @@ const login = async(req, res) => {
         loginCondition: loginCheck.loginCondition,
         roleId: loginCheck.roleId,
         mail: email,
-        pass: password
+        // pass: password
     })
 }
 

@@ -40,7 +40,7 @@ export default function Login() {
         localStorage.setItem('role', data.roleId);
         localStorage.setItem('email', email);
         localStorage.setItem('menuItemOrder', 0);
-        navigate(SCREEN_PATH[data.roleId][0]);
+        navigate(PATH.HOME);
       }
     }else {
       setErrorMsg('Vui lòng nhập đầy đủ thông tin đăng nhập.')
