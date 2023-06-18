@@ -39,6 +39,7 @@ export default function Login() {
         localStorage.setItem('isLoggedIn', true);
         localStorage.setItem('role', data.roleId);
         localStorage.setItem('email', email);
+        localStorage.setItem('menuItemOrder', 0);
         navigate(SCREEN_PATH[data.roleId][0]);
       }
     }else {

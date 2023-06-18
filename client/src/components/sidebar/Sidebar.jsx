@@ -6,9 +6,15 @@ import { logoutAction } from '../../store/reducer/changeRoleSlice';
 import {sidebarMenu, role, PATH, SCREEN_PATH} from './../../constant/constant';
 
 const MenuItem = (props) =>{
-    // console.log(props);
+    // console.log(props.className);
+    let className = "no-underline flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer ";
+    let addedClass = props.className;
+    // console.log(addedClass);
+    if(addedClass && addedClass == 'selected') {
+        className += ' dark:bg-gray-500';
+    }
     return (
-        <li className="no-underline flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer" onClick={props.func}>
+        <li className={className} onClick={props.func}>
             <h5 className="">{props.title}</h5>
         </li>
     )
@@ -18,9 +24,10 @@ const Sidebar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const rootRole = localStorage.getItem('role');
+    const menuItemOrder = localStorage.getItem('menuItemOrder');
 
     const goToLogin = ()=>{
-        console.log(123456);
+        // console.log(123456);
         if(rootRole != role.GUEST) {
             dispatch(logoutAction());
             localStorage.setItem('isLoggedIn', false);
@@ -28,6 +35,14 @@ const Sidebar = () => {
         }
         navigate(PATH.LOGIN);
     }
+
+    useEffect(()=>{
+        const listItems = document.querySelectorAll('li'); 
+        const menuItemOrder = localStorage.getItem('menuItemOrder');
+        if(menuItemOrder < listItems.length){
+            listItems[menuItemOrder].classList.add('dark:bg-gray-700');
+        }
+    });
 
     return (
         <div>
@@ -39,9 +54,10 @@ const Sidebar = () => {
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 relative">
                     <ul className="space-y-2 text-lg"> 
                         {
-                            sidebarMenu[rootRole].map(e=><MenuItem title={e} func={
-                                // (NavigationSidebar[rootRole][sidebarMenu[rootRole].indexOf(e)])(navigate)
-                                ()=>{
+                            sidebarMenu[rootRole].map(
+                                e=><MenuItem 
+                                className={sidebarMenu[rootRole].indexOf(e) == menuItemOrder ? "selected" : ""} 
+                                title={e} func={()=>{
                                     const menuItemOrder = sidebarMenu[rootRole].indexOf(e);
                                     localStorage.setItem('menuItemOrder', menuItemOrder);
                                     navigate(SCREEN_PATH[rootRole][menuItemOrder]);
