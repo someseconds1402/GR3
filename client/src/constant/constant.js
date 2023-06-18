@@ -46,7 +46,7 @@ export const sidebarMenu = [
         menuItems.ACCOUNT_MANAGE
     ],
     [
-        menuItems.EPIDEMIC_ANALSE,
+        menuItems.EPIDEMIC_ANALYSE,
         menuItems.SUPPLIES_ANALYSE,
         menuItems.DISTRIBUTION_ANALYSE,
         menuItems.DB_MODYFY
