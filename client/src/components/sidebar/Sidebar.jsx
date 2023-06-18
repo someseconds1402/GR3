@@ -1,10 +1,33 @@
 import React, {useState, useEffect} from 'react'
 import FadeIn from '../effect/FadeIn'
-import {menuItems, role} from './../../constant/constant'
-import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { logoutAction } from '../../store/reducer/changeRoleSlice';
+import {sidebarMenu, role, PATH} from './../../constant/constant'
+
+const MenuItem = (props) =>{
+    // console.log(props.title);
+    return (
+        <li className="no-underline flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer" onClick={props.func}>
+            <h5 className="">{props.title}</h5>
+        </li>
+    )
+}
 
 const Sidebar = () => {
-    const rootRole = useSelector(state => state.Role.role);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const rootRole = localStorage.getItem('role');
+
+    const goToLogin = ()=>{
+        console.log(123456);
+        if(rootRole != role.GUEST) {
+            dispatch(logoutAction());
+            localStorage.setItem('isLoggedIn', false);
+            localStorage.setItem('role', role.GUEST);
+        }
+        navigate(PATH.LOGIN);
+    }
 
     return (
         <div>
@@ -15,23 +38,14 @@ const Sidebar = () => {
             >
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 relative">
                     <ul className="space-y-2 text-lg"> 
-                        <li className="no-underline flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                            <span className="">Dashboard</span>
-                        </li>
-                        <li className="no-underline flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                            <span className="">Kanban</span>
-                        </li>
-                        <li className="no-underline flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                            <span className="">Inbox</span>
-                        </li>
-                        <li className="no-underline flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                            <span className="">Users</span>
-                        </li>
+                        {
+                            sidebarMenu[rootRole].map(e=><MenuItem title={e}/>)
+                        }
                     </ul>
                     <ul className="space-y-2 text-lg absolute bottom-9">
-                        <li className="no-underline flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer">
-                                <span className="">Đăng nhập</span>
-                        </li>
+                        {
+                            rootRole!=role.GUEST ? <MenuItem title="Đăng xuất" func={goToLogin}/> : <MenuItem title="Đăng nhập" func={goToLogin}/>
+                        }
                     </ul>
                 </div>
             </aside>

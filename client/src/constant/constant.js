@@ -32,7 +32,7 @@ export const menuItems = {
     CREATE_ACCOUNT: "Tạo tài khoản mới",
     MODIFY_ACCOUNT: "Chỉnh sửa tài khoản",
     DELETE_ACCOUNT: "Xóa tài khoản",
-    EPIDEMIC_ANALSE: "Phân tích tình hình dịch bệnh",
+    EPIDEMIC_ANALYSE: "Phân tích tình hình dịch bệnh",
     SUPPLIES_ANALYSE: "Phân tích khả năng hỗ trợ VTYT",
     DISTRIBUTION_ANALYSE: "Phân tích tuyến đường phân bổ VTYT",
     DB_MODYFY: "Thêm dữ liệu",
@@ -41,19 +41,19 @@ export const menuItems = {
     DISTRIBUTION_DISPLAY: "Tra cứu tuyến đường cung ứng VTYT",
 }
 
-export const sidebarMenu = {
-    ADMIN: [
+export const sidebarMenu = [
+    [
         menuItems.ACCOUNT_MANAGE
     ],
-    EXPERT: [
+    [
         menuItems.EPIDEMIC_ANALSE,
         menuItems.SUPPLIES_ANALYSE,
         menuItems.DISTRIBUTION_ANALYSE,
         menuItems.DB_MODYFY
     ],
-    GUEST: [
+    [
         menuItems.EPICDEMIC_DISPLAY,
         menuItems.SUPPLIES_DISPLAY,
         menuItems.DISTRIBUTION_DISPLAY
     ],
-}
+]
