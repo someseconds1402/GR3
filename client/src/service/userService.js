@@ -9,13 +9,9 @@ const handleLoginAPI = async(email, password) => {
     }
 }
 
-const getEpidemicDataAPI = async() => {
+const getEpidemicDataAPI = async(province_id, pandemic_id, date) => {
     try {
-        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_EPIDEMIC_DATA, {
-            "province_id": 2,
-            "pandemic_id": 2,
-            "date": "2022-7-18"
-        })).data;
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_EPIDEMIC_DATA, { province_id, pandemic_id, date })).data;
     } catch (err) {
         console.log(err);
     }

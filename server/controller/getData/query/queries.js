@@ -15,9 +15,19 @@ const queryEpidemicData = (province_id, pandemic_id, date) => {
     const recoveredList = recovered_situation.filter(e => getDateRangeData(e))
     const deathList = death_situation.filter(e => getDateRangeData(e))
     return {
-        infection: infectionList,
-        recovered: recoveredList,
-        death: deathList
+        dateRange: infectionList.map(e => e.date),
+        infection: {
+            title: 'Lây nhiễm',
+            list: infectionList
+        },
+        recovered: {
+            title: 'Hồi phục',
+            list: recoveredList
+        },
+        death: {
+            title: 'Tử vong',
+            list: deathList
+        }
     };
 }
 

@@ -21,7 +21,10 @@ function App() {
     if(!localStorage.getItem('role')){
       localStorage.setItem('role', 2);
     }
-  });
+    if(!localStorage.getItem('optionEpidemicDisplay')){
+      localStorage.setItem('optionEpidemicDisplay', [true, false, false, false]);
+    }
+  }, []);
   return (
     <React.StrictMode>
       <div className="root-page">

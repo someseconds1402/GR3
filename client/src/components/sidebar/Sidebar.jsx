@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react'
-import FadeIn from '../effect/FadeIn'
+import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { logoutAction } from '../../store/reducer/changeRoleSlice';
@@ -28,6 +27,7 @@ const Sidebar = () => {
         dispatch(logoutAction());
         localStorage.setItem('isLoggedIn', false);
         localStorage.setItem('role', role.GUEST);
+        localStorage.setItem('email', '');
         navigate(PATH.HOME);
     }
     
