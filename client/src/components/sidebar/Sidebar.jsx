@@ -6,10 +6,8 @@ import { logoutAction } from '../../store/reducer/changeRoleSlice';
 import {sidebarMenu, role, PATH, SCREEN_PATH} from './../../constant/constant';
 
 const MenuItem = (props) =>{
-    // console.log(props.className);
     let className = "no-underline flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer ";
     let addedClass = props.className;
-    // console.log(addedClass);
     if(addedClass && addedClass == 'selected') {
         className += ' dark:bg-gray-500';
     }
@@ -26,13 +24,14 @@ const Sidebar = () => {
     const rootRole = localStorage.getItem('role');
     const menuItemOrder = localStorage.getItem('menuItemOrder');
 
-    const goToLogin = ()=>{
-        // console.log(123456);
-        if(rootRole != role.GUEST) {
-            dispatch(logoutAction());
-            localStorage.setItem('isLoggedIn', false);
-            localStorage.setItem('role', role.GUEST);
-        }
+    const logoutHandle = ()=>{
+        dispatch(logoutAction());
+        localStorage.setItem('isLoggedIn', false);
+        localStorage.setItem('role', role.GUEST);
+        navigate(PATH.HOME);
+    }
+    
+    const loginHandle = ()=>{
         navigate(PATH.LOGIN);
     }
 
@@ -67,7 +66,7 @@ const Sidebar = () => {
                     </ul>
                     <ul className="space-y-2 text-lg absolute bottom-9">
                         {
-                            rootRole!=role.GUEST ? <MenuItem title="Đăng xuất" func={goToLogin}/> : <MenuItem title="Đăng nhập" func={goToLogin}/>
+                            rootRole!=role.GUEST ? <MenuItem title="Đăng xuất" func={logoutHandle}/> : <MenuItem title="Đăng nhập" func={loginHandle}/>
                         }
                     </ul>
                 </div>
