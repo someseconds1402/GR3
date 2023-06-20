@@ -31,6 +31,11 @@ const queryEpidemicData = (province_id, pandemic_id, date) => {
     };
 }
 
+const queryPandemicData = () => {
+    return pandemic;
+}
+
 module.exports = {
     queryEpidemicData,
+    queryPandemicData,
 }

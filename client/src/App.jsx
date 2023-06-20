@@ -3,30 +3,37 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './style.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Home from './components/Home'
 import Login from './components/login/Login'
 import FadeIn from './components/effect/FadeIn';
 import NotFoundPage from './components/notfoundpage/NotFoundPage';
-import {PATH, role} from './constant/constant';
+import {PATH} from './constant/constant';
 import SubscreenComponents from './components/subscreen/SubscreenComponents';
+import { useSelector, useDispatch } from 'react-redux';
+// import {changePandemicData} from './store/reducer/getPandemicDataSlice';
+import { getPandemicDataAPI } from './service/userService';
 
 function App() {
   const role = useSelector(state => state.changeRole.role);
-  // console.log(1);
+  // const dispatch = useDispatch();
+
   useEffect(()=>{
-    // console.log(1);
-    if(!localStorage.getItem('menuItemOrder')){
-      localStorage.setItem('menuItemOrder', 0);
-    }
     if(!localStorage.getItem('role')){
       localStorage.setItem('role', 2);
     }
-    // epidemic display 
-    // localStorage.setItem('epidemicDisplay_selectedProvinceId', 24);
-    // localStorage.setItem('epidemicDisplay_selectedDate', '2022-7-18');
-    // console.log(localStorage.getItem('epidemicDisplay_selectedDate'));
-    // console.log(localStorage);
+    localStorage.setItem('menuItemOrder', 0);
+
+    async function getPandemicData() {
+      const pandemicData = await getPandemicDataAPI();
+      let pandemicDataStr = ''; 
+      pandemicData.forEach(e=>{
+        pandemicDataStr += e.pandemic_id + ':' + e.pandemic_name + '2018@4139,.abc/&xyz';
+      })
+      localStorage.setItem('pandemicData', pandemicDataStr);
+    }
+    getPandemicData();
+
+    localStorage.setItem('epidemicDisplay_selectedProvinceId', 1);
   }, []);
   return (
     <React.StrictMode>

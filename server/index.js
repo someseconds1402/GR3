@@ -20,6 +20,8 @@ app.post(PATH.API.LOGIN, controller.login);
 
 app.post(PATH.API.GET_EPIDEMIC_DATA, controller.getData.getEpidemicData);
 
+app.get(PATH.API.GET_PANDEMIC_DATA, controller.getData.getPandemicData);
+
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })

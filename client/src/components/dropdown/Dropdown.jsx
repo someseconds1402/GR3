@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Dropdown = (props) => {
   const options = props.data;
-  const [selectedOption, setSelectedOption] = useState(options[23]); // Phần tử thứ 10 là mặc định
+  const [selectedOption, setSelectedOption] = useState(options[0]);
 
   const handleOptionChange = (e) => {
     const value = e.target.value;

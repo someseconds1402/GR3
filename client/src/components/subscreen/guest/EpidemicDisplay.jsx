@@ -1,5 +1,6 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { changeEpidemicData, changeEpidemicOption } from '../../../store/reducer/changeEpidemicDataSlice';
+// import { changePandemicData } from '../../../store/reducer/getPandemicDataSlice';
 import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame'
 import { getEpidemicDataAPI } from '../../../service/userService'
@@ -9,7 +10,22 @@ import province from './../../../constant/province'
 import MyDatePicker from '../../datepicker/DatePicker';
 
 function EpidemicDisplay() {
-  const EpidemicData = useSelector((state) => state.changeEpidemicData.data);
+  // const EpidemicData = useSelector((state) => state.changeEpidemicData.data);
+  // const pandemicData = useSelector(state => state.getPandemicData.data);
+
+  // Lấy data pandemic từ localstorage
+  const pandemicData = (localStorage.getItem('pandemicData'))
+    .split('2018@4139,.abc/&xyz')
+    .filter((item) => item !== '')
+    .map(e=>{
+      const [id, name] = e.split(':');
+      return {
+        pandemic_id: id,
+        pandemic_name: name,
+      }
+    });
+    localStorage.setItem('pandemicOption', 1);
+
   const dispatch = useDispatch();
   const [chartData, setChartData] = useState({
     labels: ['No name'],
@@ -23,9 +39,8 @@ function EpidemicDisplay() {
 
   const getEpidemicData = async (province_id, pandemic_id, date) => {
     const data = await getEpidemicDataAPI(province_id, pandemic_id, date);
-    dispatch(changeEpidemicData({data}));
     console.log({province_id, pandemic_id, date});
-    console.log(data);
+    dispatch(changeEpidemicData({data}));
     setChartData({
       labels: data.dateRange,
       datasets: [
@@ -59,11 +74,20 @@ function EpidemicDisplay() {
     dispatch(changeEpidemicOption({order: order}));
   }
 
+  const changePandemic = (option)=>{
+    getEpidemicData(
+      localStorage.getItem('epidemicDisplay_selectedProvinceId'), 
+      2, 
+      localStorage.getItem('epidemicDisplay_selectedDate')
+    );
+  }
+
   const changeProvince = (option)=>{
     const province_id = province.indexOf(option) + 1;
     localStorage.setItem('epidemicDisplay_selectedProvinceId', province_id);
     getEpidemicData(
-      province_id, 2, 
+      province_id, 
+      2, 
       localStorage.getItem('epidemicDisplay_selectedDate')
     );
   }
@@ -72,12 +96,14 @@ function EpidemicDisplay() {
     localStorage.setItem('epidemicDisplay_selectedDate', date);
     getEpidemicData(
       localStorage.getItem('epidemicDisplay_selectedProvinceId'),
-      2, date
+      2, 
+      date
     );
   }
 
   useEffect(()=>{
     // getEpidemicData(2, 2, "2022-7-18");
+    // console.log(localStorage.getItem('pandemicData'));
   })
 
   return (
@@ -85,8 +111,13 @@ function EpidemicDisplay() {
       <h1>Tra cứu tình hình dịch bệnh</h1>
       <div className="grid grid-cols-4 gap-4 mt-5">
         <div className="col-span-1 ">
-          {/* <div className="mt-4 w-full btn btn-primary" onClick={getEpidemicData}>Lấy data</div> */}
-          <Dropdown data={province} func={changeProvince}/>
+          <Dropdown 
+            data={province} func={changeProvince} 
+            // selectedOption = {parseInt(localStorage.getItem('epidemicDisplay_selectedProvinceId'))}
+          />
+          <Dropdown data={pandemicData.map(e=>e.pandemic_name)} func={changePandemic} 
+            // selectedOption={parseInt(localStorage.getItem('pandemicOption'))}
+          />
           <MyDatePicker func={changeDate}/>
         </div>
         <div className="col-span-3">
