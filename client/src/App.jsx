@@ -15,15 +15,18 @@ function App() {
   const role = useSelector(state => state.changeRole.role);
   // console.log(1);
   useEffect(()=>{
+    // console.log(1);
     if(!localStorage.getItem('menuItemOrder')){
       localStorage.setItem('menuItemOrder', 0);
     }
     if(!localStorage.getItem('role')){
       localStorage.setItem('role', 2);
     }
-    if(!localStorage.getItem('optionEpidemicDisplay')){
-      localStorage.setItem('optionEpidemicDisplay', [true, false, false, false]);
-    }
+    // epidemic display 
+    // localStorage.setItem('epidemicDisplay_selectedProvinceId', 24);
+    // localStorage.setItem('epidemicDisplay_selectedDate', '2022-7-18');
+    // console.log(localStorage.getItem('epidemicDisplay_selectedDate'));
+    // console.log(localStorage);
   }, []);
   return (
     <React.StrictMode>
