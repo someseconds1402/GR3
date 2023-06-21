@@ -30,6 +30,8 @@ export default function Login() {
     setErrorMsg('');
     if(email && password){
       const data = await handleLoginAPI(email, password);
+      // console.log(data);
+      // console.log({email, password});
       if(data.loginCondition == loginCondition.EMAIL_NOT_EXIST){
         setErrorMsg("Email không tồn tại.");
       } else if(data.loginCondition == loginCondition.FAILED_PASSWORD){

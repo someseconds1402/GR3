@@ -25,8 +25,17 @@ const getEpidemicDataAPI = async(province_id, pandemic_id, date) => {
     }
 }
 
+const getSupplyQuantityAPI = async(province_id, pandemic_id) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_SUPPLY_QUANTITY, { province_id, pandemic_id })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     handleLoginAPI,
     getPandemicDataAPI,
     getEpidemicDataAPI,
+    getSupplyQuantityAPI
 }

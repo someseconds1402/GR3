@@ -39,9 +39,10 @@ export const SCREEN_PATH = [
 
 export const PATH_API = {
     BASE_URL: 'http://localhost:8080',
-    LOGIN: '/api/login',
+    LOGIN_API: '/api/login',
     GET_PANDEMIC_DATA: '/api/get-pandemic',
-    GET_EPIDEMIC_DATA: '/api/getepidemic',
+    GET_EPIDEMIC_DATA: '/api/get-epidemic',
+    GET_SUPPLY_QUANTITY: '/api/get-supply-quantity',
 };
 
 export const role = {

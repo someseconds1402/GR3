@@ -33,7 +33,8 @@ function App() {
     }
     getPandemicData();
 
-    localStorage.setItem('epidemicDisplay_selectedProvinceId', 1);
+    // localStorage.setItem('epidemicDisplay_selectedProvinceId', 1);
+    // localStorage.setItem('suppliesDisplay_selectedProvinceId', 1);
   }, []);
   return (
     <React.StrictMode>

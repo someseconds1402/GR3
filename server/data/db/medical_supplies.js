@@ -28,3 +28,5 @@ let medical_supplies = [
     { supply_id: "91310", supply_type: "vaccine", supply_name: "Hayat - Vax ", effective_treatment: 3 },
     { supply_id: "91311", supply_type: "vaccine", supply_name: "Abdala", effective_treatment: 1 }
 ]
+
+module.exports = medical_supplies;

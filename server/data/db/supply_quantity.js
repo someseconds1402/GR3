@@ -1764,3 +1764,5 @@ let supply_quantity = [
     { province_id: 63, supply_id: '41315', quantity: 9716381 },
     { province_id: 63, supply_id: '41316', quantity: 4738940 }
 ]
+
+module.exports = supply_quantity;
