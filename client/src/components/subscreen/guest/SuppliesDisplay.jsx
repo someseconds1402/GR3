@@ -3,6 +3,7 @@ import MainFrame from '../../mainframe/MainFrame'
 import { getSupplyQuantityAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
 import province from './../../../constant/province'
+import IconWithTooltip from '../../tooltip/IconWithTooltip';
 
 function SuppliesDisplay() {
   const[supplyQuantity, getSupplyQuantity] = useState([]);
@@ -63,7 +64,6 @@ function SuppliesDisplay() {
 
   return (
     <MainFrame>
-      <h1>Tra cứu số liệu Vật tư y tế</h1>
       <div className="grid grid-cols-4 gap-4 mt-5">
         <div className="col-span-1 ">
           <Dropdown data={province} func={changeProvince} />
