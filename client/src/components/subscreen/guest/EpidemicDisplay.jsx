@@ -3,7 +3,7 @@ import { changeEpidemicData, changeEpidemicOption } from '../../../store/reducer
 // import { changePandemicData } from '../../../store/reducer/getPandemicDataSlice';
 import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame'
-import { getEpidemicDataAPI } from '../../../service/userService'
+import { getEpidemicDataAPI, getPandemicDataAPI } from '../../../service/userService'
 import LineChart from '../../chart/LineChart';
 import Dropdown from '../../dropdown/Dropdown';
 import province from './../../../constant/province'
@@ -14,17 +14,12 @@ function EpidemicDisplay() {
   // const pandemicData = useSelector(state => state.getPandemicData.data);
 
   // Lấy data pandemic từ localstorage
-  const pandemicData = (localStorage.getItem('pandemicData'))
-    .split('2018@4139,.abc/&xyz')
-    .filter((item) => item !== '')
-    .map(e=>{
-      const [id, name] = e.split(':');
-      return {
-        pandemic_id: id,
-        pandemic_name: name,
-      }
-    });
+  const [pandemicData, setPandemicData] = useState([]);
     localStorage.setItem('pandemicOption', 1);
+  
+  const [provinceSelect, setProvinceSelect] = useState(1);
+  const [pandemicSelect, setPandemicSelect] = useState(1);
+  const [dateSelect, setDateSelect] = useState("2022-07-15");
 
   const dispatch = useDispatch();
   const [chartData, setChartData] = useState({
@@ -66,45 +61,38 @@ function EpidemicDisplay() {
     })
   }
 
-  const getData = ()=>{
-    getEpidemicData(24, 2, "2022-7-18");
-  }
-
   const changeOption = (order) => {
     dispatch(changeEpidemicOption({order: order}));
   }
 
   const changePandemic = (option)=>{
-    getEpidemicData(
-      localStorage.getItem('epidemicDisplay_selectedProvinceId'), 
-      2, 
-      localStorage.getItem('epidemicDisplay_selectedDate')
-    );
+    console.log('pandemic' + pandemicData);
+    setPandemicSelect(2)
   }
 
   const changeProvince = (option)=>{
     const province_id = province.indexOf(option) + 1;
-    localStorage.setItem('epidemicDisplay_selectedProvinceId', province_id);
-    getEpidemicData(
-      province_id, 
-      2, 
-      localStorage.getItem('epidemicDisplay_selectedDate')
-    );
+    setProvinceSelect(province_id);
   }
 
   const changeDate = (date) => {
-    localStorage.setItem('epidemicDisplay_selectedDate', date);
-    getEpidemicData(
-      localStorage.getItem('epidemicDisplay_selectedProvinceId'),
-      2, 
-      date
-    );
+    setDateSelect(date);
   }
 
-  useEffect(()=>{
-    // getEpidemicData(2, 2, "2022-7-18");
-    // console.log(localStorage.getItem('pandemicData'));
-  })
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const pandemicDataSrevice = await getPandemicDataAPI();
+        setPandemicData(pandemicDataSrevice);
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
+    getEpidemicData(provinceSelect, 2, dateSelect );
+  }, [provinceSelect, pandemicSelect, dateSelect]);
 
   return (
     <MainFrame>

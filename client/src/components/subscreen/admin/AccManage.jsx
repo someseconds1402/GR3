@@ -27,6 +27,9 @@ function AccManage() {
   }
 
   useEffect(() => {
+    if(!localStorage.getItem('role')){
+      localStorage.setItem('role', 2);
+    }
     const fetchData = async () => {
       try {
         const allEmailService = await getAllEmail(localStorage.getItem('email'));

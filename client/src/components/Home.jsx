@@ -6,7 +6,9 @@ const Home = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    navigate(SCREEN_PATH[localStorage.getItem('role')][0]);
+    let role = localStorage.getItem('role');
+    role = role? role:2;
+    navigate(SCREEN_PATH[role][0]);
   });
 
   return (

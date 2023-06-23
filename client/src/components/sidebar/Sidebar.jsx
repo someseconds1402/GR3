@@ -18,6 +18,9 @@ const MenuItem = (props) =>{
 }
 
 const Sidebar = () => {
+    if(!localStorage.getItem('role')){
+      localStorage.setItem('role', 2);
+    }
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const rootRole = localStorage.getItem('role');
@@ -36,11 +39,11 @@ const Sidebar = () => {
     }
 
     useEffect(()=>{
-        const listItems = document.querySelectorAll('li'); 
-        const menuItemOrder = localStorage.getItem('menuItemOrder');
-        if(menuItemOrder < listItems.length){
-            listItems[menuItemOrder].classList.add('dark:bg-gray-700');
-        }
+        // const listItems = document.querySelectorAll('li'); 
+        // const menuItemOrder = localStorage.getItem('menuItemOrder');
+        // if(menuItemOrder < listItems.length){
+        //     listItems[menuItemOrder].classList.add('dark:bg-gray-700');
+        // }
     });
 
     return (
