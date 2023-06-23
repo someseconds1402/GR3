@@ -1,10 +1,7 @@
 const { loginCondition } = require('./../../data/constant/constant');
-const User = require('./../../data/db/User');
-const userData = require('./../../controller/getData/readfile/readUser')
+const reader = require('../../data/function/readfile/readfile')
 
 const checkInfo = async(email, password) => {
-    await userData.readUserData()
-        // console.log(User);
     return new Promise(async(resolve, reject) => {
         try {
             const account = await checkEmail(email);
@@ -16,7 +13,9 @@ const checkInfo = async(email, password) => {
     })
 }
 
-const checkEmail = (email) => {
+const checkEmail = async(email) => {
+    const User = await reader.readUser();
+    console.log(await reader.readMedicalSupply());
     return User.find(e => e.email === email);
 }
 

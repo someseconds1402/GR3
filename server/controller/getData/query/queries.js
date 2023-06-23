@@ -1,21 +1,15 @@
-const infection_situation = require('./../../../data/db/infection_situation')
-const recovered_situation = require('./../../../data/db/recovered_situation')
-const death_situation = require('./../../../data/db/death_situation')
-const pandemic = require('./../../../data/db/pandemic')
-const province = require('./../../../data/db/province')
-const medical_supplies = require('./../../../data/db/medical_supplies')
-const supply_quantity = require('./../../../data/db/supply_quantity')
+const reader = require('./../../../data/function/readfile/readfile')
 
-const queryEpidemicData = (province_id, pandemic_id, date) => {
+const queryEpidemicData = async(province_id, pandemic_id, date) => {
     const myDate = new Date(date)
     const getDateRangeData = e => {
         const eDate = new Date(e.date);
         const diffDays = Math.ceil((myDate.getTime() - eDate.getTime()) / (1000 * 3600 * 24));
         return e.province_id == province_id && diffDays >= 0 && diffDays <= 6;
     }
-    const infectionList = infection_situation.filter(e => getDateRangeData(e))
-    const recoveredList = recovered_situation.filter(e => getDateRangeData(e))
-    const deathList = death_situation.filter(e => getDateRangeData(e))
+    const infectionList = (await reader.readInfectionSituation()).filter(e => getDateRangeData(e))
+    const recoveredList = (await reader.readRecoveredSituation()).filter(e => getDateRangeData(e))
+    const deathList = (await reader.readDeathSituation()).filter(e => getDateRangeData(e))
     return {
         dateRange: infectionList.map(e => e.date),
         infection: {
@@ -33,11 +27,13 @@ const queryEpidemicData = (province_id, pandemic_id, date) => {
     };
 }
 
-const queryPandemicData = () => {
-    return pandemic;
+const queryPandemicData = async() => {
+    return reader.readPandemic();
 }
 
-const querySupplyQuantity = (province_id, pandemic_id) => {
+const querySupplyQuantity = async(province_id, pandemic_id) => {
+    const supply_quantity = await reader.readSupplyQuantity();
+    const medical_supplies = await reader.readMedicalSupply();
     return supply_quantity
         .filter(e => e.province_id == province_id)
         .map(e => {
@@ -52,8 +48,19 @@ const querySupplyQuantity = (province_id, pandemic_id) => {
         })
 }
 
+const queryAllEmail = async(email) => {
+    const User = await reader.readUser();
+    return (User.filter(e => e.email != email)).map((e, i) => {
+        return {
+            order: i + 1,
+            email: e.email
+        }
+    });
+}
+
 module.exports = {
     queryEpidemicData,
     queryPandemicData,
-    querySupplyQuantity
+    querySupplyQuantity,
+    queryAllEmail,
 }

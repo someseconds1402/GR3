@@ -45,14 +45,14 @@ function SuppliesDisplay() {
   const drawTableData = (data)=>{
     console.log(data);
     return (
-          <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-            <th class="px-6 py-4 ">
+          <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+            <th className="px-6 py-4 ">
               {data.supply_name}
             </th>
-            <td class="px-6 py-4">
+            <td className="px-6 py-4">
               {data.supply_type}
             </td>
-            <td class="px-6 py-4">
+            <td className="px-6 py-4">
               {data.quantity}
             </td>
           </tr>
@@ -71,17 +71,17 @@ function SuppliesDisplay() {
         </div>
         <div className="col-span-3">
           
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
-          <table class="w-full text-lg text-left">
-            <thead class="text-lg uppercase dark:bg-gray-900 dark:text-white dark:border-gray-700 border-b">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+          <table className="w-full text-lg text-left">
+            <thead className="text-lg uppercase dark:bg-gray-900 dark:text-white dark:border-gray-700 border-b">
               <tr>
-                <th class="px-6 py-3">
+                <th className="px-6 py-3">
                   Tên
                 </th>
-                <th class="px-6 py-3">
+                <th className="px-6 py-3">
                   Phân loại
                 </th>
-                <th class="px-6 py-3">
+                <th className="px-6 py-3">
                   Số lượng
                 </th>
               </tr>

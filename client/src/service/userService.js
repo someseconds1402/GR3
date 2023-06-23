@@ -33,9 +33,18 @@ const getSupplyQuantityAPI = async(province_id, pandemic_id) => {
     }
 }
 
+const getAllEmail = async(email) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_ALL_EMAIL, { email })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     handleLoginAPI,
     getPandemicDataAPI,
     getEpidemicDataAPI,
-    getSupplyQuantityAPI
+    getSupplyQuantityAPI,
+    getAllEmail,
 }

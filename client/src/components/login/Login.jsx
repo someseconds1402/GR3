@@ -66,7 +66,13 @@ export default function Login() {
           <Form className="container mt-5">
             <Form.Group className="row" controlId="email">
               <div className="col-3"><Form.Label >Email</Form.Label></div>
-              <div className="col-9"><Form.Control type="email" placeholder="Enter email" value={email} onChange={handleEmailChange} /></div>
+              <div className="col-9">
+                <Form.Control 
+                  type="email" 
+                  placeholder="Enter email" 
+                  value={email} 
+                  onChange={handleEmailChange} />
+              </div>
             </Form.Group>
 
             <Form.Group className="row mt-4" controlId="password">

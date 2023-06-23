@@ -17,8 +17,15 @@ const getSupplyQuantity = async(req, res) => {
     res.status(200).json(result)
 }
 
+const getAllEmail = async(req, res) => {
+    const { email } = req.body;
+    let result = await queries.queryAllEmail(email);
+    res.status(200).json(result);
+}
+
 module.exports = {
     getEpidemicData,
     getPandemicData,
     getSupplyQuantity,
+    getAllEmail,
 };
