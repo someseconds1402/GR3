@@ -49,7 +49,16 @@ const querySupplyQuantity = async(province_id, pandemic_id) => {
 }
 
 const queryAllEmail = async(email) => {
-    const User = await reader.readUser();
+    let User = await reader.readUser();
+    await User.sort((a, b) => {
+        if (a.email < b.email) {
+            return -1;
+        }
+        if (a.email > b.email) {
+            return 1;
+        }
+        return 0;
+    });
     return (User.filter(e => e.email != email)).map((e, i) => {
         return {
             order: i + 1,

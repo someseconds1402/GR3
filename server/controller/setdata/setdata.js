@@ -9,8 +9,18 @@ const addUser = async(req, res) => {
     })
 }
 
+const deleteUser = async(req, res) => {
+    const { email } = req.body;
+    const errCode = await modifyFunc.deleteUser(email);
+    res.status(200).json({
+        errorCode: errCode,
+        email: email,
+    })
+}
+
 const setData = {
     addUser,
+    deleteUser,
 
 }
 

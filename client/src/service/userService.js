@@ -49,6 +49,14 @@ const addUser = async(email, password) => {
     }
 }
 
+const deleteUser = async(email) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.DELETE_USER, { email })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     handleLoginAPI,
     getPandemicDataAPI,
@@ -56,4 +64,5 @@ export {
     getSupplyQuantityAPI,
     getAllEmail,
     addUser,
+    deleteUser,
 }

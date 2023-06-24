@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../../../constant/constant';
 import MainFrame from '../../mainframe/MainFrame';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { getAllEmail } from '../../../service/userService';
+import { getAllEmail, deleteUser } from '../../../service/userService';
 import AddAccForm from './AddAccForm';
 
 function AccManage() {
-  const [allEmail, setAllEmail] = useState([]);
+    const navigate = useNavigate();
+    const [allEmail, setAllEmail] = useState([]);
   // localStorage.setItem('allEmail', JSON.stringify([]));
   // const listEmail = JSON.parse(localStorage.getItem('allEmail'));
   const [inputSearch, setInputSearch] = useState('');
@@ -23,7 +26,17 @@ function AccManage() {
   }
 
   const handleDeleteEmail = (order)=>{
-    console.log(order);
+    const selectedEmail = allEmail.find(e=>e.order == order);
+    const confirmCheck = window.confirm("Xóa email " + selectedEmail.email + " ?");
+    // console.log(order);
+    if(confirmCheck){
+      const data = deleteUser(selectedEmail.email);
+      if(data.errorCode == 1){
+        alert(" Tài khoản không còn tồn tại trong hệ thống.\nCó quản trị viên khác đã xóa tài khoản đó.")
+      } else {
+        navigate(PATH.HOME);
+      }
+    }
   }
 
   useEffect(() => {

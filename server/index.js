@@ -28,6 +28,8 @@ app.post(PATH.API.GET_ALL_EMAIL, controller.getData.getAllEmail);
 
 app.post(PATH.API.ADD_USER, controller.setData.addUser);
 
+app.post(PATH.API.DELETE_USER, controller.setData.deleteUser);
+
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })

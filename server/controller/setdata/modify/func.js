@@ -18,8 +18,23 @@ const addUser = async(email, password) => {
     }
 }
 
+const deleteUser = async(email) => {
+    const User = await reader.readUser();
+
+    // Nếu trong CSDL Không có email đó => trả về mã lỗi 1, trả về 0 nếu có tồn tại email đó và tiến hành xóa
+    if (User.some(e => e.email == email)) {
+        const newUser = await User.filter(e => e.email != email);
+        console.log(newUser);
+        writer.writeUser(newUser);
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
 const modifyFunc = {
     addUser,
+    deleteUser,
 
 }
 

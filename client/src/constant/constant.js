@@ -45,6 +45,7 @@ export const PATH_API = {
     GET_SUPPLY_QUANTITY: '/api/get-supply-quantity',
     GET_ALL_EMAIL: '/api/get-all-eamil',
     ADD_USER: '/api/add-user',
+    DELETE_USER: '/api/delete-user',
 };
 
 export const role = {

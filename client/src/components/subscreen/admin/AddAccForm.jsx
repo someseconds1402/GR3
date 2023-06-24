@@ -25,7 +25,7 @@ function AddAccForm() {
             setShowEror(true);
             return false;
         }
-        if(!password.length < 6){
+        if(password.length < 6){
             setErrorMsg('Password phải chứa ít nhất 6 ký tự');
             setShowEror(true);
             return false;
@@ -54,9 +54,9 @@ function AddAccForm() {
         const check = checkValidInput();
 
         if(check){
-            console.log(email, password);
+            // console.log(email, password);
             const data = await addUser(email, password);
-            console.log(data);
+            // console.log(data);
             if(data.errorCode == 0){
                 alert("Thêm tài khoản thành công!")
                 navigate(PATH.HOME);
