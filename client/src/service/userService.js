@@ -41,10 +41,19 @@ const getAllEmail = async(email) => {
     }
 }
 
+const addUser = async(email, password) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.ADD_USER, { email, password })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     handleLoginAPI,
     getPandemicDataAPI,
     getEpidemicDataAPI,
     getSupplyQuantityAPI,
     getAllEmail,
+    addUser,
 }

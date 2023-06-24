@@ -44,6 +44,7 @@ export const PATH_API = {
     GET_EPIDEMIC_DATA: '/api/get-epidemic',
     GET_SUPPLY_QUANTITY: '/api/get-supply-quantity',
     GET_ALL_EMAIL: '/api/get-all-eamil',
+    ADD_USER: '/api/add-user',
 };
 
 export const role = {

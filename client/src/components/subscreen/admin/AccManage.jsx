@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame';
-import allEmail from './testData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { getAllEmail } from '../../../service/userService';
+import AddAccForm from './AddAccForm';
 
 function AccManage() {
   const [allEmail, setAllEmail] = useState([]);
@@ -12,7 +12,7 @@ function AccManage() {
   const [inputSearch, setInputSearch] = useState('');
   const [displayEmailList, setDisplayEmailList] = useState(allEmail);
 
-  console.log(displayEmailList);
+  // console.log(displayEmailList);
 
   const filterEmail = (event) => {
     console.log(displayEmailList);
@@ -59,8 +59,11 @@ function AccManage() {
           />
         </div>
       </div>
-
+      <div className="mt-4">
+        <AddAccForm/>
+      </div>
       <div className="">
+        <h3 className="shadow-md sm:rounded-lg mt-10">Danh sách tài khoản</h3>
         <div className="shadow-md sm:rounded-lg mt-4">
           <table className="w-full text-lg text-left">
             <tbody>
