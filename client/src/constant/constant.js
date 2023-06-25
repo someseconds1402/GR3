@@ -46,6 +46,7 @@ export const PATH_API = {
     GET_ALL_EMAIL: '/api/get-all-eamil',
     ADD_USER: '/api/add-user',
     DELETE_USER: '/api/delete-user',
+    GET_EPIDEMIC_DATA_OF_ALL_PROVINCES: '/api/get-epidemic-data-of-all-provinces',
 };
 
 export const role = {

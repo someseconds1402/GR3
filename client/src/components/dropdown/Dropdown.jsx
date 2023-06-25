@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Dropdown = (props) => {
   const options = props.data;
   const [selectedOption, setSelectedOption] = useState(options[0]);
+  console.log('Dropdown', props, selectedOption);
 
   const handleOptionChange = (e) => {
     const value = e.target.value;
     setSelectedOption(value);
-    // console.log('value: ' + value);
-    // console.log('option: ' + value);
     props.func(value);
   };
+
+  useEffect(()=>{
+    if(props && props.selectOption != 0){
+      setSelectedOption(options[props.selectOption])
+    } else {
+      setSelectedOption(options[0])
+    }
+  }, [props.selectOption])
 
   return (
     <div>

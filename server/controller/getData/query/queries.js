@@ -5,7 +5,7 @@ const queryEpidemicData = async(province_id, pandemic_id, date) => {
     const getDateRangeData = e => {
         const eDate = new Date(e.date);
         const diffDays = Math.ceil((myDate.getTime() - eDate.getTime()) / (1000 * 3600 * 24));
-        return e.province_id == province_id && diffDays >= 0 && diffDays <= 6;
+        return e.province_id == province_id && diffDays >= 1 && diffDays <= 7;
     }
     const infectionList = (await reader.readInfectionSituation()).filter(e => getDateRangeData(e))
     const recoveredList = (await reader.readRecoveredSituation()).filter(e => getDateRangeData(e))
@@ -67,9 +67,48 @@ const queryAllEmail = async(email) => {
     });
 }
 
+const queryEpidemicDataOfAllProvinces = async(pandemic_id, date) => {
+    const myDate = new Date(date)
+    const provinces = (await reader.readProvince());
+    const infection = (await reader.readInfectionSituation());
+    const recovered = (await reader.readRecoveredSituation());
+    const death = (await reader.readDeathSituation());
+
+    const getDateRangeData = (e, province_id) => {
+        const eDate = new Date(e.date);
+        const diffDays = Math.ceil((myDate.getTime() - eDate.getTime()) / (1000 * 3600 * 24));
+        return e.province_id == province_id && diffDays >= 1 && diffDays <= 7;
+    }
+
+    const result = provinces.map((province) => {
+        const infectionList = infection.filter(e => getDateRangeData(e, province.province_id));
+        const recoveredList = recovered.filter(e => getDateRangeData(e, province.province_id));
+        const deathList = death.filter(e => getDateRangeData(e, province.province_id));
+        return {
+            province_id: province.province_id,
+            dateRange: infectionList.map(e => e.date),
+            infection: {
+                title: 'Lây nhiễm',
+                list: infectionList
+            },
+            recovered: {
+                title: 'Hồi phục',
+                list: recoveredList
+            },
+            death: {
+                title: 'Tử vong',
+                list: deathList
+            }
+        };
+    })
+    return result;
+}
+
 module.exports = {
     queryEpidemicData,
     queryPandemicData,
     querySupplyQuantity,
     queryAllEmail,
+    queryEpidemicDataOfAllProvinces,
+
 }

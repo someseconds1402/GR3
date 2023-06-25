@@ -15,7 +15,6 @@ const checkInfo = async(email, password) => {
 
 const checkEmail = async(email) => {
     const User = await reader.readUser();
-    console.log(await reader.readMedicalSupply());
     return User.find(e => e.email === email);
 }
 

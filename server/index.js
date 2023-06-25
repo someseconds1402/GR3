@@ -30,6 +30,8 @@ app.post(PATH.API.ADD_USER, controller.setData.addUser);
 
 app.post(PATH.API.DELETE_USER, controller.setData.deleteUser);
 
+app.post(PATH.API.GET_EPIDEMIC_DATA_OF_ALL_PROVINCES, controller.getData.getEpidemicDataOfAllProvinces);
+
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })

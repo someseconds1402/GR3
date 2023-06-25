@@ -57,6 +57,14 @@ const deleteUser = async(email) => {
     }
 }
 
+const getEpidemicDataOfAllProvincesAPI = async(pandemic_id, date) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_EPIDEMIC_DATA_OF_ALL_PROVINCES, { pandemic_id, date })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     handleLoginAPI,
     getPandemicDataAPI,
@@ -65,4 +73,6 @@ export {
     getAllEmail,
     addUser,
     deleteUser,
+    getEpidemicDataOfAllProvincesAPI,
+
 }
