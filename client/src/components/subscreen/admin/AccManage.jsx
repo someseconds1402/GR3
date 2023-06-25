@@ -40,8 +40,9 @@ function AccManage() {
   }
 
   useEffect(() => {
-    if(!localStorage.getItem('role')){
-      localStorage.setItem('role', 2);
+    if(localStorage.getItem('role') != 0){
+      // localStorage.setItem('role', 2);
+      navigate(PATH.HOME);
     }
     const fetchData = async () => {
       try {

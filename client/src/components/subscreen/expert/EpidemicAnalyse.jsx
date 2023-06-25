@@ -1,9 +1,11 @@
 import MainFrame from '../../mainframe/MainFrame'
+import ImportButton from './importfile/ImportButton'
 
 function EpidemicAnalyse() {
   return (
     <MainFrame>
-      <h1>EpidemicAnalyse</h1>
+      <h1>Phân tích tình hình dịch bệnh</h1>
+      <ImportButton/>
     </MainFrame>
   )
 }
