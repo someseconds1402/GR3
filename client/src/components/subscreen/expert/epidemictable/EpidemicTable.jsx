@@ -7,7 +7,7 @@ const EpidemicTable = (props) => {
   const [levelList, setLevelList] = useState(['Chưa xác định', 'Cấp 1', 'Cấp 2', 'Cấp 3']);
 
   useEffect(()=>{
-    console.log('EpidemicTable: ', props);
+    // console.log('EpidemicTable: ', props);
     // console.log(Object.keys(props.data).length);
     // console.log(props.data);
     if(Object.keys(props.data).length){

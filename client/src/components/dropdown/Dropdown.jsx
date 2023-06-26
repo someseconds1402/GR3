@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const Dropdown = (props) => {
   const options = props.data;
   const [selectedOption, setSelectedOption] = useState(options[0]);
-  console.log('Dropdown', props, selectedOption);
+  // console.log('Dropdown', props, selectedOption);
 
   const handleOptionChange = (e) => {
     const value = e.target.value;
@@ -17,7 +17,7 @@ const Dropdown = (props) => {
     } else {
       setSelectedOption(options[0])
     }
-  }, [props.selectOption])
+  })
 
   return (
     <div>
