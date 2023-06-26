@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame'
-import { getEpidemicDataAPI, getPandemicDataAPI, getEpidemicDataOfAllProvincesAPI } from '../../../service/userService'
-import LineChart from '../../chart/LineChart';
+import { getPandemicDataAPI, getEpidemicDataOfAllProvincesAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
 import province from './../../../constant/province'
 import MyDatePicker from '../../datepicker/DatePicker';

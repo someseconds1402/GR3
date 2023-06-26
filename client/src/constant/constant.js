@@ -47,6 +47,7 @@ export const PATH_API = {
     ADD_USER: '/api/add-user',
     DELETE_USER: '/api/delete-user',
     GET_EPIDEMIC_DATA_OF_ALL_PROVINCES: '/api/get-epidemic-data-of-all-provinces',
+    GET_SUPPLY_QUANTITY_OF_ALL_PROVINCES: '/api/get-supply-quantity-of-all-provinces',
 };
 
 export const role = {

@@ -29,11 +29,18 @@ const getEpidemicDataOfAllProvinces = async(req, res) => {
     res.status(200).json(result)
 }
 
+const getSupplyQuantityOfAllProvinces = async(req, res) => {
+    const { pandemic_id, date } = req.body;
+    let result = await queries.querySupplyQuantityOfAllProvinces(pandemic_id, date);
+    res.status(200).json(result)
+}
+
 module.exports = {
     getEpidemicData,
     getPandemicData,
     getSupplyQuantity,
     getAllEmail,
     getEpidemicDataOfAllProvinces,
+    getSupplyQuantityOfAllProvinces,
 
 };

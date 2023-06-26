@@ -65,6 +65,14 @@ const getEpidemicDataOfAllProvincesAPI = async(pandemic_id, date) => {
     }
 }
 
+const getSupplyQuantityOfAllProvincesAPI = async(pandemic_id) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_SUPPLY_QUANTITY_OF_ALL_PROVINCES, { pandemic_id })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     handleLoginAPI,
     getPandemicDataAPI,
@@ -74,5 +82,6 @@ export {
     addUser,
     deleteUser,
     getEpidemicDataOfAllProvincesAPI,
+    getSupplyQuantityOfAllProvincesAPI,
 
 }

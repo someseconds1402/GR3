@@ -69,10 +69,10 @@ const queryAllEmail = async(email) => {
 
 const queryEpidemicDataOfAllProvinces = async(pandemic_id, date) => {
     const myDate = new Date(date)
-    const provinces = (await reader.readProvince());
-    const infection = (await reader.readInfectionSituation());
-    const recovered = (await reader.readRecoveredSituation());
-    const death = (await reader.readDeathSituation());
+    const provinces = await reader.readProvince();
+    const infection = await reader.readInfectionSituation();
+    const recovered = await reader.readRecoveredSituation();
+    const death = await reader.readDeathSituation();
 
     const getDateRangeData = (e, province_id) => {
         const eDate = new Date(e.date);
@@ -104,11 +104,36 @@ const queryEpidemicDataOfAllProvinces = async(pandemic_id, date) => {
     return result;
 }
 
+const querySupplyQuantityOfAllProvinces = async(pandemic_id) => {
+    const provinces = await reader.readProvince();
+    const supply_quantity = await reader.readSupplyQuantity();
+    const medical_supplies = await reader.readMedicalSupply();
+    return provinces.map(province => {
+        const dataQuantity = supply_quantity.filter(e => e.province_id == province.province_id)
+            .map(e => {
+                const supply = medical_supplies.find(spl => spl.supply_id == e.supply_id);
+                return {
+                    province_id: e.province_id,
+                    supply_id: e.supply_id,
+                    supply_type: supply.supply_type,
+                    supply_name: supply.supply_name,
+                    quantity: e.quantity
+                }
+            })
+        return {
+            province_id: province.province_id,
+            level: dataQuantity[0].quantity % 3 + 1,
+            data: dataQuantity
+        }
+    })
+}
+
 module.exports = {
     queryEpidemicData,
     queryPandemicData,
     querySupplyQuantity,
     queryAllEmail,
     queryEpidemicDataOfAllProvinces,
+    querySupplyQuantityOfAllProvinces,
 
 }
