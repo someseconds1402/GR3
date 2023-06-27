@@ -110,6 +110,16 @@ function EpidemicAnalyse() {
     saveAs(blob, fileName);
   };
 
+  const toPreProvicne = () => {
+    const province_id = provinceSelect==1 ? 63 : provinceSelect-1;
+    setProvinceSelect(province_id)
+  }
+
+  const toNextProvicne = () => {
+    const province_id = provinceSelect==63 ? 1 : provinceSelect+1;
+    setProvinceSelect(province_id)
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -174,9 +184,11 @@ function EpidemicAnalyse() {
             />
           </div>
           <div className="col-span-1 flex justify-between">
+            <span className="btn btn-primary w-10 h-10 mt-4" onClick={toPreProvicne}>&lt;</span>
             <Dropdown 
-              data={province} func={changeProvince} 
+              data={province} func={changeProvince} selectOption={provinceSelect}
             />
+            <span className="btn btn-primary w-10 h-10 mt-4" onClick={toNextProvicne}>&gt;</span>
           </div>
           <div className="col-span-1 flex justify-between">
             <MyDatePicker func={changeDate}/>

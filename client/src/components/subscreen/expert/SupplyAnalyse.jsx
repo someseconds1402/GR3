@@ -110,6 +110,16 @@ function SupplyAnalyse() {
     saveAs(blob, fileName);
   };
 
+  const toPreProvicne = () => {
+    const province_id = provinceSelect==1 ? 63 : provinceSelect-1;
+    setProvinceSelect(province_id)
+  }
+
+  const toNextProvicne = () => {
+    const province_id = provinceSelect==63 ? 1 : provinceSelect+1;
+    setProvinceSelect(province_id)
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -175,9 +185,11 @@ function SupplyAnalyse() {
             />
           </div>
           <div className="col-span-1 flex justify-between">
+            <span className="btn btn-primary w-10 h-10 mt-4" onClick={toPreProvicne}>&lt;</span>
             <Dropdown 
-              data={province} func={changeProvince} 
+              data={province} func={changeProvince} selectOption={provinceSelect}
             />
+            <span className="btn btn-primary w-10 h-10 mt-4" onClick={toNextProvicne}>&gt;</span>
           </div>
           <div className="col-span-1 flex justify-between">
             <MyDatePicker func={changeDate}/>
@@ -190,7 +202,7 @@ function SupplyAnalyse() {
             <div className="mt-3">Cần hỗ trợ        : <strong className='text-red-900'>{ability1}</strong></div>
             <div className="mt-3">Tự cung ứng       : <strong className='text-blue-900'>{ability2}</strong></div>
             <div className="mt-3">Có khả năng hỗ trợ: <strong className='text-green-900'>{ability3}</strong></div>
-            {(ability1>2 && ability2>2 && ability3>2) ? (
+            {(ability1>1 && ability2>1 && ability3>1) ? (
               <><span className="btn btn-primary mt-5 w-36" onClick={analyseData}>Phân cụm</span>
               {canDownload && <span className="btn btn-success mt-5 ml-4 w-36" onClick={downloadFile}>Tải file phân tích</span>}
               </>
