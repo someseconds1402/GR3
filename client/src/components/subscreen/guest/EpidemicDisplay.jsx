@@ -32,6 +32,17 @@ function EpidemicDisplay() {
     ]
   });
 
+  const [isShowLevel, setIsShowLevel] = useState(false);
+  const [chartLevelData, setChartLevelData] = useState({
+    labels: ['No name'],
+    datasets: [
+      {
+        label: "No name",
+        data: [0],
+      }
+    ]
+  });
+
   const getEpidemicData = async (province_id, pandemic_id, date) => {
     const data = await getEpidemicDataAPI(province_id, pandemic_id, date);
     console.log({province_id, pandemic_id, date});
@@ -59,6 +70,18 @@ function EpidemicDisplay() {
         },
       ]
     })
+
+    setChartLevelData({
+      labels: data.dateRange,
+      datasets: [
+        {
+          label: "Cấp độ dịch",
+          data: data.infection.list.map(e=>{return e.quantity_in_today % 3 + 1}),
+          borderColor: 'blue',
+          backgroundColor: 'blue'
+        }
+      ]
+    })
   }
 
   const changeOption = (order) => {
@@ -78,6 +101,10 @@ function EpidemicDisplay() {
   const changeDate = (date) => {
     setDateSelect(date);
   }
+
+  const changeIsShowLevel = (event) => {
+    setIsShowLevel(event.target.checked);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,10 +134,21 @@ function EpidemicDisplay() {
             // selectedOption={parseInt(localStorage.getItem('pandemicOption'))}
           />
           <MyDatePicker func={changeDate}/>
+
+          <div className="w-full mt-4">
+            <label className='text-lg'>
+              <input className='h-6 w-6' type="checkbox" checked={isShowLevel} onChange={changeIsShowLevel} />
+              <span className='ml-1'>Xem cấp độ dịch</span>
+            </label>
+          </div>
         </div>
-        <div className="col-span-3">
+        { !isShowLevel ? 
+        (<div className="col-span-3">
           <LineChart data={chartData} />
-        </div>
+        </div>):(
+        <div className="col-span-3">
+          <LineChart data={chartLevelData} />
+        </div>)}
       </div>
     </MainFrame>
   )
