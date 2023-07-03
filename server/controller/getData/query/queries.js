@@ -86,6 +86,8 @@ const queryEpidemicDataOfAllProvinces = async(pandemic_id, date) => {
         const deathList = death.filter(e => getDateRangeData(e, province.province_id));
         return {
             province_id: province.province_id,
+            population: province.population,
+            population_density: province.population_density,
             dateRange: infectionList.map(e => e.date),
             infection: {
                 title: 'Lây nhiễm',
@@ -122,6 +124,8 @@ const querySupplyQuantityOfAllProvinces = async(pandemic_id) => {
             })
         return {
             province_id: province.province_id,
+            population: province.population,
+            population_density: province.population_density,
             level: dataQuantity[0].quantity % 3 + 1,
             data: dataQuantity
         }

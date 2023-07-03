@@ -30,8 +30,8 @@ const getEpidemicDataOfAllProvinces = async(req, res) => {
 }
 
 const getSupplyQuantityOfAllProvinces = async(req, res) => {
-    const { pandemic_id, date } = req.body;
-    let result = await queries.querySupplyQuantityOfAllProvinces(pandemic_id, date);
+    const { pandemic_id } = req.body;
+    let result = await queries.querySupplyQuantityOfAllProvinces(pandemic_id);
     res.status(200).json(result)
 }
 

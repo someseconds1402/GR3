@@ -99,7 +99,6 @@ function EpidemicAnalyse() {
     });
     // Convert data to worksheet format
     const worksheet = XLSX.utils.json_to_sheet(transformedData);
-    // console.log(fileName, workbook, worksheet);
     // Append worksheet to workbook
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Data');
     // Write workbook to Excel file
