@@ -12,6 +12,7 @@ import SubscreenComponents from './components/subscreen/SubscreenComponents';
 import { useSelector, useDispatch } from 'react-redux';
 // import {changePandemicData} from './store/reducer/getPandemicDataSlice';
 import { getPandemicDataAPI } from './service/userService';
+import Sidebar from './components/sidebar/Sidebar';
 
 function App() {
   const role = useSelector(state => state.changeRole.role);
@@ -41,10 +42,9 @@ function App() {
       <div className="root-page">
         <FadeIn>
           <Router>
+            <Sidebar/>
             <Routes>
               <Route exact path={PATH.HOME} element={<Home role={role}/>}/>
-              <Route path={PATH.LOGIN} element={<Login/>}/>
-              
               <Route path={PATH.LOGIN} element={<Login/>}/>
               <Route path={PATH.ACCOUNT_MANAGE} element={<SubscreenComponents.ADMIN.AccManage/>}/>
               <Route path={PATH.DB_MODYFY} element={<SubscreenComponents.EXPERT.DbModify/>}/>

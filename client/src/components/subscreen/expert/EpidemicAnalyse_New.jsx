@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame'
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../../../constant/constant';
 import { getPandemicDataAPI, getEpidemicDataOfAllProvincesAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
 import province from '../../../constant/province'
@@ -15,6 +17,7 @@ import EpidemicTable_New from './epidemictable/EpidemicTable_New';
 import S_SMC_FCM from '../../../logic/sSMC_FCM';
 
 function EpidemicAnalyse_New() {
+  const navigate = useNavigate();
   const EpidemicData = useSelector((state) => state.epidemicDataAnalyse.data);
   const dispatch = useDispatch();
 
@@ -114,6 +117,9 @@ function EpidemicAnalyse_New() {
   };
 
   useEffect(() => {
+    if(localStorage.getItem('role') != 1){
+      navigate(PATH.HOME);
+    }
     const fetchData = async () => {
       try {
         const pandemicDataSrevice = await getPandemicDataAPI();

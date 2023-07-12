@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame'
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../../../constant/constant';
 import { getSupplyQuantityAPI, getPandemicDataAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
 import province from './../../../constant/province'
 import IconWithTooltip from '../../tooltip/IconWithTooltip';
 
 function SuppliesDisplay() {
+  const navigate = useNavigate();
   const [supplyQuantity, setSupplyQuantity] = useState([]);
   const [pandemicData, setPandemicData] = useState([]);
   const [provinceSelect, setProvinceSelect] = useState(1);
@@ -41,6 +44,12 @@ function SuppliesDisplay() {
           </tr>
     )
   }
+
+  useEffect(()=>{
+    if(localStorage.getItem('role') != 2){
+      navigate(PATH.HOME);
+    }
+  })
 
   useEffect(() => {
     const fetchData = async () => {

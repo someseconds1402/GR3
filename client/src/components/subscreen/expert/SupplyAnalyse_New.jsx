@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame'
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../../../constant/constant';
 import { getPandemicDataAPI, getSupplyQuantityOfAllProvincesAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
 import province from '../../../constant/province'
@@ -13,6 +15,7 @@ import SupplyTable_New from './supplytable/SupplyTable_New';
 import S_SMC_FCM from '../../../logic/sSMC_FCM';
 
 function SupplyAnalyse_New() {
+  const navigate = useNavigate();
   const SupplyData = useSelector((state) => state.supplyDataAnalyse.data);
   const dispatch = useDispatch();
 
@@ -100,6 +103,9 @@ function SupplyAnalyse_New() {
   };
 
   useEffect(() => {
+    if(localStorage.getItem('role') != 1){
+      navigate(PATH.HOME);
+    }
     const fetchData = async () => {
       try {
         const pandemicDataSrevice = await getPandemicDataAPI();

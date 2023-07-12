@@ -1,21 +1,20 @@
+import { useState, useEffect } from 'react';
+import MainFrame from '../../mainframe/MainFrame'
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../../../constant/constant';
+import { getEpidemicDataAPI, getPandemicDataAPI } from '../../../service/userService'
 import { useDispatch } from 'react-redux';
 import { changeEpidemicData, changeEpidemicOption } from '../../../store/reducer/changeEpidemicDataSlice';
 // import { changePandemicData } from '../../../store/reducer/getPandemicDataSlice';
-import { useState, useEffect } from 'react';
-import MainFrame from '../../mainframe/MainFrame'
-import { getEpidemicDataAPI, getPandemicDataAPI } from '../../../service/userService'
 import LineChart from '../../chart/LineChart';
 import Dropdown from '../../dropdown/Dropdown';
 import province from './../../../constant/province'
 import MyDatePicker from '../../datepicker/DatePicker';
 
 function EpidemicDisplay() {
-  // const EpidemicData = useSelector((state) => state.changeEpidemicData.data);
-  // const pandemicData = useSelector(state => state.getPandemicData.data);
+  const navigate = useNavigate();
 
-  // Lấy data pandemic từ localstorage
   const [pandemicData, setPandemicData] = useState([]);
-    localStorage.setItem('pandemicOption', 1);
   
   const [provinceSelect, setProvinceSelect] = useState(1);
   const [pandemicSelect, setPandemicSelect] = useState(1);
@@ -105,6 +104,12 @@ function EpidemicDisplay() {
   const changeIsShowLevel = (event) => {
     setIsShowLevel(event.target.checked);
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem('role') != 2){
+      navigate(PATH.HOME);
+    }
+  })
 
   useEffect(() => {
     const fetchData = async () => {

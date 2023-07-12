@@ -44,6 +44,7 @@ function AccManage() {
       // localStorage.setItem('role', 2);
       navigate(PATH.HOME);
     }
+    // localStorage.setItem('menuItemOrder', 0);
     const fetchData = async () => {
       try {
         const allEmailService = await getAllEmail(localStorage.getItem('email'));

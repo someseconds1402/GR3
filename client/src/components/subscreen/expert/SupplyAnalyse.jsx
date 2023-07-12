@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame'
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../../../constant/constant';
 import { getPandemicDataAPI, getEpidemicDataOfAllProvincesAPI, getSupplyQuantityOfAllProvincesAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
 import province from './../../../constant/province'
@@ -11,6 +13,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 function SupplyAnalyse() {
+  const navigate = useNavigate();
 
   const [pandemicData, setPandemicData] = useState([]);
   
@@ -121,6 +124,9 @@ function SupplyAnalyse() {
   }
 
   useEffect(() => {
+    if(localStorage.getItem('role') != 1){
+      navigate(PATH.HOME);
+    }
     const fetchData = async () => {
       try {
         const pandemicDataSrevice = await getPandemicDataAPI();

@@ -20,11 +20,13 @@ const MenuItem = (props) =>{
 const Sidebar = () => {
     if(!localStorage.getItem('role')){
       localStorage.setItem('role', 2);
+      localStorage.setItem('menuItemOrder', 0);
     }
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const rootRole = localStorage.getItem('role');
     const menuItemOrder = localStorage.getItem('menuItemOrder');
+    const [itemOrder, setItemOrder] = useState(0);
 
     const logoutHandle = ()=>{
         dispatch(logoutAction());
@@ -39,12 +41,15 @@ const Sidebar = () => {
     }
 
     useEffect(()=>{
-        // const listItems = document.querySelectorAll('li'); 
-        // const menuItemOrder = localStorage.getItem('menuItemOrder');
-        // if(menuItemOrder < listItems.length){
-        //     listItems[menuItemOrder].classList.add('dark:bg-gray-700');
-        // }
-    });
+        const pathname = window.location.pathname;
+        SCREEN_PATH.forEach(paths => {
+            const order = paths.indexOf(pathname);
+            if(order>-1){
+                setItemOrder(paths.indexOf(pathname));
+                console.log(pathname, paths.indexOf(pathname));
+            } 
+        })
+    }, [window.location.pathname]);
 
     return (
         <div>
@@ -56,13 +61,12 @@ const Sidebar = () => {
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 relative">
                     <ul className="space-y-2 text-lg"> 
                         {
-                            sidebarMenu[rootRole].map(
-                                e=><MenuItem 
-                                className={sidebarMenu[rootRole].indexOf(e) == menuItemOrder ? "selected" : ""} 
+                            sidebarMenu[rootRole].map((e)=>
+                                <MenuItem 
+                                className={sidebarMenu[rootRole].indexOf(e) == itemOrder ? "selected" : ""} 
                                 title={e} func={()=>{
-                                    const menuItemOrder = sidebarMenu[rootRole].indexOf(e);
-                                    localStorage.setItem('menuItemOrder', menuItemOrder);
-                                    navigate(SCREEN_PATH[rootRole][menuItemOrder]);
+                                    const itemOrder = sidebarMenu[rootRole].indexOf(e);
+                                    navigate(SCREEN_PATH[rootRole][itemOrder]);
                                 }
                             }/>)
                         }

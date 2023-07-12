@@ -24,7 +24,7 @@ const Dropdown = (props) => {
         <select 
         value={selectedOption} 
         onChange={handleOptionChange} 
-        className="py-2 px-4 rounded-md focus:outline-none w-full mt-4 border-2 border-gray-600">
+        className="py-2 px-4 rounded-md focus:outline-none w-full border-2 border-gray-600">
             {options.map((option, index) => (
             <option key={index} value={option}>
                 {option}
