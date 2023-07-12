@@ -1,9 +1,6 @@
-.root-div {
-    padding-top: 10vh;
-}
-
 .main-frame {
-    height: 80vh;
+    padding-top: 10vh;
+    /* height: 80vh; */
     background-color: white;
     border-radius: 10px;
 }

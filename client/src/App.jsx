@@ -45,7 +45,7 @@ function App() {
             <Sidebar/>
             <Routes>
               <Route exact path={PATH.HOME} element={<Home role={role}/>}/>
-              <Route path={PATH.LOGIN} element={<Login/>}/>
+              {/* <Route path={PATH.LOGIN} element={<Login/>}/> */}
               <Route path={PATH.ACCOUNT_MANAGE} element={<SubscreenComponents.ADMIN.AccManage/>}/>
               <Route path={PATH.DB_MODYFY} element={<SubscreenComponents.EXPERT.DbModify/>}/>
               <Route path={PATH.DISTRIBUTION_ANALYSE} element={<SubscreenComponents.EXPERT.DistributionAnalyse/>}/>

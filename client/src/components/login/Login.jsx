@@ -9,7 +9,7 @@ import { handleLoginAPI } from '../../service/userService';
 import { loginCondition, PATH, role, SCREEN_PATH } from '../../constant/constant';
 
 
-export default function Login() {
+export default function Login(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,6 +42,7 @@ export default function Login() {
         localStorage.setItem('role', data.roleId);
         localStorage.setItem('email', email);
         localStorage.setItem('menuItemOrder', 0);
+        props.func();
         navigate(PATH.HOME);
       }
     }else {
@@ -56,47 +57,49 @@ export default function Login() {
   }
 
   return (
-    <FadeIn>
-      <div className="container root-div">
-      <div className="row justify-content-center">
-        <div className="col-6 main-frame shadow text-center pt-5">
+    <div className="main-frame shadow text-center pt-5 h-2/3 level-count-container absolute z-10">
+      <FadeIn>
 
-          <span className="lead text-9xl ">ĐĂNG NHẬP</span>
+        <span className="lead text-9xl mt-12">ĐĂNG NHẬP</span>
 
-          <Form className="container mt-5">
-            <Form.Group className="row" controlId="email">
-              <div className="col-3"><Form.Label >Email</Form.Label></div>
-              <div className="col-9">
-                <Form.Control 
-                  type="email" 
-                  placeholder="Enter email" 
-                  value={email} 
-                  onChange={handleEmailChange} />
-              </div>
-            </Form.Group>
+        <Form className=" mt-12">
+          <Form.Group className="grid grid-cols-4 mr-8" controlId="email">
+            <div className="col-span-1"><Form.Label >Email</Form.Label></div>
+            <div className="col-span-3">
+              <Form.Control 
+                type="email" 
+                placeholder="Enter email" 
+                value={email} 
+                onChange={handleEmailChange} />
+            </div>
+          </Form.Group>
 
-            <Form.Group className="row mt-4" controlId="password">
-              <div className="col-3"><Form.Label>Mật Khẩu</Form.Label></div>
-              <div className="col-9">
-                <Form.Control 
-                  type="password" 
-                  placeholder="Password" 
-                  value={password} 
-                  onChange={handlePasswordChange} 
-                  onKeyPress={handleEnterKeyPress} />
-              </div>
-            </Form.Group>
-            <div className='text-center mt-3 text-danger'>{errorMsg}</div>
-            <div className="row mt-3 login btn btn-primary" onClick={handleLogin}>
+          <Form.Group className="grid grid-cols-4 mr-8 mt-4" controlId="password">
+            <div className="col-span-1"><Form.Label>Mật Khẩu</Form.Label></div>
+            <div className="col-span-3">
+              <Form.Control 
+                type="password" 
+                placeholder="Password" 
+                value={password} 
+                onChange={handlePasswordChange} 
+                onKeyPress={handleEnterKeyPress} />
+            </div>
+          </Form.Group>
+          <div className='text-center mt-3 text-danger'>{errorMsg}</div>
+          <div className="grid grid-cols-2">
+            <div className="col-span-1 mt-3 ml-14 login btn btn-primary" onClick={handleLogin}>
               Đăng Nhập
             </div>
-          </Form>
-          {/* <div className='btn btn-primary' onClick={handleLogin}>abcsasd</div> */}
+            <div className="col-span-1 mt-3 ml-4 login btn btn-danger" onClick={props.func}>
+              Thoát
+            </div>
+          </div>
+        </Form>
+        {/* <div className='btn btn-primary' onClick={handleLogin}>abcsasd</div> */}
 
-          <div className="mt-4 text-right text-xs"><a href="http://">Quên mật khẩu?</a></div>
-        </div>
-      </div>
+        <div className="mt-4 text-right text-xs mr-8"><a href="http://">Quên mật khẩu?</a></div>
+      </FadeIn>
     </div>
-    </FadeIn>
+
   )
 }

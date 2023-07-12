@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { logoutAction } from '../../store/reducer/changeRoleSlice';
 import {sidebarMenu, role, PATH, SCREEN_PATH} from './../../constant/constant';
+import Login from '../login/Login';
 
 const MenuItem = (props) =>{
     let className = "no-underline flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer ";
@@ -27,6 +28,7 @@ const Sidebar = () => {
     const rootRole = localStorage.getItem('role');
     const menuItemOrder = localStorage.getItem('menuItemOrder');
     const [itemOrder, setItemOrder] = useState(0);
+    const [showLoginDialog, setShowLoginDialog] = useState(false);
 
     const logoutHandle = ()=>{
         dispatch(logoutAction());
@@ -37,7 +39,12 @@ const Sidebar = () => {
     }
     
     const loginHandle = ()=>{
-        navigate(PATH.LOGIN);
+        // navigate(PATH.LOGIN);
+        setShowLoginDialog(true);
+    }
+
+    const closeDialog = ()=>{
+        setShowLoginDialog(false);
     }
 
     useEffect(()=>{
@@ -53,6 +60,15 @@ const Sidebar = () => {
 
     return (
         <div>
+            {showLoginDialog && 
+                <div>
+                    <div className="absolute inset-0 h-full w-full bg-black opacity-80 z-50">
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center z-50">
+                        <Login func={closeDialog}/>
+                    </div>
+                </div>
+            }
             <aside
                 id="default-sidebar"
                 className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
