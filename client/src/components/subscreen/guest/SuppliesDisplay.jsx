@@ -5,7 +5,6 @@ import { PATH } from '../../../constant/constant';
 import { getSupplyQuantityAPI, getPandemicDataAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
 import province from './../../../constant/province'
-import IconWithTooltip from '../../tooltip/IconWithTooltip';
 
 function SuppliesDisplay() {
   const navigate = useNavigate();
@@ -13,14 +12,15 @@ function SuppliesDisplay() {
   const [pandemicData, setPandemicData] = useState([]);
   const [provinceSelect, setProvinceSelect] = useState(1);
   const [pandemicSelect, setPandemicSelect] = useState(1);
+  const [displayOption, setDisplayOption] = useState([]);
 
   const getSupplyQuantityData = async (province_id, pandemic_id) => {
     setSupplyQuantity(await getSupplyQuantityAPI(province_id, pandemic_id));
   }
 
   const changePandemic = (option)=>{
-    console.log('pandemic' + pandemicData);
-    setPandemicSelect(2)
+    const pandemic_id = pandemicData.find(e=>e.pandemic_name==option).pandemic_id;
+    setPandemicSelect(pandemic_id)
   }
 
   const changeProvince = (option)=>{
@@ -28,22 +28,69 @@ function SuppliesDisplay() {
     setProvinceSelect(province_id);
   }
 
-  const drawTableData = (data)=>{
-    console.log(data);
+  const drawTableData = ()=>{
+    // console.log(supplyQuantity);
+    if(supplyQuantity.length == 0){
+      return (
+        <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+          <td className="px-6 py-4 text-center" colSpan={3}><strong>Chưa có dữ liệu</strong></td>
+        </tr>
+      );
+    }
     return (
-          <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-            <th className="px-6 py-4 ">
-              {data.supply_name}
-            </th>
-            <td className="px-6 py-4">
-              {data.supply_type}
-            </td>
-            <td className="px-6 py-4">
-              {data.quantity}
-            </td>
-          </tr>
+      <tbody>
+      {supplyQuantity.map((d) => {
+        const display = displayOption.find(e=>e.id==d.supply_type_id); 
+        if(display && display.isCheck){
+          if(d.supply_quantity.length == 0 && display){
+            return (
+              <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <th className="px-6 py-4"></th>
+                <td className="px-6 py-4">{d.supply_type_name}</td>
+                <td className="px-6 py-4">Chưa có dữ liệu</td>
+              </tr>
+            );
+          }
+          return d.supply_quantity.map((e) => {
+            return (
+              <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <th className="px-6 py-4">{e.supply_name}</th>
+                <td className="px-6 py-4">{d.supply_type_name}</td>
+                <td className="px-6 py-4">{e.quantity}</td>
+              </tr>
+            );
+          });
+        }
+      })}
+    </tbody>
     )
   }
+
+  const drawDisplayOption = () => {
+    const handleChangeCheckbox = (event, index) => {
+      setDisplayOption((prevOptions) => {
+        const updatedOptions = [...prevOptions];
+        updatedOptions[index].isCheck = event.target.checked;
+        return updatedOptions;
+      });
+    };
+  
+    return (
+      <div className="w-full mt-4">
+        {displayOption.map((option, index) => (
+          <div className="text-lg flex items-center mb-3" key={index}>
+            <input
+              className="h-6 w-6"
+              type="checkbox"
+              checked={option.isCheck}
+              onChange={(event) => handleChangeCheckbox(event, index)}
+            />
+            <span className="ml-1">{option.name}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   useEffect(()=>{
     if(localStorage.getItem('role') != 2){
@@ -63,8 +110,19 @@ function SuppliesDisplay() {
     };
   
     fetchData();
-    getSupplyQuantityData(provinceSelect, 2 );
+    getSupplyQuantityData(provinceSelect, pandemicSelect );
   }, [provinceSelect, pandemicSelect]);
+
+  useEffect(()=>{
+    setDisplayOption(supplyQuantity.map(e=>{
+      return {
+        id: e.supply_type_id,
+        name: e.supply_type_name,
+        isCheck: true,
+      }
+    }));
+
+  }, [supplyQuantity]);
 
   return (
     <MainFrame>
@@ -72,7 +130,8 @@ function SuppliesDisplay() {
       <div className="grid grid-cols-4 gap-4 mt-5">
         <div className="col-span-1 ">
           <Dropdown data={province} func={changeProvince} />
-          <Dropdown data={pandemicData.map(e=>e.pandemic_name)} func={changePandemic} />
+          <div className="mt-4"><Dropdown data={pandemicData.map(e=>e.pandemic_name)} func={changePandemic} /></div>
+          {drawDisplayOption()}
         </div>
         <div className="col-span-3">
           
@@ -91,9 +150,7 @@ function SuppliesDisplay() {
                 </th>
               </tr>
             </thead>
-            <tbody>
-            {supplyQuantity.map(e=>drawTableData(e))}
-            </tbody>
+            {drawTableData()}
           </table>
         </div>
 

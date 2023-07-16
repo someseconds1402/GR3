@@ -131,17 +131,12 @@ function EpidemicDisplay() {
       <h1>Tra cứu tình hình dịch bệnh</h1>
       <div className="grid grid-cols-4 gap-4 mt-5">
         <div className="col-span-1 ">
-          <Dropdown 
-            data={province} func={changeProvince} 
-            // selectedOption = {parseInt(localStorage.getItem('epidemicDisplay_selectedProvinceId'))}
-          />
-          <Dropdown data={pandemicData.map(e=>e.pandemic_name)} func={changePandemic} 
-            // selectedOption={parseInt(localStorage.getItem('pandemicOption'))}
-          />
+          <Dropdown data={province} func={changeProvince} />
+          <div className="mt-4"><Dropdown data={pandemicData.map(e=>e.pandemic_name)} func={changePandemic} /></div>
           <MyDatePicker func={changeDate}/>
 
           <div className="w-full mt-4">
-            <label className='text-lg'>
+            <label className='text-lg flex items-center'>
               <input className='h-6 w-6' type="checkbox" checked={isShowLevel} onChange={changeIsShowLevel} />
               <span className='ml-1'>Xem cấp độ dịch</span>
             </label>

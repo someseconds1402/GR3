@@ -24,7 +24,7 @@ const deleteUser = async(email) => {
     // Nếu trong CSDL Không có email đó => trả về mã lỗi 1, trả về 0 nếu có tồn tại email đó và tiến hành xóa
     if (User.some(e => e.email == email)) {
         const newUser = await User.filter(e => e.email != email);
-        console.log(newUser);
+        // console.log(newUser);
         writer.writeUser(newUser);
         return 0;
     } else {

@@ -32,20 +32,34 @@ const queryPandemicData = async() => {
 }
 
 const querySupplyQuantity = async(province_id, pandemic_id) => {
-    const supply_quantity = await reader.readSupplyQuantity();
+    const pandemic = await reader.readPandemic();
+    const supply_type = await reader.readSupplyType();
     const medical_supplies = await reader.readMedicalSupply();
-    return supply_quantity
-        .filter(e => e.province_id == province_id)
-        .map(e => {
-            const supply = medical_supplies.find(spl => spl.supply_id == e.supply_id);
-            return {
-                province_id: e.province_id,
-                supply_id: e.supply_id,
-                supply_type: supply.supply_type,
-                supply_name: supply.supply_name,
-                quantity: e.quantity
+    const supply_quantity = await reader.readSupplyQuantity();
+
+    const listSupplyTypeId = pandemic.find(e => e.pandemic_id == pandemic_id).supply_type;
+
+    return listSupplyTypeId.map(type_id => {
+        const typeInfo = supply_type.find(type => type.id == type_id);
+        const listSupply = medical_supplies.filter(spl => spl.supply_type_id == type_id);
+        let listQuantity = [];
+        listSupply.forEach(e => {
+            const quantityInfo = supply_quantity.find(m => m.province_id == province_id && e.supply_id == m.supply_id);
+            if (quantityInfo) {
+                listQuantity.push({
+                    supply_id: e.supply_id,
+                    supply_name: e.supply_name,
+                    quantity: quantityInfo.quantity
+                })
             }
         })
+
+        return {
+            supply_type_id: type_id,
+            supply_type_name: typeInfo.name,
+            supply_quantity: listQuantity
+        };
+    })
 }
 
 const queryAllEmail = async(email) => {
