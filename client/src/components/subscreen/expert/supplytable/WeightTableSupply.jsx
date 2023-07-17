@@ -1,147 +1,78 @@
-import React, {useEffect, useState} from 'react';
-import Dropdown from '../../../dropdown/Dropdown';
+import React, {useState} from 'react';
+import FadeIn from '../../../effect/FadeIn';
 
 const WeightTableSupply = (props) => {
-  const [weight, setWeight] = useState([0,0,0,0,0,0,0,0,0,0,0]);
+    const [weight, setWeight] = useState(props.data);
+    const labelProps = [
+      'Số lượng ' + props.supplyTypeSelect,
+      'Số lượng ' + props.supplyTypeSelect + ' /người',
+      'Dân số',
+      'Mật độ dân cư',
+      'Cấp độ dịch',
+    ]
   
-  const handleChange = (event, index) => {
-    const inputValue = event.target.value;
-    const updatedWeight = [...weight]; // Tạo một bản sao của mảng weight
-    // if (!isNaN(inputValue)) {
-      updatedWeight[index] = inputValue;
-    // } else {
-      // updatedWeight[index] = 0;
-    // }
-    // console.log(inputValue);
-    setWeight(updatedWeight);
-  };
+    const handleChange = (event, index) => {
+        const inputValue = event.target.value;
+        const updatedWeight = [...weight]; // Tạo một bản sao của mảng weight
+        // if (!isNaN(inputValue)) {
+        updatedWeight[index] = inputValue;
+        // } else {
+        // updatedWeight[index] = 0;
+        // }
+        // console.log(inputValue);
+        setWeight(updatedWeight);
+    };
 
-  const test = () => {
-    console.log(weight);
-  }
+    const submit = () => {
+        props.func(weight.map(e=>parseFloat(e)));
+    }
 
-  return (
-    <table className="border w-full shadow-xl rounded-lg border-b dark:border-gray-700 bg-white" >
-      <thead className=''>
-        <tr className="h-10 border-b border-black bg-blue-300">
-          <th className='pl-3'>Thuộc tính</th>
-          <th>Trọng số</th>
-        </tr>
-      </thead>
-      <tbody className="max-h-100 overflow-y-auto">
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Số lượng ca nhiễm mới</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[0]}
-                onChange={(e)=>{handleChange(e, 0)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Số lượng ca nhiễm trung bình 7 ngày</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[1]}
-                onChange={(e)=>{handleChange(e, 1)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Tổng số ca nhiễm</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[2]}
-                onChange={(e)=>{handleChange(e, 2)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Số lượng ca hồi phục mới</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[3]}
-                onChange={(e)=>{handleChange(e, 3)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Số lượng ca hồi phục trung bình 7 ngày</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[4]}
-                onChange={(e)=>{handleChange(e, 4)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Tổng số ca hồi phục</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[5]}
-                onChange={(e)=>{handleChange(e, 5)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Số lượng ca tử vong mới</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[6]}
-                onChange={(e)=>{handleChange(e, 6)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Số lượng ca tử vong trung bình 7 ngày</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[7]}
-                onChange={(e)=>{handleChange(e, 7)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Tổng số ca tử vong</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[8]}
-                onChange={(e)=>{handleChange(e, 8)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Dân số</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[9]}
-                onChange={(e)=>{handleChange(e, 9)}}
-              /></td>
-        </tr>
-        <tr className="border-t border-gray">
-          <td className='pl-3 border-r border-gray'>Mật độ dân cư</td>
-          <td className='pl-5'><input
-                type="Weight"
-                placeholder=""
-                className="w-fullshadow-md sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-gray-500 w-96 shadow-xl"
-                value={weight[10]}
-                onChange={(e)=>{handleChange(e, 10)}}
-              /></td>
-        </tr>
-      </tbody>
-    </table>
-  );
+    const cancel = () => {
+        props.func();
+    }
+
+    const drawTable = (label, index) => {
+        return (
+            <div className="col-span-1 grid grid-cols-3 items-center mx-3 px-2 mb-1 h-24
+            border shadow-xl rounded-lg dark:border-gray-700 bg-white">
+                <div className='col-span-2'><strong>{label}</strong></div>
+                <div className='col-span-1'><input
+                        type="Weight"
+                        placeholder=""
+                        className="w-full sm:rounded-lg border border-gray-500 rounded-md py-2 px-4 h-16 
+                            focus:outline-none focus:ring-2 focus:ring-gray-500 shadow-xl bg-gray-50"
+                        value={weight[index]}
+                        onChange={(e)=>{handleChange(e, index)}}
+                    /></div>
+            </div>
+        )
+    }
+
+    return (
+        <>
+            <div className="absolute inset-0 h-full w-full bg-black opacity-20 z-50">
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center z-50">
+                    <div className="main-frame shadow text-center pt-5 h-4/5 w-1/2 level-count-container absolute z-10">
+                    <FadeIn>
+                        <div className="grid grid-cols-2">
+                            {labelProps.map((e, index)=>drawTable(e, index))}
+                        </div>
+
+                        <div className="flex justify-center mt-5">
+                            <div className=" w-72 btn btn-primary mr-3" onClick={submit}>
+                                Xác Nhận
+                            </div>
+                            <div className=" w-72 btn btn-danger ml-3" onClick={cancel}>
+                                Thoát
+                            </div>
+                        </div>
+                    </FadeIn>
+                    </div>
+            </div>
+        </>
+        
+    );
 };
 
 export default WeightTableSupply;

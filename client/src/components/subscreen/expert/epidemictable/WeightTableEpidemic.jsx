@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import Dropdown from '../../../dropdown/Dropdown';
+import React, {useState} from 'react';
 import FadeIn from '../../../effect/FadeIn';
 
 const WeightTableEpidemic = (props) => {

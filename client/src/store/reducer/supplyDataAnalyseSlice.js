@@ -9,9 +9,10 @@ const supplyDataAnalyseSlice = createSlice({
             population: 0,
             population_density: 0,
             level: 0,
-            kit_test: 0,
-            vaccine: 0,
-            ability: 0
+            supply_name: '',
+            supply_quantity: 0,
+            supply_quatity_per_person: 0,
+            ability: 0,
         }],
     },
     reducers: {

@@ -31,7 +31,7 @@ function EpidemicAnalyse_New() {
   const [showWeightTable, setShowWeightTable] = useState(false);
   const [weight, setWeight] = useState([1,1,1,1,1,1,1,1,1,1,1]);
   const [isShowWeight, setIsShowWeight] = useState(false);
-  let weightList = {
+  const [weightList, setWeightList] = useState({
     infection_new: 1,
     infection_average: 1,
     infection_total: 1,
@@ -43,7 +43,7 @@ function EpidemicAnalyse_New() {
     death_total: 1,
     population: 1,
     population_density: 1,
-  }
+  });
 
   const weightLabel = [
     'infection_new',
@@ -73,13 +73,14 @@ function EpidemicAnalyse_New() {
   }
 
   const closeDialog = (data)=>{
-    // console.log(data);
     if(data){
       setWeight(data);
+      let weightListTmp = weightList;
       weightLabel.forEach((e, index)=>{
-        weightList[e] = data[index];
+        weightListTmp[e] = data[index];
       });
-      console.log(weightList);
+      setWeightList(weightListTmp);
+      // console.log(weightList);
     }
     setShowWeightTable(false);
   }
@@ -103,7 +104,7 @@ function EpidemicAnalyse_New() {
         "death_average": e.death_average,
       }
     });
-    // console.log(U);
+    // console.log(U, weightList);
     const C = [1, 2, 3]; // Danh sách các nhãn cần phân cụm
     
     const tagField = 'level'; // Trường dữ liệu chứa nhãn
