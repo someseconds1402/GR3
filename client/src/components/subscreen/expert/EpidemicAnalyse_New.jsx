@@ -7,7 +7,7 @@ import Dropdown from '../../dropdown/Dropdown';
 import province from '../../../constant/province'
 import MyDatePicker from '../../datepicker/DatePicker';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeEpidemicDataAnalyse, sortWithLevel, } from '../../../store/reducer/epidemicDataAnalyseSlice';
+import { changeEpidemicDataAnalyse, sortWithLevel, resetAllLevel } from '../../../store/reducer/epidemicDataAnalyseSlice';
 
 // Excel
 import * as XLSX from 'xlsx';
@@ -15,6 +15,7 @@ import { saveAs } from 'file-saver';
 import WeightTable from './epidemictable/WeightTable';
 import EpidemicTable_New from './epidemictable/EpidemicTable_New';
 import S_SMC_FCM from '../../../logic/sSMC_FCM';
+import WeightTableEpidemic from './epidemictable/WeightTableEpidemic';
 
 function EpidemicAnalyse_New() {
   const navigate = useNavigate();
@@ -27,6 +28,36 @@ function EpidemicAnalyse_New() {
   const [dateSelect, setDateSelect] = useState("2022-07-15");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [showWeightTable, setShowWeightTable] = useState(false);
+  const [weight, setWeight] = useState([1,1,1,1,1,1,1,1,1,1,1]);
+  const [isShowWeight, setIsShowWeight] = useState(false);
+  let weightList = {
+    infection_new: 1,
+    infection_average: 1,
+    infection_total: 1,
+    recovered_new: 1,
+    recovered_average: 1,
+    recovered_total: 1,
+    death_new: 1,
+    death_average: 1,
+    death_total: 1,
+    population: 1,
+    population_density: 1,
+  }
+
+  const weightLabel = [
+    'infection_new',
+    'infection_average',
+    'infection_total',
+    'recovered_new',
+    'recovered_average',
+    'recovered_total',
+    'death_new',
+    'death_average',
+    'death_total',
+    'population',
+    'population_density',
+  ]
 
   const changePandemic = (option)=>{
     // console.log('pandemic', pandemicData);
@@ -35,6 +66,22 @@ function EpidemicAnalyse_New() {
 
   const changeDate = (date) => {
     setDateSelect(date);
+  }
+
+  const changeIsShowWeight = (event) => {
+    setIsShowWeight(event.target.checked);
+  }
+
+  const closeDialog = (data)=>{
+    // console.log(data);
+    if(data){
+      setWeight(data);
+      weightLabel.forEach((e, index)=>{
+        weightList[e] = data[index];
+      });
+      console.log(weightList);
+    }
+    setShowWeightTable(false);
   }
 
   const Clust = async () => {
@@ -57,14 +104,14 @@ function EpidemicAnalyse_New() {
       }
     });
     // console.log(U);
-    const C = [1, 2]; // Danh sách các nhãn cần phân cụm
+    const C = [1, 2, 3]; // Danh sách các nhãn cần phân cụm
     
     const tagField = 'level'; // Trường dữ liệu chứa nhãn
     
     const keys = ['province_name', 'province_id']; // Các trường dữ liệu không tham gia vào việc phân cụm
     
     // Tạo một đối tượng thuật toán phân cụm
-    const algorithm = new S_SMC_FCM(U, C, tagField, keys);
+    const algorithm = new S_SMC_FCM(U, C, tagField, keys, weightList);
     
     // Chạy thuật toán
     algorithm.run()
@@ -192,22 +239,24 @@ function EpidemicAnalyse_New() {
         <div className="col-span-1">
           <Dropdown data={pandemicData.map(e=>e.pandemic_name)} func={changePandemic}/>
           <MyDatePicker func={changeDate}/>
+          <div className="w-full mt-4">
+            <label className='text-lg flex items-center'>
+              <input className='h-6 w-6' type="checkbox" checked={isShowWeight} onChange={changeIsShowWeight} />
+              <span className='ml-1'>Xem trọng số</span>
+            </label>
+          </div>
         </div>
         <div className="col-span-1"></div>
         <div className="col-span-1">
+          <div className="btn btn-primary w-full" onClick={()=>{setShowWeightTable(true)}}>Thiết lập trọng số</div>
+          {showWeightTable && <WeightTableEpidemic data={weight} func={closeDialog}/>}
           <div className="btn btn-primary w-full mt-4" onClick={Clust}>Phân cụm</div>
           <div className="btn btn-success w-full mt-4" onClick={downloadFile}>Download dữ liệu</div>
         </div>
       </div>
 
-      {/* <div className="grid grid-cols-3 gap-4 mt-5">
-        
-        <div className="col-span-2 mt-4">
-          <WeightTable/>
-        </div>
-      </div> */}
       <div className="mt-5">
-        <EpidemicTable_New />
+        <EpidemicTable_New weightData={weight} isShowWeight={isShowWeight} />
 
       </div>
     </MainFrame>

@@ -122,28 +122,44 @@ const queryEpidemicDataOfAllProvinces = async(pandemic_id, date) => {
 
 const querySupplyQuantityOfAllProvinces = async(pandemic_id) => {
     const provinces = await reader.readProvince();
-    const supply_quantity = await reader.readSupplyQuantity();
+    const pandemic = await reader.readPandemic();
+    const supply_type = await reader.readSupplyType();
     const medical_supplies = await reader.readMedicalSupply();
-    return provinces.map(province => {
-        const dataQuantity = supply_quantity.filter(e => e.province_id == province.province_id)
-            .map(e => {
-                const supply = medical_supplies.find(spl => spl.supply_id == e.supply_id);
+    const supply_quantity = await reader.readSupplyQuantity();
+
+    const listSupplyTypeId = pandemic.find(e => e.pandemic_id == pandemic_id).supply_type;
+    console.log(listSupplyTypeId);
+    const listSupplyType = listSupplyTypeId.map(e => { return supply_type.find(m => m.id == e) });
+
+    return {
+        listSupplyType: listSupplyType,
+        data: provinces.map(province => {
+            const dataQuantity = listSupplyTypeId.map(type_id => {
+                const typeInfo = supply_type.find(type => type.id == type_id);
+                const listSupply = medical_supplies.filter(spl => spl.supply_type_id == type_id);
+                let listQuantity = 0;
+                listSupply.forEach(e => {
+                    const quantityInfo = supply_quantity.find(m => m.province_id == province.province_id && e.supply_id == m.supply_id);
+                    if (quantityInfo) {
+                        listQuantity += quantityInfo.quantity;
+                    }
+                })
+
                 return {
-                    province_id: e.province_id,
-                    supply_id: e.supply_id,
-                    supply_type: supply.supply_type,
-                    supply_name: supply.supply_name,
-                    quantity: e.quantity
-                }
+                    supply_type_id: type_id,
+                    supply_type_name: typeInfo.name,
+                    supply_quantity: listQuantity
+                };
             })
-        return {
-            province_id: province.province_id,
-            population: province.population,
-            population_density: province.population_density,
-            level: dataQuantity[0].quantity % 3 + 1,
-            data: dataQuantity
-        }
-    })
+            return {
+                province_id: province.province_id,
+                population: province.population,
+                population_density: province.population_density,
+                level: (province.population * 17 + 117) % 3 + 1,
+                data: dataQuantity
+            }
+        })
+    }
 }
 
 module.exports = {

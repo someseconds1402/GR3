@@ -95,7 +95,6 @@ export default function Login(props) {
             </div>
           </div>
         </Form>
-        {/* <div className='btn btn-primary' onClick={handleLogin}>abcsasd</div> */}
 
         <div className="mt-4 text-right text-xs mr-8"><a href="http://">Quên mật khẩu?</a></div>
       </FadeIn>

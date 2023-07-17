@@ -11,15 +11,16 @@ class S_SMC_FCM {
   U = [];
   tag = null;
   keys = null;
+  weights = {};
 
   isDone = false;
 
-  constructor(X, C, tagField, keys) {
+  constructor(X, C, tagField, keys, weights) {
     this.X = X;
     this.C = C;
     this.tag = tagField;
     this.keys = keys;
-
+    this.weights = weights;
   }
 
   run() {
@@ -35,7 +36,6 @@ class S_SMC_FCM {
       let m = []
 
       this.C.forEach((c, ic) => {
-        // this.colors[c] = colors[ic];
         m.push(x[this.tag] == c ? _M : M)
       })
       this.m.push(m)
@@ -52,13 +52,13 @@ class S_SMC_FCM {
       ele && ele.forEach(e => {
         Object.keys(e).forEach(field => {
           if (![...this.keys, this.tag].includes(field) && typeof e[field] == 'number') {
-            v[field] = 0
-            v[field] += e[field]
+            v[field] = 0;
+            v[field] += e[field] * this.weights[field]; // Nhân giá trị với trọng số tương ứng
           } else {
             v[field] = null;
           }
-        })
-      })
+        });
+      });
 
       ele && Object.keys(v).forEach(field => {
         if (![...this.keys, this.tag].includes(field) && typeof v[field] == 'number') {
@@ -173,9 +173,6 @@ class S_SMC_FCM {
 
     let isLoop = ds.some(d => d > epsilon)
 
-    // draw V
-    // this.#drawV();
-
     // let loop = setTimeout(() => {
       if (isLoop) {
         this.#step2();
@@ -208,7 +205,7 @@ class S_SMC_FCM {
     let sumOfSquares = 0;
     Object.keys(v).forEach(field => {
       if (![...this.keys, this.tag].includes(field) && typeof v[field] == 'number') {
-        sumOfSquares += Math.pow(x[field] - v[field], 2)
+        sumOfSquares += Math.pow((x[field] - v[field]) * this.weights[field], 2); // Nhân giá trị với trọng số tương ứng
       }
     })
 
@@ -297,7 +294,6 @@ class S_SMC_FCM {
     });
   }
   
-
 }
 
 export default S_SMC_FCM;

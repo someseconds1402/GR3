@@ -33,9 +33,14 @@ const epidemicDataAnalyseSlice = createSlice({
         },
         sortWithLevel: (state) => {
             state.data.sort((a, b) => a.level - b.level);
+        },
+        resetAllLevel: (state) => {
+            state.data.forEach(e => {
+                e.level = 0;
+            })
         }
     },
 });
 
-export const { changeEpidemicDataAnalyse, changeLevel, sortWithLevel } = epidemicDataAnalyseSlice.actions;
+export const { changeEpidemicDataAnalyse, changeLevel, sortWithLevel, resetAllLevel } = epidemicDataAnalyseSlice.actions;
 export default epidemicDataAnalyseSlice.reducer;

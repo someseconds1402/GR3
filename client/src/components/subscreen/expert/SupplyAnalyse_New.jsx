@@ -13,6 +13,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import SupplyTable_New from './supplytable/SupplyTable_New';
 import S_SMC_FCM from '../../../logic/sSMC_FCM';
+import WeightTableSupply from './supplytable/WeightTableSupply';
 
 function SupplyAnalyse_New() {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ function SupplyAnalyse_New() {
       }
     });
     // console.log(U);
-    const C = [1, 2]; // Danh sách các nhãn cần phân cụm
+    const C = [1, 2, 3]; // Danh sách các nhãn cần phân cụm
     
     const tagField = 'level'; // Trường dữ liệu chứa nhãn
     
@@ -164,6 +165,7 @@ function SupplyAnalyse_New() {
   return (
     <MainFrame>
       <h1>Phân tích tình hình dịch bệnh</h1>
+      <WeightTableSupply/>
       <div className="grid grid-cols-3 gap-4 mt-5">
         <div className="col-span-1">
           <Dropdown data={pandemicData.map(e=>e.pandemic_name)} func={changePandemic}/>
