@@ -4,7 +4,7 @@ import FadeIn from '../../../effect/FadeIn';
 const WeightTableSupply = (props) => {
     const [weight, setWeight] = useState(props.data);
     const labelProps = [
-      'Số lượng ' + props.supplyTypeSelect,
+    //   'Số lượng ' + props.supplyTypeSelect,
       'Số lượng ' + props.supplyTypeSelect + ' /người',
       'Dân số',
       'Mật độ dân cư',

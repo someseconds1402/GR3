@@ -5,22 +5,22 @@ const goToAccManage= (func) => {
     func(SCREEN_PATH.ADMIN.ACCOUNT_MANAGE);
 } 
 const goToEpidemicAnalyse= (func) => {
-    console.log(SCREEN_PATH.EXPERT.EPIDEMIC_ANALYSE);
+    // console.log(SCREEN_PATH.EXPERT.EPIDEMIC_ANALYSE);
     // localStorage.setItem('menuItemOrder', 0);
     func(SCREEN_PATH.EXPERT.EPIDEMIC_ANALYSE);
 } 
 const goToSupplyAnalyse= (func) => {
-    console.log(SCREEN_PATH.EXPERT.SUPPLIES_ANALYSE);
+    // console.log(SCREEN_PATH.EXPERT.SUPPLIES_ANALYSE);
     // localStorage.setItem('menuItemOrder', 1);
     func(SCREEN_PATH.EXPERT.SUPPLIES_ANALYSE);
 } 
 const goToDistributionAnalyse= (func) => {
-    console.log(SCREEN_PATH.EXPERT.DISTRIBUTION_ANALYSE);
+    // console.log(SCREEN_PATH.EXPERT.DISTRIBUTION_ANALYSE);
     // localStorage.setItem('menuItemOrder', 2);
     func(SCREEN_PATH.EXPERT.DISTRIBUTION_ANALYSE);
 } 
 const goToDbModify= (func) => {
-    console.log(SCREEN_PATH.EXPERT.DB_MODYFY);
+    // console.log(SCREEN_PATH.EXPERT.DB_MODYFY);
     // localStorage.setItem('menuItemOrder', 3);
     func(SCREEN_PATH.EXPERT.DB_MODYFY);
 } 

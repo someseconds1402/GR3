@@ -34,6 +34,13 @@ app.post(PATH.API.GET_EPIDEMIC_DATA_OF_ALL_PROVINCES, controller.getData.getEpid
 
 app.post(PATH.API.GET_SUPPLY_QUANTITY_OF_ALL_PROVINCES, controller.getData.getSupplyQuantityOfAllProvinces);
 
+app.post(PATH.API.CLUSTER, controller.cluster.cluster);
+
+app.post(PATH.API.INSERT_SUPPLY_ABILITY, controller.setData.insertSupplyAbility);
+
+app.post(PATH.API.GET_DISTRIBUTION_DATA, controller.getData.getDistributionData);
+
+
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
 })

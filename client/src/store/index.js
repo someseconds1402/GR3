@@ -5,6 +5,7 @@ import changeEpidemicDataSlice from './reducer/changeEpidemicDataSlice';
 import getPandemicDataSlice from './reducer/getPandemicDataSlice';
 import epidemicDataAnalyseSlice from './reducer/epidemicDataAnalyseSlice';
 import supplyDataAnalyseSlice from './reducer/supplyDataAnalyseSlice';
+import showLoadingScreenSlice from './reducer/showLoadingScreenSlice';
 
 const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
         getPandemicData: getPandemicDataSlice,
         epidemicDataAnalyse: epidemicDataAnalyseSlice,
         supplyDataAnalyse: supplyDataAnalyseSlice,
+        showLoadingScreen: showLoadingScreenSlice,
     },
 });
 

@@ -10,6 +10,7 @@ const filePathDeathSituation = path.join(__dirname, '/../../db/death_situation.j
 const filePathMedicalSupply = path.join(__dirname, '/../../db/medical_supplies.js');
 const filePathSupplyType = path.join(__dirname, '/../../db/supply_type.js');
 const filePathSupplyQuantity = path.join(__dirname, '/../../db/supply_quantity.js');
+const filePathSupplyAbility = path.join(__dirname, '/../../db/supply_ability.js');
 
 const readUser = async() => {
     try {
@@ -110,6 +111,17 @@ const readSupplyQuantity = async() => {
     }
 }
 
+const readSupplyAbility = async() => {
+    try {
+        const data = fs.readFileSync(filePathSupplyAbility, 'utf8');
+        const jsonData = JSON.parse(data);
+        return jsonData;
+    } catch (err) {
+        console.error('Error reading user data:', err);
+        return null;
+    }
+}
+
 const reader = {
     readUser,
     readProvince,
@@ -120,6 +132,7 @@ const reader = {
     readMedicalSupply,
     readSupplyType,
     readSupplyQuantity,
+    readSupplyAbility,
 }
 
 module.exports = reader;

@@ -18,9 +18,18 @@ const deleteUser = async(req, res) => {
     })
 }
 
+const insertSupplyAbility = async(req, res) => {
+    const { data } = req.body;
+    const errCode = await modifyFunc.insertSupplyAbility(data);
+    res.status(200).json({
+
+    })
+}
+
 const setData = {
     addUser,
     deleteUser,
+    insertSupplyAbility,
 
 }
 

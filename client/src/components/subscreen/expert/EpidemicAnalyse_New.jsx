@@ -2,19 +2,19 @@ import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame'
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../../constant/constant';
-import { getPandemicDataAPI, getEpidemicDataOfAllProvincesAPI } from '../../../service/userService'
+import { getPandemicDataAPI, getEpidemicDataOfAllProvincesAPI, clusterAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
 import province from '../../../constant/province'
 import MyDatePicker from '../../datepicker/DatePicker';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeEpidemicDataAnalyse, sortWithLevel, resetAllLevel } from '../../../store/reducer/epidemicDataAnalyseSlice';
+import { enebleLoadingScreen, disableLoadingScreen } from '../../../store/reducer/showLoadingScreenSlice';
 
 // Excel
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import WeightTable from './epidemictable/WeightTable';
 import EpidemicTable_New from './epidemictable/EpidemicTable_New';
-import S_SMC_FCM from '../../../logic/sSMC_FCM';
+// import S_SMC_FCM from '../../../logic/sSMC_FCM';
 import WeightTableEpidemic from './epidemictable/WeightTableEpidemic';
 
 function EpidemicAnalyse_New() {
@@ -27,9 +27,10 @@ function EpidemicAnalyse_New() {
   const [pandemicSelect, setPandemicSelect] = useState(1);
   const [dateSelect, setDateSelect] = useState("2022-07-15");
 
+  const [showTip, setShowTip] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showWeightTable, setShowWeightTable] = useState(false);
-  const [weight, setWeight] = useState([1,1,1,1,1,1,1,1,1,1,1]);
+  const [weight, setWeight] = useState([0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]);
   const [isShowWeight, setIsShowWeight] = useState(false);
   const [weightList, setWeightList] = useState({
     infection_new: 1,
@@ -90,7 +91,7 @@ function EpidemicAnalyse_New() {
       return {
         "province_id": e.province_id,
         "province_name": e.province_name,
-        "population": e.population,
+        "population": (e.population)/1000000,
         "population_density": e.population_density,
         "level": e.level,
         "infection_new": e.infection_new,
@@ -111,19 +112,15 @@ function EpidemicAnalyse_New() {
     
     const keys = ['province_name', 'province_id']; // Các trường dữ liệu không tham gia vào việc phân cụm
     
-    // Tạo một đối tượng thuật toán phân cụm
-    const algorithm = new S_SMC_FCM(U, C, tagField, keys, weightList);
-    
-    // Chạy thuật toán
-    algorithm.run()
-      .then(() => {
-        // Khi thuật toán hoàn thành, lấy kết quả
-        const result = algorithm.X;
-        dispatch(changeEpidemicDataAnalyse({data: result.map(e=>{
+    dispatch(enebleLoadingScreen());
+    clusterAPI(U, C, tagField, keys, weightList)
+      .then(data => {
+        // console.log(data);
+        dispatch(changeEpidemicDataAnalyse({data: data.map(e=>{
           return {
             "province_id": e.province_id,
             "province_name": e.province_name,
-            "population": e.population,
+            "population": (e.population)*1000000,
             "population_density": e.population_density,
             "level": e.cluster_label,
             "infection_new": e.infection_new,
@@ -137,8 +134,8 @@ function EpidemicAnalyse_New() {
             "death_average": e.death_average,
           }
         })}))
-        dispatch(sortWithLevel())
-        console.log(result);
+        dispatch(sortWithLevel());
+        dispatch(disableLoadingScreen());
       })
       .catch(error => {
         console.error('Đã xảy ra lỗi:', error);
@@ -245,6 +242,17 @@ function EpidemicAnalyse_New() {
               <input className='h-6 w-6' type="checkbox" checked={isShowWeight} onChange={changeIsShowWeight} />
               <span className='ml-1'>Xem trọng số</span>
             </label>
+          </div>
+          <div className="mt-4 cursor-pointer" onClick={()=>{setShowTip(!showTip)}}>
+            {showTip ? 
+            <div className=" text-green-900">
+              Việc đánh giá cấp độ dịch có thể tham khảo công thức sau: 
+              <br />Giá trị đánh giá = α * (Hồi phục)/(Nhiễm * Tử vong * Mật độ dân số). 
+              <br />Với α là hệ số do chuyên viên quyết định. 
+              <br />Nếu Giá trị đánh giá &lt; 0.1 thì sẽ được coi là cấp độ 1 (An toàn)
+              <br />Nếu 0.1 &lt; Giá trị đánh giá &lt; 0.15 thì sẽ được coi là cấp độ 2 (Chú ý)
+              <br />Nếu Giá trị đánh giá &gt; 0.15 thì sẽ được coi là cấp độ 3 (Nguy hiểm)
+            </div> : <div className="text-blue-500 underline">Xem gợi ý đánh giá</div>}
           </div>
         </div>
         <div className="col-span-1"></div>

@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { logoutAction } from '../../store/reducer/changeRoleSlice';
 import {sidebarMenu, role, PATH, SCREEN_PATH} from './../../constant/constant';
 import Login from '../login/Login';
@@ -23,6 +23,7 @@ const Sidebar = () => {
       localStorage.setItem('role', 2);
       localStorage.setItem('menuItemOrder', 0);
     }
+    const showLoadingScreen = useSelector((state) => state.showLoadingScreen.value);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const rootRole = localStorage.getItem('role');
@@ -53,7 +54,7 @@ const Sidebar = () => {
             const order = paths.indexOf(pathname);
             if(order>-1){
                 setItemOrder(paths.indexOf(pathname));
-                console.log(pathname, paths.indexOf(pathname));
+                // console.log(pathname, paths.indexOf(pathname));
             } 
         })
     }, [window.location.pathname]);
@@ -67,6 +68,11 @@ const Sidebar = () => {
                     <div className="absolute inset-0 flex items-center justify-center z-50">
                         <Login func={closeDialog}/>
                     </div>
+                </div>
+            }
+            {showLoadingScreen && 
+                <div className="absolute inset-0 h-full w-full bg-black opacity-80 flex items-center justify-center z-50">
+                    <h1 className='absolute z-10 text-white'>Đang xử lý...</h1>
                 </div>
             }
             <aside

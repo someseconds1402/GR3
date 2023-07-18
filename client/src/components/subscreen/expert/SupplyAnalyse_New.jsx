@@ -2,17 +2,18 @@ import { useState, useEffect } from 'react';
 import MainFrame from '../../mainframe/MainFrame'
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../../constant/constant';
-import { getPandemicDataAPI, getSupplyQuantityOfAllProvincesAPI } from '../../../service/userService'
+import { getPandemicDataAPI, getSupplyQuantityOfAllProvincesAPI, clusterAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
 import province from '../../../constant/province'
 import { useSelector, useDispatch } from 'react-redux';
 import { changeSupplyDataAnalyse, sortWithAbility } from '../../../store/reducer/supplyDataAnalyseSlice';
+import { enebleLoadingScreen, disableLoadingScreen } from '../../../store/reducer/showLoadingScreenSlice';
 
 // Excel
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import SupplyTable_New from './supplytable/SupplyTable_New';
-import S_SMC_FCM from '../../../logic/sSMC_FCM';
+// import S_SMC_FCM from '../../../logic/sSMC_FCM';
 import WeightTableSupply from './supplytable/WeightTableSupply';
 
 function SupplyAnalyse_New() {
@@ -25,16 +26,16 @@ function SupplyAnalyse_New() {
   
   const [pandemicSelect, setPandemicSelect] = useState(1);
 
-  const [isLoading, setIsLoading] = useState(false);
   const [showWeightTable, setShowWeightTable] = useState(false);
-  const [weight, setWeight] = useState([1,1,1,1,1]);
+  const [weight, setWeight] = useState([0.1,0.1,0.1,0.1]);
   const [isShowWeight, setIsShowWeight] = useState(false);
+  const [showTip, setShowTip] = useState(false);
 
   const [supplyType, setSupplyType] = useState([{id: -1, name: 'Chưa có dữ liệu'}]);
   const [supplyTypeSelect, setSupplyTypeSelect] = useState(-1);
 
   const [weightList, setWeightList] = useState({
-    supply_quatity: 1,
+    // supply_quatity: 1,
     supply_quatity_per_person: 1,
     population: 1,
     population_density: 1,
@@ -42,7 +43,7 @@ function SupplyAnalyse_New() {
   });
 
   const weightLabel = [
-    'supply_quatity',
+    // 'supply_quatity',
     'supply_quatity_per_person',
     'population',
     'population_density',
@@ -76,15 +77,16 @@ function SupplyAnalyse_New() {
   }
 
   const Clust = async () => {
+    // console.log(SupplyData);
     let U = SupplyData.map(e=>{
       return {
         province_id: e.province_id,
         province_name: e.province_name,
-        population: e.population,
+        population: (e.population)/1000000,
         population_density: e.population_density,
         level: e.level,
         supply_name: e.supply_name,
-        // supply_quantity: e.supply_quantity,
+        supply_quantity: e.supply_quantity,
         supply_quatity_per_person: e.supply_quatity_per_person,
         ability: e.ability,
       }
@@ -93,32 +95,27 @@ function SupplyAnalyse_New() {
     
     const tagField = 'ability'; // Trường dữ liệu chứa nhãn
     
-    const keys = ['province_name', 'province_id', 'supply_name']; // Các trường dữ liệu không tham gia vào việc phân cụm
+    const keys = ['province_name', 'province_id', 'supply_name', 'supply_quantity']; // Các trường dữ liệu không tham gia vào việc phân cụm
     
-    // Tạo một đối tượng thuật toán phân cụm
-    const algorithm = new S_SMC_FCM(U, C, tagField, keys, weightList);
-    console.log(U, C, tagField, keys, weightList);
-    
-    // Chạy thuật toán
-    algorithm.run()
-      .then(() => {
-        // Khi thuật toán hoàn thành, lấy kết quả
-        const result = algorithm.X;
-        dispatch(changeSupplyDataAnalyse({data: result.map(e=>{
+    dispatch(enebleLoadingScreen());
+    clusterAPI(U, C, tagField, keys, weightList)
+      .then(data => {
+        // console.log(data);
+        dispatch(changeSupplyDataAnalyse({data: data.map(e=>{
           return {
             province_id: e.province_id,
             province_name: e.province_name,
-            population: e.population,
+            population: (e.population)*1000000,
             population_density: e.population_density,
             level: e.level,
             supply_name: e.supply_name,
-            // supply_quantity: e.supply_quantity,
+            supply_quantity: e.supply_quantity,
             supply_quatity_per_person: e.supply_quatity_per_person,
             ability: e.cluster_label,
           }
         })}))
         dispatch(sortWithAbility())
-        console.log(result);
+        dispatch(disableLoadingScreen());
       })
       .catch(error => {
         console.error('Đã xảy ra lỗi:', error);
@@ -132,7 +129,19 @@ function SupplyAnalyse_New() {
     const workbook = XLSX.utils.book_new();
 
     // Convert data to worksheet format
-    const worksheet = XLSX.utils.json_to_sheet(SupplyData);
+    console.log(SupplyData);
+    const worksheet = XLSX.utils.json_to_sheet(SupplyData.map(e=>{
+      return {
+        pandemic_id: pandemicSelect,
+        pandemic_name: pandemicData.find(m=>m.pandemic_id==pandemicSelect).pandemic_name,
+        province_id: e.province_id,
+        province_name: e.province_name,
+        supply_type_id: supplyTypeSelect,
+        supply_name: e.supply_name,
+        supply_quantity: e.supply_quantity,
+        ability: e.ability,
+      }
+    }));
     // console.log(fileName, workbook, worksheet);
     // Append worksheet to workbook
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Data');
@@ -164,6 +173,7 @@ function SupplyAnalyse_New() {
       try {
         const data = await getSupplyQuantityOfAllProvincesAPI(pandemicSelect);
         // console.log(data);
+        setSupplyTypeSelect(-1);
         setSupplyType(data.listSupplyType.length > 0 ? 
           data.listSupplyType : [{id: -1, name: 'Chưa có dữ liệu'}]);
 
@@ -223,6 +233,17 @@ function SupplyAnalyse_New() {
               <input className='h-6 w-6' type="checkbox" checked={isShowWeight} onChange={changeIsShowWeight} />
               <span className='ml-1'>Xem trọng số</span>
             </label>
+          </div>
+          <div className="mt-4 cursor-pointer" onClick={()=>{setShowTip(!showTip)}}>
+            {showTip ? 
+            <div className=" text-green-900">
+              Với các loại vật tư y tế dùng 1 lần như vắc xin hoặc kit test, 
+              việc đánh giá khả năng hỗ trợ VTYT có thể tham khảo công thức sau: 
+              <br />Giá trị đánh giá = α * (Số lượng VTYT /người)/(Mật độ dân cư * Cấp độ dịch). 
+              <br />Với α là hệ số do chuyên viên quyết định. 
+              <br />Một tinh thành phố được đánh giá là tự cung ứng nếu 0.1 &lt; Giá trị đánh giá &lt; 0.15
+              <br />Nếu nhỏ hơn 0.1 sẽ được coi là cần hỗ trợ VTYT, nếu lớn hơn 0.15 sẽ được coi là có thể hỗ trọ VTYT tới các tỉnh thành khác.
+            </div> : <div className="text-blue-500 underline">Xem gợi ý đánh giá</div>}
           </div>
         </div>
         <div className="col-span-1"></div>

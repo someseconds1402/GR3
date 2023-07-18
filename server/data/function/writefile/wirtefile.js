@@ -9,6 +9,7 @@ const filePathRecoveredSituation = path.join(__dirname, '/../../db/recovered_sit
 const filePathDeathSituation = path.join(__dirname, '/../../db/death_situation.js');
 const filePathMedicalSupply = path.join(__dirname, '/../../db/medical_supplies.js');
 const filePathSupplyQuantity = path.join(__dirname, '/../../db/supply_quantity.js');
+const filePathSupplyAbility = path.join(__dirname, '/../../db/supply_ability.js');
 
 const writeUser = (jsonData) => {
     try {
@@ -135,6 +136,21 @@ const writeSupplyQuantity = (jsonData) => {
     }
 }
 
+const writeSupplyAbilty = (jsonData) => {
+    try {
+        fs.writeFile(filePathSupplyAbility, JSON.stringify(jsonData), (err) => {
+            if (err) {
+                console.error('Lỗi khi ghi file:', err);
+            } else {
+                console.log('Ghi file thành công.');
+            }
+        })
+    } catch (err) {
+        console.error('Error writeing user data:', err);
+        return null;
+    }
+}
+
 const writer = {
     writeUser,
     writeProvince,
@@ -144,6 +160,7 @@ const writer = {
     writeDeathSituation,
     writeMedicalSupply,
     writeSupplyQuantity,
+    writeSupplyAbilty,
 }
 
 module.exports = writer;

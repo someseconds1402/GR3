@@ -73,6 +73,30 @@ const getSupplyQuantityOfAllProvincesAPI = async(pandemic_id) => {
     }
 }
 
+const clusterAPI = async(U, C, tagField, keys, weightList) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.CLUSTER, { U, C, tagField, keys, weightList })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertSupplyAbilityAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_SUPPLY_ABILITY, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const getDistributionDataAPI = async(pandemic_id, supply_type_id) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_DISTRIBUTION_DATA, { pandemic_id, supply_type_id })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     handleLoginAPI,
     getPandemicDataAPI,
@@ -83,5 +107,7 @@ export {
     deleteUser,
     getEpidemicDataOfAllProvincesAPI,
     getSupplyQuantityOfAllProvincesAPI,
-
+    clusterAPI,
+    insertSupplyAbilityAPI,
+    getDistributionDataAPI,
 }

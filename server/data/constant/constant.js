@@ -10,6 +10,9 @@ PATH.API = {
     DELETE_USER: '/api/delete-user',
     GET_EPIDEMIC_DATA_OF_ALL_PROVINCES: '/api/get-epidemic-data-of-all-provinces',
     GET_SUPPLY_QUANTITY_OF_ALL_PROVINCES: '/api/get-supply-quantity-of-all-provinces',
+    CLUSTER: '/api/cluster',
+    INSERT_SUPPLY_ABILITY: '/api/insert-supply-ability',
+    GET_DISTRIBUTION_DATA: '/api/get-distribution-data',
 }
 
 const role = {

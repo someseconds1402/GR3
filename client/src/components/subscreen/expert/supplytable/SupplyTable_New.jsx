@@ -11,7 +11,7 @@ const SupplyTable_New = (props) => {
     if (SupplyData && SupplyData.length > 0) {
       const supplyType = SupplyData[0].supply_name;
       setLabelProps([
-        'Số lượng ' + supplyType,
+        // 'Số lượng ' + supplyType,
         'Số lượng ' + supplyType + ' /người',
         'Dân số',
         'Mật độ dân cư',
@@ -36,7 +36,7 @@ const SupplyTable_New = (props) => {
         {SupplyData.map((row, index) => (
           <tr key={index} style={{ backgroundColor: colors[row.ability] }}>
             <td className="border border-black p-2">{row.province_name}</td>
-            <td className="border border-black p-2">{row.supply_quantity}</td>
+            {/* <td className="border border-black p-2">{row.supply_quantity}</td> */}
             <td className="border border-black p-2">{row.supply_quatity_per_person}</td>
             <td className="border border-black p-2">{row.population}</td>
             <td className="border border-black p-2">{row.population_density}</td>

@@ -15,22 +15,21 @@ const ImportFrame = () => {
     }
 
     return (
-        <div className="mt-5 grid grid-cols-6">
-            <div className="col-span-1 mt-5">
+        <div className="mt-5">
+            <div className="flex justify-center items-end mt-5">
                 <button className={
-                    "btn w-36 ml-4 " + (buttonChange==1 ? 'btn-secondary':'btn-primary')
+                    "rounded-t-lg " + (buttonChange==1 ? 'border-solid border-2 border-gray-500 w-40 h-11':' bg-gray-300 w-36 h-10')
                 } onClick={handleButton1}>Dữ liệu tĩnh</button>
                 <button className={
-                    "btn w-36 ml-4 " + (buttonChange==2 ? 'btn-secondary':'btn-primary')
+                    "rounded-t-lg " + (buttonChange==2 ? 'border-solid border-2 border-gray-500 w-40 h-11':' bg-gray-300 w-36 h-10')
                 } onClick={handleButton2}>Dữ liệu động</button>
-
             </div>
-            {buttonChange==1 && <div className="col-span-3 border-l-8 border-gray-500 rounded-lg">
+            {buttonChange==1 && <div className="grid grid-cols-3 border-t-2 border-gray-500 rounded-lg">
                 <ImportButton elementName="Thông tin địa lý"/>
                 <ImportButton elementName="Khoảng cách"/>
                 <ImportButton elementName="Các loại bệnh dịch"/>
             </div>}
-            {buttonChange==2 && <div className="col-span-3 border-l-8 border-gray-500 rounded-lg">
+            {buttonChange==2 && <div className="grid grid-cols-3 border-t-2 border-gray-500 rounded-lg">
                 <ImportButton elementName="Số lượng nhiễm"/>
                 <ImportButton elementName="Số lượng hồi phục"/>
                 <ImportButton elementName="Số lượng tử vong"/>

@@ -32,9 +32,33 @@ const deleteUser = async(email) => {
     }
 }
 
+const insertSupplyAbility = async(data) => {
+    let supplyAbility = await reader.readSupplyAbility();
+    if (supplyAbility) {
+        supplyAbility = supplyAbility.filter(e => {
+            const findItem = data.find(m =>
+                m.pandemic_id == e.pandemic_id &&
+                m.province_id == e.province_id &&
+                m.supply_type_id == e.supply_type_id);
+            if (findItem) {
+                return false;
+            } else {
+                return true;
+            }
+        })
+    } else {
+        supplyAbility = [];
+    }
+    supplyAbility.push(...data);
+    writer.writeSupplyAbilty(supplyAbility);
+
+    return 1;
+}
+
 const modifyFunc = {
     addUser,
     deleteUser,
+    insertSupplyAbility,
 
 }
 
