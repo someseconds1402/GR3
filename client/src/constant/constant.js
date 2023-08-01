@@ -26,7 +26,7 @@ export const SCREEN_PATH = [
     [
         '/epidemic-analyse',
         '/supply-analyse',
-        '/distribution-analyse',
+        // '/distribution-analyse',
         '/db-modify',
     ],
     // GUEST: 
@@ -93,7 +93,7 @@ export const sidebarMenu = [
     [
         menuItems.EPIDEMIC_ANALYSE,
         menuItems.SUPPLIES_ANALYSE,
-        menuItems.DISTRIBUTION_ANALYSE,
+        // menuItems.DISTRIBUTION_ANALYSE,
         menuItems.DB_MODYFY
     ],
     // GUEST:

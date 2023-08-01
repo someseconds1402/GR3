@@ -159,16 +159,17 @@ function DistributionDisplay() {
           <div className=""><strong>Tỉnh thành nhận</strong></div>
           <Dropdown data={provinceList1.map(e=>e.province_name)} func={changeProvince} />
         </div>
+        {supplyTypeSelect!=-1 && 
         <div className="col-span-3 mt-4 ml-1">
-          <div className="mx-3"><strong>Tỉnh thành hỗ trợ</strong></div>
-          <div className="grid grid-cols-3 items-center mx-3 px-2 h-14
-            border shadow-xl rounded-t-lg bg-gray-700 text-white">
-            <div className='col-span-1'><strong>Tỉnh thành phố</strong></div>
-            <div className='col-span-1'><strong>Quãng đường (km)</strong></div>
-            <div className='col-span-1'><strong>Số lượng Vật tư hỗ trợ</strong></div>
-          </div>
-          {provinceList2.map(e=>drawTable(e.province_name, e.supply_quantity))}
+        <div className="mx-3"><strong>Tỉnh thành hỗ trợ</strong></div>
+        <div className="grid grid-cols-3 items-center mx-3 px-2 h-14
+          border shadow-xl rounded-t-lg bg-gray-700 text-white">
+          <div className='col-span-1'><strong>Tỉnh thành phố</strong></div>
+          <div className='col-span-1'><strong>Quãng đường (km)</strong></div>
+          <div className='col-span-1'><strong>Số lượng Vật tư hỗ trợ</strong></div>
         </div>
+        {provinceList2.map(e=>drawTable(e.province_name, e.supply_quantity))}
+      </div>}
         {/* <Map/> */}
       </div>
     </MainFrame>
