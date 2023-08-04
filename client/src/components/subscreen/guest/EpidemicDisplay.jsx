@@ -18,7 +18,7 @@ function EpidemicDisplay() {
   
   const [provinceSelect, setProvinceSelect] = useState(1);
   const [pandemicSelect, setPandemicSelect] = useState(1);
-  const [dateSelect, setDateSelect] = useState("2022-07-15");
+  const [dateSelect, setDateSelect] = useState("2023-07-15");
 
   const dispatch = useDispatch();
   const [chartData, setChartData] = useState({
@@ -88,8 +88,8 @@ function EpidemicDisplay() {
   }
 
   const changePandemic = (option)=>{
-    console.log('pandemic' + pandemicData);
-    setPandemicSelect(2)
+    // console.log(pandemicData.find(e=>e.pandemic_name==option).pandemic_id);
+    setPandemicSelect(pandemicData.find(e=>e.pandemic_name==option).pandemic_id);
   }
 
   const changeProvince = (option)=>{
@@ -123,7 +123,7 @@ function EpidemicDisplay() {
     };
   
     fetchData();
-    getEpidemicData(provinceSelect, 2, dateSelect );
+    getEpidemicData(provinceSelect, pandemicSelect, dateSelect );
   }, [provinceSelect, pandemicSelect, dateSelect]);
 
   return (

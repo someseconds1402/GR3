@@ -3,11 +3,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const MyDatePicker = (props) => {
-  const [selectedDate, setSelectedDate] = useState(new Date('2022-07-15'));
+  const [selectedDate, setSelectedDate] = useState(new Date('2023-07-15'));
   
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    props.func(date ? date.toString() : '2022-07-18');
+    props.func(date ? date.toString() : '2023-07-15');
   };
 
   return (

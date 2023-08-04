@@ -11,6 +11,16 @@ const filePathMedicalSupply = path.join(__dirname, '/../../db/medical_supplies.j
 const filePathSupplyQuantity = path.join(__dirname, '/../../db/supply_quantity.js');
 const filePathSupplyAbility = path.join(__dirname, '/../../db/supply_ability.js');
 
+const getInfectionSituationPath = async(pandemic_id) => {
+    return path.join(__dirname, '/../../db/infection_situation_' + pandemic_id + '.js');
+}
+const getRecoveredSituationPath = async(pandemic_id) => {
+    return path.join(__dirname, '/../../db/recovered_situation_' + pandemic_id + '.js');
+}
+const getDeathSituationPath = async(pandemic_id) => {
+    return path.join(__dirname, '/../../db/death_situation_' + pandemic_id + '.js');
+}
+
 const writeUser = (jsonData) => {
     try {
         fs.writeFile(filePathUser, JSON.stringify(jsonData), (err) => {
@@ -59,9 +69,9 @@ const writePandemic = (jsonData) => {
     }
 }
 
-const writeInfectionSituation = (jsonData) => {
+const writeInfectionSituation = (jsonData, pandemic_id) => {
     try {
-        fs.writeFile(filePathInfectionSituation, JSON.stringify(jsonData), (err) => {
+        fs.writeFile(getInfectionSituationPath(pandemic_id), JSON.stringify(jsonData), (err) => {
             if (err) {
                 console.error('Lỗi khi ghi file:', err);
             } else {
@@ -74,9 +84,9 @@ const writeInfectionSituation = (jsonData) => {
     }
 }
 
-const writeRecoveredSituation = (jsonData) => {
+const writeRecoveredSituation = (jsonData, pandemic_id) => {
     try {
-        fs.writeFile(filePathRecoveredSituation, JSON.stringify(jsonData), (err) => {
+        fs.writeFile(getRecoveredSituationPath(pandemic_id), JSON.stringify(jsonData), (err) => {
             if (err) {
                 console.error('Lỗi khi ghi file:', err);
             } else {
@@ -90,9 +100,9 @@ const writeRecoveredSituation = (jsonData) => {
     }
 }
 
-const writeDeathSituation = (jsonData) => {
+const writeDeathSituation = (jsonData, pandemic_id) => {
     try {
-        fs.writeFile(filePathDeathSituation, JSON.stringify(jsonData), (err) => {
+        fs.writeFile(getDeathSituationPath(pandemic_id), JSON.stringify(jsonData), (err) => {
             if (err) {
                 console.error('Lỗi khi ghi file:', err);
             } else {

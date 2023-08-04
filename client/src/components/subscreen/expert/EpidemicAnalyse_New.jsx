@@ -25,7 +25,7 @@ function EpidemicAnalyse_New() {
   const [pandemicData, setPandemicData] = useState([]);
   
   const [pandemicSelect, setPandemicSelect] = useState(1);
-  const [dateSelect, setDateSelect] = useState("2022-07-15");
+  const [dateSelect, setDateSelect] = useState("2023-07-15");
 
   const [showTip, setShowTip] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ function EpidemicAnalyse_New() {
 
   const changePandemic = (option)=>{
     // console.log('pandemic', pandemicData);
-    setPandemicSelect(2)
+    setPandemicSelect(pandemicData.find(e=>e.pandemic_name==option).pandemic_id)
   }
 
   const changeDate = (date) => {
@@ -185,41 +185,71 @@ function EpidemicAnalyse_New() {
             e.level = 0;
           }
         })
+        // console.log(data);
         const res = data.map(dt=>{
           const infectionLst = dt.infection.list;
           const recoveredLst = dt.recovered.list;
           const deathLst = dt.death.list;
-          let infectionAverage = 0;
-          let recoveredAverage = 0;
-          let deathAverage = 0;
-    
-          infectionLst.forEach(e=>{
-            infectionAverage += e.quantity_in_today;
-          });
-          recoveredLst.forEach(e=>{
-            recoveredAverage += e.quantity_in_today;
-          });
-          deathLst.forEach(e=>{
-            deathAverage += e.quantity_in_today;
-          });
-    
+          let infection_average = 0, recovered_average = 0, death_average = 0, 
+          infection_new = 0, infection_total = 0, 
+          recovered_new = 0, recovered_total = 0,
+          death_new = 0, death_total = 0;
+          
+          if(infectionLst.length){
+            infectionLst.forEach(e=>{
+              infection_average += e.quantity_in_today;
+            });
+            infection_new = infectionLst[infectionLst.length-1].quantity_in_today;
+            infection_total = infectionLst[infectionLst.length-1].total_quantity;
+            infection_average = parseFloat((infection_average/(infectionLst.length)).toFixed(2));
+          } else {
+            infection_new = -1;
+            infection_total = -1;
+            infection_average = -1;
+          }
+          if(recoveredLst.length){
+            recoveredLst.forEach(e=>{
+              recovered_average += e.quantity_in_today;
+            });
+            recovered_new = recoveredLst[recoveredLst.length-1].quantity_in_today;
+            recovered_total = recoveredLst[recoveredLst.length-1].total_quantity;
+            recovered_average = parseFloat((recovered_average/(recoveredLst.length)).toFixed(2));
+          } else {
+            recovered_new = -1;
+            recovered_total = -1;
+            recovered_average = -1;
+          }
+          if(deathLst.length){
+            deathLst.forEach(e=>{
+              death_average += e.quantity_in_today;
+            });
+            death_new = deathLst[deathLst.length-1].quantity_in_today;
+            death_total = deathLst[deathLst.length-1].total_quantity;
+            death_average = parseFloat((death_average/(deathLst.length)).toFixed(2));
+          } else {
+            death_new = -1;
+            death_total = -1;
+            death_average = -1;
+          }
+          
           return {
             province_id: dt.province_id,
             province_name: province[dt.province_id-1],
             population: dt.population,
             population_density: dt.population_density,
             level: dt.level,
-            infection_new: infectionLst[infectionLst.length-1].quantity_in_today,
-            infection_total: infectionLst[infectionLst.length-1].total_quantity,
-            infection_average: parseFloat((infectionAverage/(infectionLst.length)).toFixed(2)),
-            recovered_new: recoveredLst[recoveredLst.length-1].quantity_in_today,
-            recovered_total: recoveredLst[recoveredLst.length-1].total_quantity,
-            recovered_average: parseFloat((recoveredAverage/(recoveredLst.length)).toFixed(2)),
-            death_new: deathLst[deathLst.length-1].quantity_in_today,
-            death_total: deathLst[deathLst.length-1].total_quantity,
-            death_average: parseFloat((deathAverage/(deathLst.length)).toFixed(2)),
+            infection_new: infection_new,
+            infection_total: infection_total,
+            infection_average: infection_average,
+            recovered_new: recovered_new,
+            recovered_total: recovered_total,
+            recovered_average: recovered_average,
+            death_new: death_new,
+            death_total: death_total,
+            death_average: death_average,
           }
         });
+        console.log('res', res);
         dispatch(changeEpidemicDataAnalyse({data: res}))
         
       } catch (error) {
