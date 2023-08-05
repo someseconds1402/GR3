@@ -230,7 +230,7 @@ function SupplyAnalyse_New() {
 
   return (
     <MainFrame>
-      <h1>Phân tích tình hình dịch bệnh</h1>
+      <h1>Phân tích khả năng hỗ trợ VTYT</h1>
       <div className="grid grid-cols-3 gap-4 mt-5">
         <div className="col-span-1">
           <Dropdown data={pandemicData.map(e=>e.pandemic_name)} func={changePandemic}/>

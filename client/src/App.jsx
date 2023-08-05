@@ -24,15 +24,15 @@ function App() {
     }
     localStorage.setItem('menuItemOrder', 0);
 
-    async function getPandemicData() {
-      const pandemicData = await getPandemicDataAPI();
-      let pandemicDataStr = ''; 
-      pandemicData.forEach(e=>{
-        pandemicDataStr += e.pandemic_id + ':' + e.pandemic_name + '2018@4139,.abc/&xyz';
-      })
-      localStorage.setItem('pandemicData', pandemicDataStr);
-    }
-    getPandemicData();
+    // async function getPandemicData() {
+    //   const pandemicData = await getPandemicDataAPI();
+    //   let pandemicDataStr = ''; 
+    //   pandemicData.forEach(e=>{
+    //     pandemicDataStr += e.pandemic_id + ':' + e.pandemic_name + '2018@4139,.abc/&xyz';
+    //   })
+    //   localStorage.setItem('pandemicData', pandemicDataStr);
+    // }
+    // getPandemicData();
 
     // localStorage.setItem('epidemicDisplay_selectedProvinceId', 1);
     // localStorage.setItem('suppliesDisplay_selectedProvinceId', 1);

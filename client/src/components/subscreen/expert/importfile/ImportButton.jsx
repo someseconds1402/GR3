@@ -62,18 +62,22 @@ const ImportButton = (props) => {
           const prop = properties[index];
           const val = e[index];
           const valType = importProp.find((m) => m.name == prop).type;
-  
+          if(val==null || val==undefined){
+            setErrorMessage(`Cột ${prop} hàng ${i+2} không có giá trị.`);
+            return false
+          }
+
           switch (valType) {
             case 'int': {
               if (isNaN(val) || val % 1 !== 0) {
-                setErrorMessage(`Cột ${prop} tồn tại 1 giá trị không phải số nguyên (${val}).`);
+                setErrorMessage(`Cột ${prop} hàng ${i+2}: giá trị không phải số nguyên.`);
                 return false;
               }
               break;
             }
             case 'float': {
               if (isNaN(val) || val % 1 === 0) {
-                setErrorMessage(`Cột ${prop} tồn tại 1 giá trị không phải số thực (${val}).`);
+                setErrorMessage(`Cột ${prop} hàng ${i+2}: giá trị không phải số thực.`);
                 return false;
               }
               break;
