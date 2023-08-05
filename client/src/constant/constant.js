@@ -107,17 +107,68 @@ export const sidebarMenu = [
     ],
 ]
 
-export const IMPORT_PROPERTIES = {
-    province: ['province_id', 'province_name', 'population', 'population_density'],
-    distance: ['province_id_1', 'province_id_2', 'distance'],
-    pandemic: ['pandemic_id', 'pandemic_name'],
-    supply_type: ['id', 'name'],
-    supply_map_pandemic: ['pandemic_id', 'supply_type_id'],
-    medical_suppy: ['supply_id', 'supply_type_id', 'supply_name'],
-    infection_situation: ['province_id', 'pandemic_id', 'date', 'quantity_in_today', 'total_quantity'],
-    recovered_situation: ['province_id', 'pandemic_id', 'date', 'quantity_in_today', 'total_quantity'],
-    death_situation: ['province_id', 'pandemic_id', 'date', 'quantity_in_today', 'total_quantity'],
-    level: ['province_id', 'pandemic_id', 'date', 'level'],
-    supply_quantity: ['province_id', 'supply_id', 'quantity'],
-    supply_ability: ['pandemic_id', 'province_id', 'supply_type_id', 'supply_quantity', 'ability'],
-}
+export const IMPORT_PROPERTIES = [
+    [
+        { name: 'province_id', type: 'int' },
+        { name: 'population', type: 'int' },
+        { name: 'population_density', type: 'float' },
+    ],
+    [
+        { name: 'province_id_1', type: 'int' },
+        { name: 'province_id_2', type: 'int' },
+        { name: 'distance', type: 'float' },
+    ],
+    [
+        { name: 'pandemic_name', type: '' },
+    ],
+    [
+        { name: 'name', type: '' },
+    ],
+    [
+        { name: 'pandemic_id', type: 'int' },
+        { name: 'supply_type_id', type: 'int' },
+    ],
+    [
+        { name: 'supply_type_id', type: 'int' },
+        { name: 'supply_name', type: '' },
+    ],
+    [
+        { name: 'province_id', type: 'int' },
+        { name: 'pandemic_id', type: 'int' },
+        { name: 'date', type: 'date' },
+        { name: 'quantity_in_today', type: 'int' },
+        { name: 'total_quantity', type: 'int' },
+    ],
+    [
+        { name: 'province_id', type: 'int' },
+        { name: 'pandemic_id', type: 'int' },
+        { name: 'date', type: 'date' },
+        { name: 'quantity_in_today', type: 'int' },
+        { name: 'total_quantity', type: 'int' },
+    ],
+    [
+        { name: 'province_id', type: 'int' },
+        { name: 'pandemic_id', type: 'int' },
+        { name: 'date', type: 'date' },
+        { name: 'quantity_in_today', type: 'int' },
+        { name: 'total_quantity', type: 'int' },
+    ],
+    [
+        { name: 'province_id', type: 'int' },
+        { name: 'pandemic_id', type: 'int' },
+        { name: 'date', type: 'date' },
+        { name: 'level', type: 'int' },
+    ],
+    [
+        { name: 'province_id', type: 'int' },
+        { name: 'supply_id', type: 'int' },
+        { name: 'quantity', type: 'int' },
+    ],
+    [
+        { name: 'pandemic_id', type: 'int' },
+        { name: 'province_id', type: 'int' },
+        { name: 'supply_type_id', type: 'int' },
+        { name: 'supply_quantity', type: 'int' },
+        { name: 'ability', type: 'int' },
+    ],
+]

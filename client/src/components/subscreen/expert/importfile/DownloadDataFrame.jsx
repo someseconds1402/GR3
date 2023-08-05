@@ -9,7 +9,7 @@ const DownloadDataFrame = () => {
 
     const downloadFile = (data, filename) => {
         const currentTime = new Date().getTime();
-        const fileName = `${currentTime}_${filename}.xlsx`;
+        const fileName = `${filename}_${currentTime}.xlsx`;
         // Tạo workbook mới
         const workbook = XLSX.utils.book_new();
     
@@ -25,7 +25,7 @@ const DownloadDataFrame = () => {
         const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         // Download the file
         saveAs(blob, fileName);
-      };
+    };
 
     const getProvinceData = async () => {
         const provinceData = await getProvinceDataAPI();

@@ -131,7 +131,7 @@ function SupplyAnalyse_New() {
 
   const downloadFile = () => {
     const currentTime = new Date().getTime();
-    const fileName = `${currentTime}_EpidemicAnalyse.xlsx`;
+    const fileName = `SupplyAnalyse_${currentTime}.xlsx`;
     // Tạo workbook mới
     const workbook = XLSX.utils.book_new();
 

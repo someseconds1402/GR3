@@ -1,7 +1,11 @@
 import React, { useRef, useState } from 'react';
-import * as XLSX from 'xlsx';
 import FadeIn from '../../../effect/FadeIn';
 import { insertSupplyAbilityAPI } from '../../../../service/userService';
+import { IMPORT_PROPERTIES } from '../../../../constant/constant';
+import { EXAMPLE } from '../../../../constant/example';
+// Excel
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const ImportButton = (props) => {
   const fileInputRef = useRef(null);
@@ -15,6 +19,15 @@ const ImportButton = (props) => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+
+    // Check the file extension
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    if (fileExtension !== 'xlsx') {
+      setErrorMessage('Lỗi định dạng. Hãy chọn file có phần mở rộng là \'xlsx\'');
+      setSelectedFile(null);
+      return;
+    }
+
     const fileReader = new FileReader();
 
     fileReader.onload = (e) => {
@@ -23,7 +36,7 @@ const ImportButton = (props) => {
       const workbook = XLSX.read(data, { type: 'array' });
 
       if (workbook.SheetNames.length === 0) {
-        setErrorMessage('Invalid file format. Please select an Excel file.');
+        setErrorMessage('Lỗi định dạng. Hãy chọn file có phần mở rộng là \'xlsx\'');
         setSelectedFile(null);
         return;
       }
@@ -35,19 +48,89 @@ const ImportButton = (props) => {
     fileReader.readAsArrayBuffer(file);
   };
 
+  const handleUploadFile = async (jsonData, orderButton) => {
+    let objectData = [];
+    let importProp = IMPORT_PROPERTIES[orderButton];
+    let properties = jsonData.shift();
+  
+    if (importProp.every((e) => properties.includes(e.name))) {
+      for (let i = 0; i < jsonData.length; i++) {
+        let e = jsonData[i];
+        let element = {};
+  
+        for (let index = 0; index < properties.length; index++) {
+          const prop = properties[index];
+          const val = e[index];
+          const valType = importProp.find((m) => m.name == prop).type;
+  
+          switch (valType) {
+            case 'int': {
+              if (isNaN(val) || val % 1 !== 0) {
+                setErrorMessage(`Cột ${prop} tồn tại 1 giá trị không phải số nguyên (${val}).`);
+                return false;
+              }
+              break;
+            }
+            case 'float': {
+              if (isNaN(val) || val % 1 === 0) {
+                setErrorMessage(`Cột ${prop} tồn tại 1 giá trị không phải số thực (${val}).`);
+                return false;
+              }
+              break;
+            }
+            case 'date': {
+              if (isNaN(Date.parse(val))) {
+                setErrorMessage(`Cột ${prop} tồn tại 1 giá trị thời gian không hợp lệ (${val}).`);
+                return false;
+              }
+              break;
+            }
+            default:
+              break;
+          }
+          element[prop] = val;
+        }
+        objectData.push(element);
+      }
+      console.log('test', objectData);
+      return true;
+    } else {
+      setErrorMessage('Lỗi. Các trường trong bảng đang không đúng theo định dạng. Hãy xem file mẫu để tham khảo.');
+      return false;
+    }
+  };
+
+  const downloadFile = (data, filename) => {
+    const currentTime = new Date().getTime();
+    const fileName = `${filename}_${currentTime}.xlsx`;
+    // Tạo workbook mới
+    const workbook = XLSX.utils.book_new();
+
+    // Convert data to worksheet format
+    // console.log(data);
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    // console.log(fileName, workbook, worksheet);
+    // Append worksheet to workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Data');
+    // Write workbook to Excel file
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    // Create a Blob from the buffer
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    // Download the file
+    saveAs(blob, fileName);
+  };
+
   const handleReadData = () => {
     if (!selectedFile) {
       return;
     }
 
-    
     const fileReader = new FileReader();
     
     fileReader.onload = async (e) => {
       const arrayBuffer = e.target.result;
       const data = new Uint8Array(arrayBuffer);
       const workbook = await XLSX.read(data, { type: 'array' });
-      let objectData = [], properties = [];
 
       // Đọc dữ liệu từ sheet đầu tiên (sheet index = 0)
       const sheetName = workbook.SheetNames[0];
@@ -56,77 +139,16 @@ const ImportButton = (props) => {
       // Sử dụng XLSX.utils.sheet_to_json để chuyển đổi sheet thành mảng JSON
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-      switch (props.orderButton) {
-        case '1':{
-          console.log(1);
-          break;
-        }
-        case '2':{
-          console.log(2);
-          break;
-        }
-        case '3':{
-          console.log(3);
-          break;
-        }
-        case '4':{
-          console.log(4);
-          break;
-        }
-        case '5':{
-          console.log(5);
-          break;
-        }
-        case '6':{
-          console.log(6);
-          break;
-        }
-        case '7':{
-          console.log(7);
-          break;
-        }
-        case '8':{
-          console.log(8);
-          break;
-        }
-        case '9':{
-          console.log(9);
-          break;
-        }
-        case '10':{
-          console.log(10);
-          break;
-        }
-        case '11':{
-          console.log(11);
-          break;
-        }
-        case '12':{
-          console.log(12);
-          break;
-        }
-        default:
-          break;
-      }
-
+      
       if(jsonData.length > 1){
-        properties = jsonData.shift();
-        jsonData.forEach(e=>{
-          let element = {}
-          properties.forEach((prop, index) => {
-            element[prop] = e[index];
-          })
-          objectData.push({
-            pandemic_id: element.pandemic_id,
-            province_id: element.province_id,
-            supply_type_id: element.supply_type_id,
-            supply_quantity: element.supply_quantity,
-            ability: element.ability,
-          })
-        })
+        if(!handleUploadFile(jsonData, props.orderButton-1)){
+          return;
+        }
+      } else {
+        setErrorMessage('Lỗi định dạng. Hãy chọn file có phần mở rộng là \'xlsx\'');
+        setSelectedFile(null);
+        return;
       }
-      // insertSupplyAbilityAPI(objectData);
-      // console.log(properties,objectData);
     };
 
     fileReader.readAsArrayBuffer(selectedFile);
@@ -156,7 +178,7 @@ const ImportButton = (props) => {
         />
         {selectedFile && (
           <div className=''>
-            <p>Selected file: {selectedFile.name}</p>
+            <p className="pl-4">Selected file: {selectedFile.name}</p>
             <button className="btn btn-danger w-64 ml-4" onClick={handleDelete}>
               Xóa
             </button>
@@ -165,7 +187,8 @@ const ImportButton = (props) => {
             </button>
           </div>
         )}
-        {errorMessage && <p>{errorMessage}</p>}
+        <p className="text-blue-500 underline cursor-pointer pl-4" onClick={()=>{downloadFile(EXAMPLE[props.orderButton-1].data, EXAMPLE[props.orderButton-1].name)}}>Download file mẫu</p>
+        {errorMessage && <p className="text-red-700 px-4">{errorMessage}</p>}
       </FadeIn>
     </div>
   );
