@@ -171,6 +171,18 @@ const queryDistributionData = async(pandemic_id, supply_type_id) => {
     return supplyAbilityList;
 }
 
+const queryProvinceData = async() => {
+    return reader.readProvince();
+}
+
+const queryMedicalSupplyData = async() => {
+    return reader.readMedicalSupply();
+}
+
+const querySupplyTypeData = async() => {
+    return reader.readSupplyType();
+}
+
 module.exports = {
     queryEpidemicData,
     queryPandemicData,
@@ -179,4 +191,7 @@ module.exports = {
     queryEpidemicDataOfAllProvinces,
     querySupplyQuantityOfAllProvinces,
     queryDistributionData,
+    queryProvinceData,
+    queryMedicalSupplyData,
+    querySupplyTypeData,
 }

@@ -9,9 +9,33 @@ const handleLoginAPI = async(email, password) => {
     }
 }
 
+const getProvinceDataAPI = async() => {
+    try {
+        return (await axios.get(PATH_API.BASE_URL + PATH_API.GET_PROVINCE_DATA)).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 const getPandemicDataAPI = async() => {
     try {
         return (await axios.get(PATH_API.BASE_URL + PATH_API.GET_PANDEMIC_DATA)).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const getSupplyTypeDataAPI = async() => {
+    try {
+        return (await axios.get(PATH_API.BASE_URL + PATH_API.GET_SUPPLY_TYPE_DATA)).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const getMedicalSupplyDataAPI = async() => {
+    try {
+        return (await axios.get(PATH_API.BASE_URL + PATH_API.GET_MEDICAL_SUPPLY_DATA)).data;
     } catch (err) {
         console.log(err);
     }
@@ -99,7 +123,10 @@ const getDistributionDataAPI = async(pandemic_id, supply_type_id) => {
 
 export {
     handleLoginAPI,
+    getProvinceDataAPI,
     getPandemicDataAPI,
+    getSupplyTypeDataAPI,
+    getMedicalSupplyDataAPI,
     getEpidemicDataAPI,
     getSupplyQuantityAPI,
     getAllEmail,

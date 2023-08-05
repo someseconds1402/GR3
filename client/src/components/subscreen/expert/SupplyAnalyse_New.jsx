@@ -6,7 +6,7 @@ import { getPandemicDataAPI, getSupplyQuantityOfAllProvincesAPI, clusterAPI } fr
 import Dropdown from '../../dropdown/Dropdown';
 import province from '../../../constant/province'
 import { useSelector, useDispatch } from 'react-redux';
-import { changeSupplyDataAnalyse, sortWithAbility } from '../../../store/reducer/supplyDataAnalyseSlice';
+import { changeSupplyDataAnalyse, sortWithAbility, resetAllAbility } from '../../../store/reducer/supplyDataAnalyseSlice';
 import { enebleLoadingScreen, disableLoadingScreen } from '../../../store/reducer/showLoadingScreenSlice';
 
 // Excel
@@ -27,6 +27,7 @@ function SupplyAnalyse_New() {
   const [pandemicSelect, setPandemicSelect] = useState(1);
 
   const [showWeightTable, setShowWeightTable] = useState(false);
+  const [showResetData, setShowResetData] = useState(false);
   const [weight, setWeight] = useState([0.1,0.1,0.1,0.1]);
   const [isShowWeight, setIsShowWeight] = useState(false);
   const [showTip, setShowTip] = useState(false);
@@ -116,10 +117,16 @@ function SupplyAnalyse_New() {
         })}))
         dispatch(sortWithAbility())
         dispatch(disableLoadingScreen());
+        setShowResetData(true);
       })
       .catch(error => {
         console.error('Đã xảy ra lỗi:', error);
       });
+  }
+
+  const resetData = () => {
+    dispatch(resetAllAbility());
+    setShowResetData(false);
   }
 
   const downloadFile = () => {
@@ -250,7 +257,11 @@ function SupplyAnalyse_New() {
         <div className="col-span-1">
           <div className={"btn btn-primary w-full "+(supplyTypeSelect==-1?'disabled':'')} onClick={()=>{setShowWeightTable(true)}}>Thiết lập trọng số</div>
           {showWeightTable && <WeightTableSupply data={weight} supplyTypeSelect={supplyType.find(e=>e.id==supplyTypeSelect).name} func={closeDialog} />}
-          <div className={"btn btn-primary w-full mt-4 "+(supplyTypeSelect==-1?'disabled':'')} onClick={Clust}>Phân cụm</div>
+          {!showResetData ?
+            <div className={"btn btn-primary w-full mt-4 "+(supplyTypeSelect==-1?'disabled':'')} onClick={Clust}>Phân cụm</div>
+            :
+            <div className="btn btn-success w-full mt-4" onClick={resetData}>Reset dữ liệu</div>
+          }
           <div className="btn btn-success w-full mt-4" onClick={downloadFile}>Download dữ liệu</div>
         </div>
       </div>

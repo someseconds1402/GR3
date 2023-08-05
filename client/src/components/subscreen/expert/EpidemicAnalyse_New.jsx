@@ -32,6 +32,7 @@ function EpidemicAnalyse_New() {
   const [showWeightTable, setShowWeightTable] = useState(false);
   const [weight, setWeight] = useState([0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1]);
   const [isShowWeight, setIsShowWeight] = useState(false);
+  const [showResetData, setShowResetData] = useState(false);
   const [weightList, setWeightList] = useState({
     infection_new: 1,
     infection_average: 1,
@@ -136,10 +137,16 @@ function EpidemicAnalyse_New() {
         })}))
         dispatch(sortWithLevel());
         dispatch(disableLoadingScreen());
+        setShowResetData(true);
       })
       .catch(error => {
         console.error('Đã xảy ra lỗi:', error);
       });
+  }
+
+  const resetData = () => {
+    dispatch(resetAllLevel());
+    setShowResetData(false);
   }
 
   const downloadFile = () => {
@@ -289,7 +296,11 @@ function EpidemicAnalyse_New() {
         <div className="col-span-1">
           <div className="btn btn-primary w-full" onClick={()=>{setShowWeightTable(true)}}>Thiết lập trọng số</div>
           {showWeightTable && <WeightTableEpidemic data={weight} func={closeDialog}/>}
-          <div className="btn btn-primary w-full mt-4" onClick={Clust}>Phân cụm</div>
+          {!showResetData ? 
+            <div className="btn btn-primary w-full mt-4" onClick={Clust}>Phân cụm</div>
+            :
+            <div className="btn btn-success w-full mt-4" onClick={resetData}>Reset dữ liệu</div>
+          }
           <div className="btn btn-success w-full mt-4" onClick={downloadFile}>Download dữ liệu</div>
         </div>
       </div>

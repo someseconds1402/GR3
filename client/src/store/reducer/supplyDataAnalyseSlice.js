@@ -28,9 +28,14 @@ const supplyDataAnalyseSlice = createSlice({
         },
         sortWithAbility: (state) => {
             state.data.sort((a, b) => a.ability - b.ability);
+        },
+        resetAllAbility: (state) => {
+            state.data.forEach(e => {
+                e.ability = 0;
+            })
         }
     },
 });
 
-export const { changeSupplyDataAnalyse, changeAbility, sortWithAbility } = supplyDataAnalyseSlice.actions;
+export const { changeSupplyDataAnalyse, changeAbility, sortWithAbility, resetAllAbility } = supplyDataAnalyseSlice.actions;
 export default supplyDataAnalyseSlice.reducer;

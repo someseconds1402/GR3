@@ -47,7 +47,7 @@ const ImportButton = (props) => {
       const arrayBuffer = e.target.result;
       const data = new Uint8Array(arrayBuffer);
       const workbook = await XLSX.read(data, { type: 'array' });
-      let objectData = [], props = [];
+      let objectData = [], properties = [];
 
       // Đọc dữ liệu từ sheet đầu tiên (sheet index = 0)
       const sheetName = workbook.SheetNames[0];
@@ -56,11 +56,64 @@ const ImportButton = (props) => {
       // Sử dụng XLSX.utils.sheet_to_json để chuyển đổi sheet thành mảng JSON
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
+      switch (props.orderButton) {
+        case '1':{
+          console.log(1);
+          break;
+        }
+        case '2':{
+          console.log(2);
+          break;
+        }
+        case '3':{
+          console.log(3);
+          break;
+        }
+        case '4':{
+          console.log(4);
+          break;
+        }
+        case '5':{
+          console.log(5);
+          break;
+        }
+        case '6':{
+          console.log(6);
+          break;
+        }
+        case '7':{
+          console.log(7);
+          break;
+        }
+        case '8':{
+          console.log(8);
+          break;
+        }
+        case '9':{
+          console.log(9);
+          break;
+        }
+        case '10':{
+          console.log(10);
+          break;
+        }
+        case '11':{
+          console.log(11);
+          break;
+        }
+        case '12':{
+          console.log(12);
+          break;
+        }
+        default:
+          break;
+      }
+
       if(jsonData.length > 1){
-        props = jsonData.shift();
+        properties = jsonData.shift();
         jsonData.forEach(e=>{
           let element = {}
-          props.forEach((prop, index) => {
+          properties.forEach((prop, index) => {
             element[prop] = e[index];
           })
           objectData.push({
@@ -72,15 +125,11 @@ const ImportButton = (props) => {
           })
         })
       }
-      insertSupplyAbilityAPI(objectData);
-      // console.log(props,objectData);
+      // insertSupplyAbilityAPI(objectData);
+      // console.log(properties,objectData);
     };
 
     fileReader.readAsArrayBuffer(selectedFile);
-
-    // setTimeout(() => {
-    //   alert('Đã xảy ra lỗi! \nDữ liệu bạn tải lên gây xung đột với dữ liệu trong hệ thống.')
-    // }, 1000);
   };
 
   const handleDelete = () => {
@@ -91,9 +140,9 @@ const ImportButton = (props) => {
   return (
     <div className='col-span-1'>
       <FadeIn>
-        <div className="grid grid-cols-8 mt-5">
-          <div className="col-span-5 pl-4"><h5>{props.elementName}</h5></div>
-          <div className="col-span-3"><hr /></div>
+        <div className="grid grid-cols-4 mt-5">
+          <div className="col-span-3 pl-4"><h5>{props.elementName}</h5></div>
+          <div className="col-span-1"><hr /></div>
         </div>
         {!selectedFile && 
           <button className="border-solid border-2 border-gray-500 rounded-lg w-64 h-9 hover:bg-gray-300 ml-4" onClick={handleImport}>

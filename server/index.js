@@ -20,6 +20,12 @@ app.post(PATH.API.LOGIN, controller.login);
 
 app.post(PATH.API.GET_EPIDEMIC_DATA, controller.getData.getEpidemicData);
 
+app.get(PATH.API.GET_PROVINCE_DATA, controller.getData.getProvinceData);
+
+app.get(PATH.API.GET_SUPPLY_TYPE_DATA, controller.getData.getSupplyTypeData);
+
+app.get(PATH.API.GET_MEDICAL_SUPPLY_DATA, controller.getData.getMedicalSupplyData);
+
 app.get(PATH.API.GET_PANDEMIC_DATA, controller.getData.getPandemicData);
 
 app.post(PATH.API.GET_SUPPLY_QUANTITY, controller.getData.getSupplyQuantity);
