@@ -11,7 +11,7 @@ function SuppliesDisplay() {
   const [supplyQuantity, setSupplyQuantity] = useState([]);
   const [pandemicData, setPandemicData] = useState([]);
   const [provinceSelect, setProvinceSelect] = useState(1);
-  const [pandemicSelect, setPandemicSelect] = useState(1);
+  const [pandemicSelect, setPandemicSelect] = useState(0);
   const [displayOption, setDisplayOption] = useState([]);
 
   const getSupplyQuantityData = async (province_id, pandemic_id) => {

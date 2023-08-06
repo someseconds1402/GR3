@@ -42,10 +42,32 @@ app.post(PATH.API.GET_SUPPLY_QUANTITY_OF_ALL_PROVINCES, controller.getData.getSu
 
 app.post(PATH.API.CLUSTER, controller.cluster.cluster);
 
-app.post(PATH.API.INSERT_SUPPLY_ABILITY, controller.setData.insertSupplyAbility);
-
 app.post(PATH.API.GET_DISTRIBUTION_DATA, controller.getData.getDistributionData);
 
+/* IMPORT DATA ************************************************************************************ */
+app.post(PATH.API.INSERT_PROVINCE, controller.setData.insertProvince);
+
+app.post(PATH.API.INSERT_DISTANCE, controller.setData.insertDistance);
+
+app.post(PATH.API.INSERT_PANDEMIC, controller.setData.insertPandemic);
+
+app.post(PATH.API.INSERT_SUPPLY_TYPE, controller.setData.insertSupplyType);
+
+app.post(PATH.API.INSERT_SUPPLY_MAP_PANDEMIC, controller.setData.insertSupplyMapPandemic);
+
+app.post(PATH.API.INSERT_MEDICAL_SUPPY, controller.setData.insertMedicalSupply);
+
+app.post(PATH.API.INSERT_INFECTION_SITUATION, controller.setData.insertInfectionSituation);
+
+app.post(PATH.API.INSERT_RECOVERED_SITUATION, controller.setData.insertRecoveredSituation);
+
+app.post(PATH.API.INSERT_DEATH_SITUATION, controller.setData.insertDeathSituation);
+
+app.post(PATH.API.INSERT_LEVEL, controller.setData.insertLevel);
+
+app.post(PATH.API.INSERT_SUPPLY_QUANTITY, controller.setData.insertSupplyQuantity);
+
+app.post(PATH.API.INSERT_SUPPLY_ABILITY, controller.setData.insertSupplyAbility);
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)

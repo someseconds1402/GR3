@@ -36,8 +36,8 @@ const ImportFrame = () => {
                 <ImportButton elementName="Số lượng nhiễm" orderButton='7'/>
                 <ImportButton elementName="Số lượng hồi phục" orderButton='8'/>
                 <ImportButton elementName="Số lượng tử vong" orderButton='9'/>
-                <ImportButton elementName="Cấp độ dịch" orderButton='10'/>
-                <ImportButton elementName="Số lượng vật tư y tế" orderButton='11'/>
+                <ImportButton elementName="Số lượng vật tư y tế" orderButton='10'/>
+                <ImportButton elementName="Cấp độ dịch" orderButton='11'/>
                 <ImportButton elementName="Khả năng cung ứng VTYT" orderButton='12'/>
             </div>}
         </div>

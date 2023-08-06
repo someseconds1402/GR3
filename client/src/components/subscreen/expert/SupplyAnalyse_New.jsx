@@ -24,7 +24,7 @@ function SupplyAnalyse_New() {
   const [superData, setSuperData] = useState([]);
   const [pandemicData, setPandemicData] = useState([]);
   
-  const [pandemicSelect, setPandemicSelect] = useState(1);
+  const [pandemicSelect, setPandemicSelect] = useState(0);
 
   const [showWeightTable, setShowWeightTable] = useState(false);
   const [showResetData, setShowResetData] = useState(false);
@@ -179,7 +179,7 @@ function SupplyAnalyse_New() {
     const fetchData = async () => {
       try {
         const data = await getSupplyQuantityOfAllProvincesAPI(pandemicSelect);
-        // console.log(data);
+        console.log(data, pandemicData);
         setSupplyTypeSelect(-1);
         setSupplyType(data.listSupplyType.length > 0 ? 
           data.listSupplyType : [{id: -1, name: 'Chưa có dữ liệu'}]);

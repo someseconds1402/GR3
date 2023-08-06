@@ -105,17 +105,107 @@ const clusterAPI = async(U, C, tagField, keys, weightList) => {
     }
 }
 
-const insertSupplyAbilityAPI = async(data) => {
+const getDistributionDataAPI = async(pandemic_id, supply_type_id) => {
     try {
-        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_SUPPLY_ABILITY, { data })).data;
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_DISTRIBUTION_DATA, { pandemic_id, supply_type_id })).data;
     } catch (err) {
         console.log(err);
     }
 }
 
-const getDistributionDataAPI = async(pandemic_id, supply_type_id) => {
+const insertProvinceAPI = async(data) => {
     try {
-        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_DISTRIBUTION_DATA, { pandemic_id, supply_type_id })).data;
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_PROVINCE, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertDistanceAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_DISTANCE, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertPandemicAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_PANDEMIC, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertSupplyTypeAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_SUPPLY_TYPE, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertSupplyMapPandemicAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_SUPPLY_MAP_PANDEMIC, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertMedicalSupplyAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_MEDICAL_SUPPY, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+const insertInfectionSituationAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_INFECTION_SITUATION, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertRecoveredSituationAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_RECOVERED_SITUATION, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertDeathSituationAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_DEATH_SITUATION, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertLevelAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_LEVEL, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const insertSupplyQuantityAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_SUPPLY_QUANTITY, { data })).data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+const insertSupplyAbilityAPI = async(data) => {
+    try {
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.INSERT_SUPPLY_ABILITY, { data })).data;
     } catch (err) {
         console.log(err);
     }
@@ -135,6 +225,20 @@ export {
     getEpidemicDataOfAllProvincesAPI,
     getSupplyQuantityOfAllProvincesAPI,
     clusterAPI,
-    insertSupplyAbilityAPI,
     getDistributionDataAPI,
+
+    // IMPORT DATA
+    insertProvinceAPI,
+    insertDistanceAPI,
+    insertPandemicAPI,
+    insertSupplyTypeAPI,
+    insertSupplyMapPandemicAPI,
+    insertMedicalSupplyAPI,
+
+    insertInfectionSituationAPI,
+    insertRecoveredSituationAPI,
+    insertDeathSituationAPI,
+    insertLevelAPI,
+    insertSupplyQuantityAPI,
+    insertSupplyAbilityAPI,
 }

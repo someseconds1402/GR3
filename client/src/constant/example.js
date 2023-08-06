@@ -23,8 +23,8 @@ const SUPPLY_TYPE = [
 ]
 
 const SUPPLY_MAP_PANDEMIC = [
-    { pandemic_id: 1, supply_type_id: 0 },
-    { pandemic_id: 1, supply_type_id: 1 }
+    { pandemic_id: 0, supply_type_id: 0 },
+    { pandemic_id: 0, supply_type_id: 1 }
 ]
 
 const MEDICAL_SUPPY = [
@@ -35,34 +35,34 @@ const MEDICAL_SUPPY = [
 ]
 
 const INFECTION_SITUATION = [
-    { province_id: 1, pandemic_id: 1, date: "2023-7-3", quantity_in_today: 144, total_quantity: 78484 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-4", quantity_in_today: 67, total_quantity: 78551 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-5", quantity_in_today: 30, total_quantity: 78581 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-6", quantity_in_today: 23, total_quantity: 78604 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-7", quantity_in_today: 94, total_quantity: 78698 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-3", quantity_in_today: 144, total_quantity: 78484 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-4", quantity_in_today: 67, total_quantity: 78551 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-5", quantity_in_today: 30, total_quantity: 78581 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-6", quantity_in_today: 23, total_quantity: 78604 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-7", quantity_in_today: 94, total_quantity: 78698 },
 ]
 
 const RECOVERED_SITUATION = [
-    { province_id: 1, pandemic_id: 1, date: "2023-7-3", quantity_in_today: 144, total_quantity: 78484 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-4", quantity_in_today: 67, total_quantity: 78551 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-5", quantity_in_today: 30, total_quantity: 78581 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-6", quantity_in_today: 23, total_quantity: 78604 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-7", quantity_in_today: 94, total_quantity: 78698 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-3", quantity_in_today: 144, total_quantity: 78484 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-4", quantity_in_today: 67, total_quantity: 78551 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-5", quantity_in_today: 30, total_quantity: 78581 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-6", quantity_in_today: 23, total_quantity: 78604 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-7", quantity_in_today: 94, total_quantity: 78698 },
 ]
 
 const DEATH_SITUATION = [
-    { province_id: 1, pandemic_id: 1, date: "2023-7-3", quantity_in_today: 144, total_quantity: 78484 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-4", quantity_in_today: 67, total_quantity: 78551 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-5", quantity_in_today: 30, total_quantity: 78581 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-6", quantity_in_today: 23, total_quantity: 78604 },
-    { province_id: 1, pandemic_id: 1, date: "2023-7-7", quantity_in_today: 94, total_quantity: 78698 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-3", quantity_in_today: 144, total_quantity: 78484 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-4", quantity_in_today: 67, total_quantity: 78551 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-5", quantity_in_today: 30, total_quantity: 78581 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-6", quantity_in_today: 23, total_quantity: 78604 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-7", quantity_in_today: 94, total_quantity: 78698 },
 ]
 
 const LEVEL = [
-    { province_id: 1, pandemic_id: 1, date: "2023-7-7", level: 1 },
-    { province_id: 2, pandemic_id: 1, date: "2023-7-7", level: 1 },
-    { province_id: 3, pandemic_id: 1, date: "2023-7-7", level: 1 },
-    { province_id: 4, pandemic_id: 1, date: "2023-7-7", level: 1 },
+    { province_id: 1, pandemic_id: 0, date: "2023-7-7", level: 1 },
+    { province_id: 2, pandemic_id: 0, date: "2023-7-7", level: 1 },
+    { province_id: 3, pandemic_id: 0, date: "2023-7-7", level: 1 },
+    { province_id: 4, pandemic_id: 0, date: "2023-7-7", level: 1 },
 ]
 
 const SUPPLY_QUANTITY = [
@@ -75,11 +75,11 @@ const SUPPLY_QUANTITY = [
 ]
 
 const SUPPLY_ABILITY = [
-    { pandemic_id: 1, province_id: 2, supply_type_id: 0, supply_quantity: 25154257, ability: 1 },
-    { pandemic_id: 1, province_id: 4, supply_type_id: 0, supply_quantity: 32907105, ability: 1 },
-    { pandemic_id: 1, province_id: 5, supply_type_id: 0, supply_quantity: 5092564, ability: 1 },
-    { pandemic_id: 1, province_id: 8, supply_type_id: 0, supply_quantity: 45285013, ability: 1 },
-    { pandemic_id: 1, province_id: 14, supply_type_id: 0, supply_quantity: 20172723, ability: 1 },
+    { pandemic_id: 0, province_id: 2, supply_type_id: 0, supply_quantity: 25154257, ability: 1 },
+    { pandemic_id: 0, province_id: 4, supply_type_id: 0, supply_quantity: 32907105, ability: 1 },
+    { pandemic_id: 0, province_id: 5, supply_type_id: 0, supply_quantity: 5092564, ability: 1 },
+    { pandemic_id: 0, province_id: 8, supply_type_id: 0, supply_quantity: 45285013, ability: 1 },
+    { pandemic_id: 0, province_id: 14, supply_type_id: 0, supply_quantity: 20172723, ability: 1 },
 ]
 
 export const EXAMPLE = [
@@ -92,7 +92,7 @@ export const EXAMPLE = [
     { name: 'Example_INFECTION_SITUATION', data: INFECTION_SITUATION },
     { name: 'Example_RECOVERED_SITUATION', data: RECOVERED_SITUATION },
     { name: 'Example_DEATH_SITUATION', data: DEATH_SITUATION },
-    { name: 'Example_LEVEL', data: LEVEL },
     { name: 'Example_SUPPLY_QUANTITY', data: SUPPLY_QUANTITY },
+    { name: 'Example_LEVEL', data: LEVEL },
     { name: 'Example_SUPPLY_ABILITY', data: SUPPLY_ABILITY },
 ]

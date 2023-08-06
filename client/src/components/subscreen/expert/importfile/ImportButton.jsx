@@ -1,6 +1,11 @@
 import React, { useRef, useState } from 'react';
 import FadeIn from '../../../effect/FadeIn';
-import { insertSupplyAbilityAPI } from '../../../../service/userService';
+import { insertProvinceAPI, insertDistanceAPI, 
+  insertPandemicAPI, insertSupplyTypeAPI, 
+  insertSupplyMapPandemicAPI, insertMedicalSupplyAPI, 
+  insertInfectionSituationAPI, insertRecoveredSituationAPI, 
+  insertDeathSituationAPI, insertLevelAPI, 
+  insertSupplyQuantityAPI, insertSupplyAbilityAPI } from '../../../../service/userService';
 import { IMPORT_PROPERTIES } from '../../../../constant/constant';
 import { EXAMPLE } from '../../../../constant/example';
 // Excel
@@ -11,6 +16,14 @@ const ImportButton = (props) => {
   const fileInputRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const APIList = [
+    insertProvinceAPI, insertDistanceAPI, 
+    insertPandemicAPI, insertSupplyTypeAPI, 
+    insertSupplyMapPandemicAPI, insertMedicalSupplyAPI, 
+    insertInfectionSituationAPI, insertRecoveredSituationAPI, 
+    insertDeathSituationAPI, insertSupplyQuantityAPI, 
+    insertLevelAPI, insertSupplyAbilityAPI
+  ]
 
   const handleImport = () => {
     fileInputRef.current.value = null;
@@ -76,7 +89,7 @@ const ImportButton = (props) => {
               break;
             }
             case 'float': {
-              if (isNaN(val) || val % 1 === 0) {
+              if (isNaN(val)) {
                 setErrorMessage(`Cột ${prop} hàng ${i+2}: giá trị không phải số thực.`);
                 return false;
               }
@@ -97,6 +110,14 @@ const ImportButton = (props) => {
         objectData.push(element);
       }
       console.log('test', objectData);
+      const result = await APIList[orderButton](objectData);
+      if(result && result.errCode==0){
+        alert('Cập nhật thành công!');
+      } else {
+        alert('Đã xảy ra lỗi. Đã có dữ liệu nằm ngoài phạm vi cho phép.');
+      }
+      setSelectedFile(null);
+      setErrorMessage('');
       return true;
     } else {
       setErrorMessage('Lỗi. Các trường trong bảng đang không đúng theo định dạng. Hãy xem file mẫu để tham khảo.');
@@ -145,6 +166,7 @@ const ImportButton = (props) => {
 
       
       if(jsonData.length > 1){
+        // console.log(jsonData);
         if(!handleUploadFile(jsonData, props.orderButton-1)){
           return;
         }

@@ -24,7 +24,7 @@ function EpidemicAnalyse_New() {
 
   const [pandemicData, setPandemicData] = useState([]);
   
-  const [pandemicSelect, setPandemicSelect] = useState(1);
+  const [pandemicSelect, setPandemicSelect] = useState(0);
   const [dateSelect, setDateSelect] = useState("2023-07-15");
 
   const [showTip, setShowTip] = useState(false);
