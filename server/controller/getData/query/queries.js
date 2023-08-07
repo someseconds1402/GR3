@@ -12,6 +12,7 @@ const queryEpidemicData = async(province_id, pandemic_id, date) => {
     const infectionList = (await reader.readInfectionSituation()).filter(e => getDateRangeData(e))
     const recoveredList = (await reader.readRecoveredSituation()).filter(e => getDateRangeData(e))
     const deathList = (await reader.readDeathSituation()).filter(e => getDateRangeData(e))
+    const levelList = (await reader.readLevel()).filter(e => getDateRangeData(e))
     return {
         dateRange: infectionList.map(e => e.date),
         infection: {
@@ -25,6 +26,10 @@ const queryEpidemicData = async(province_id, pandemic_id, date) => {
         death: {
             title: 'Tử vong',
             list: deathList
+        },
+        level: {
+            title: 'Cấp độ dịch',
+            list: levelList
         }
     };
 }

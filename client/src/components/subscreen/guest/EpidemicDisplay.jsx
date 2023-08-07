@@ -44,7 +44,7 @@ function EpidemicDisplay() {
 
   const getEpidemicData = async (province_id, pandemic_id, date) => {
     const data = await getEpidemicDataAPI(province_id, pandemic_id, date);
-    console.log({province_id, pandemic_id, date});
+    console.log(data);
     dispatch(changeEpidemicData({data}));
     setChartData({
       labels: data.dateRange,
@@ -75,7 +75,7 @@ function EpidemicDisplay() {
       datasets: [
         {
           label: "Cấp độ dịch",
-          data: data.infection.list.map(e=>{return e.quantity_in_today % 3 + 1}),
+          data: data.level.list.map(e=>e.level),
           borderColor: 'blue',
           backgroundColor: 'blue'
         }
