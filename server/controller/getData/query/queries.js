@@ -1,4 +1,6 @@
 const reader = require('./../../../data/function/readfile/readfile')
+const dijkstra = require('./../../dijkstra/dijkstra')
+const Graph = require('./../../dijkstra/Graph')
 
 const queryEpidemicData = async(province_id, pandemic_id, date) => {
     const myDate = new Date(date)
@@ -171,13 +173,19 @@ const querySupplyAbility = async(pandemic_id, supply_type_id) => {
     return supplyAbilityList;
 }
 
-const queryDistributionData = async(pandemic_id, supply_type_id) => {
-    const supply_ability = await reader.readSupplyAbility();
-
-    const supplyAbilityList = supply_ability.filter(e =>
-        e.pandemic_id == pandemic_id && e.supply_type_id == supply_type_id);
-    // console.log(supplyAbilityList);
-    return supplyAbilityList;
+const queryDistributionData = async(start, end) => {
+    const result = await dijkstra(start, end);
+    const path = [],
+        resPath = result.path;
+    for (let i = 0; i < result.path.length - 1; i++) {
+        const start = resPath[i],
+            end = resPath[i + 1];
+        path.push({ start: start, end: end, distance: Graph[start][end] })
+    }
+    return {
+        distance: result.distance,
+        path: path,
+    };
 }
 
 const queryProvinceData = async() => {

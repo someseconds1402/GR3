@@ -42,8 +42,8 @@ const getSupplyAbility = async(req, res) => {
 }
 
 const getDistributionData = async(req, res) => {
-    const { pandemic_id, supply_type_id } = req.body;
-    let result = await queries.queryDistributionData(pandemic_id, supply_type_id);
+    const { start, end } = req.body;
+    let result = await queries.queryDistributionData(start, end);
     res.status(200).json(result);
 }
 

@@ -113,9 +113,9 @@ const getSupplyAbilityAPI = async(pandemic_id, supply_type_id) => {
     }
 }
 
-const getDistributionDataAPI = async(pandemic_id, supply_type_id) => {
+const getDistributionDataAPI = async(start, end) => {
     try {
-        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_DISTRIBUTION_DATA, { pandemic_id, supply_type_id })).data;
+        return (await axios.post(PATH_API.BASE_URL + PATH_API.GET_DISTRIBUTION_DATA, { start, end })).data;
     } catch (err) {
         console.log(err);
     }

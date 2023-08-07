@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const path = require('path');
+// const path = require('path');
 const { PATH } = require('./data/constant/constant');
 
 const controller = require('./controller/controller');
@@ -42,7 +42,7 @@ app.post(PATH.API.GET_SUPPLY_QUANTITY_OF_ALL_PROVINCES, controller.getData.getSu
 
 app.post(PATH.API.CLUSTER, controller.cluster.cluster);
 
-app.post(PATH.API.GET_SUPPLY_ABILITY, controller.getData.getDistributionData);
+app.post(PATH.API.GET_SUPPLY_ABILITY, controller.getData.getSupplyAbility);
 
 app.post(PATH.API.GET_DISTRIBUTION_DATA, controller.getData.getDistributionData);
 
