@@ -156,7 +156,16 @@ function EpidemicAnalyse_New() {
     const workbook = XLSX.utils.book_new();
 
     // Convert data to worksheet format
-    const worksheet = XLSX.utils.json_to_sheet(EpidemicData);
+    const worksheet = XLSX.utils.json_to_sheet(EpidemicData.map(e=>{
+      return {
+        province_id: e.province_id,
+        province_name: e.province_name,
+        pandemic_id: pandemicData[pandemicSelect].pandemic_id,
+        pandemic_name: pandemicData[pandemicSelect].pandemic_name,
+        date: dateSelect,
+        level: e.level
+      }
+    }));
     // console.log(fileName, workbook, worksheet);
     // Append worksheet to workbook
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Data');

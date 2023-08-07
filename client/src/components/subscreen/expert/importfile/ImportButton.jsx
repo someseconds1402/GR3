@@ -74,7 +74,11 @@ const ImportButton = (props) => {
         for (let index = 0; index < properties.length; index++) {
           const prop = properties[index];
           const val = e[index];
-          const valType = importProp.find((m) => m.name == prop).type;
+          const valProp = importProp.find((m) => m.name == prop);
+          if(!valProp) {
+            continue;
+          }
+          const valType = valProp.type;
           if(val==null || val==undefined){
             setErrorMessage(`Cột ${prop} hàng ${i+2} không có giá trị.`);
             return false
@@ -125,7 +129,7 @@ const ImportButton = (props) => {
     }
   };
 
-  const downloadFile = (data, filename) => {
+  const downloadFile = async (data, filename) => {
     const currentTime = new Date().getTime();
     const fileName = `${filename}_${currentTime}.xlsx`;
     // Tạo workbook mới
@@ -167,7 +171,8 @@ const ImportButton = (props) => {
       
       if(jsonData.length > 1){
         // console.log(jsonData);
-        if(!handleUploadFile(jsonData, props.orderButton-1)){
+        const result = await handleUploadFile(jsonData, props.orderButton-1);
+        if(!result){
           return;
         }
       } else {
