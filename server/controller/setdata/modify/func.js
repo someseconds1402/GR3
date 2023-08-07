@@ -381,15 +381,15 @@ const insertSupplyAbility = async(data) => {
                         supplyAbility.splice(index, 0, e);
                     }
                 }
-                supplyAbility.sort((a, b) => {
-                    if (a.pandemic_id == b.pandemic_id) {
-                        if (a.supply_type_id == b.supply_type_id) {
-                            return a.province_id - b.province_id;
-                        }
-                        return a.supply_type_id - b.supply_type_id;
-                    }
-                    return a.pandemic_id - b.pandemic_id;
-                });
+                // supplyAbility.sort((a, b) => {
+                //     if (a.pandemic_id == b.pandemic_id) {
+                //         if (a.supply_type_id == b.supply_type_id) {
+                //             return a.province_id - b.province_id;
+                //         }
+                //         return a.supply_type_id - b.supply_type_id;
+                //     }
+                //     return a.pandemic_id - b.pandemic_id;
+                // });
             } else {
                 return 1;
             }

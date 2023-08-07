@@ -42,6 +42,8 @@ app.post(PATH.API.GET_SUPPLY_QUANTITY_OF_ALL_PROVINCES, controller.getData.getSu
 
 app.post(PATH.API.CLUSTER, controller.cluster.cluster);
 
+app.post(PATH.API.GET_SUPPLY_ABILITY, controller.getData.getDistributionData);
+
 app.post(PATH.API.GET_DISTRIBUTION_DATA, controller.getData.getDistributionData);
 
 /* IMPORT DATA ************************************************************************************ */

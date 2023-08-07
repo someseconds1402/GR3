@@ -162,6 +162,15 @@ const querySupplyQuantityOfAllProvinces = async(pandemic_id) => {
     }
 }
 
+const querySupplyAbility = async(pandemic_id, supply_type_id) => {
+    const supply_ability = await reader.readSupplyAbility();
+
+    const supplyAbilityList = supply_ability.filter(e =>
+        e.pandemic_id == pandemic_id && e.supply_type_id == supply_type_id);
+    // console.log(supplyAbilityList);
+    return supplyAbilityList;
+}
+
 const queryDistributionData = async(pandemic_id, supply_type_id) => {
     const supply_ability = await reader.readSupplyAbility();
 
@@ -190,6 +199,7 @@ module.exports = {
     queryAllEmail,
     queryEpidemicDataOfAllProvinces,
     querySupplyQuantityOfAllProvinces,
+    querySupplyAbility,
     queryDistributionData,
     queryProvinceData,
     queryMedicalSupplyData,

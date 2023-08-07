@@ -14,6 +14,7 @@ PATH.API = {
     GET_EPIDEMIC_DATA_OF_ALL_PROVINCES: '/api/get-epidemic-data-of-all-provinces',
     GET_SUPPLY_QUANTITY_OF_ALL_PROVINCES: '/api/get-supply-quantity-of-all-provinces',
     CLUSTER: '/api/cluster',
+    GET_SUPPLY_ABILITY: '/api/get-supply-ability',
     GET_DISTRIBUTION_DATA: '/api/get-distribution-data',
 
     // IMPORT DATA
