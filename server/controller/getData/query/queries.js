@@ -43,12 +43,14 @@ const querySupplyQuantity = async(province_id, pandemic_id) => {
     const supply_type = await reader.readSupplyType();
     const medical_supplies = await reader.readMedicalSupply();
     const supply_quantity = await reader.readSupplyQuantity();
+    const supply_ability = await reader.readSupplyAbility();
 
     const listSupplyTypeId = pandemic.find(e => e.pandemic_id == pandemic_id).supply_type;
 
     return listSupplyTypeId.map(type_id => {
         const typeInfo = supply_type.find(type => type.id == type_id);
         const listSupply = medical_supplies.filter(spl => spl.supply_type_id == type_id);
+        const supplyAbility = supply_ability.find(sa => sa.province_id == province_id && sa.pandemic_id == pandemic_id && sa.supply_type_id == type_id);
         let listQuantity = [];
         listSupply.forEach(e => {
             const quantityInfo = supply_quantity.find(m => m.province_id == province_id && e.supply_id == m.supply_id);
@@ -64,7 +66,9 @@ const querySupplyQuantity = async(province_id, pandemic_id) => {
         return {
             supply_type_id: type_id,
             supply_type_name: typeInfo.name,
-            supply_quantity: listQuantity
+            supply_quantity: listQuantity,
+            total_quantity: supplyAbility ? supplyAbility.supply_quantity : -1,
+            ability: supplyAbility ? supplyAbility.ability : 0,
         };
     })
 }

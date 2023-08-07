@@ -83,8 +83,9 @@ const Sidebar = () => {
                 <div className="h-full px-3 py-4 overflow-y-auto bg-gray-800 relative">
                     <ul className="space-y-2 text-lg"> 
                         {
-                            sidebarMenu[rootRole].map((e)=>
+                            sidebarMenu[rootRole].map((e, index)=>
                                 <MenuItem 
+                                key={index}
                                 className={sidebarMenu[rootRole].indexOf(e) == itemOrder ? "selected" : ""} 
                                 title={e} func={()=>{
                                     const itemOrder = sidebarMenu[rootRole].indexOf(e);

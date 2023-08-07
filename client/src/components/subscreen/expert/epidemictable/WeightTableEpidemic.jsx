@@ -39,7 +39,7 @@ const WeightTableEpidemic = (props) => {
 
     const drawTable = (label, index) => {
         return (
-            <div className="col-span-1 grid grid-cols-3 items-center mx-3 px-2 mb-1 h-24
+            <div className="col-span-1 grid grid-cols-3 items-center mx-2 px-1 mb-1 h-24
             border shadow-xl rounded-lg dark:border-gray-700 bg-white">
                 <div className='col-span-2'><strong>{label}</strong></div>
                 <div className='col-span-1'><input

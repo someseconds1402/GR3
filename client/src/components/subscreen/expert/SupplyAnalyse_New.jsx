@@ -244,12 +244,12 @@ function SupplyAnalyse_New() {
           <div className="mt-4 cursor-pointer" onClick={()=>{setShowTip(!showTip)}}>
             {showTip ? 
             <div className=" text-green-900">
-              Với các loại vật tư y tế dùng 1 lần như vắc xin hoặc kit test, 
+              Với các loại vật tư y tế như vắc xin hoặc kit test, 
               việc đánh giá khả năng hỗ trợ VTYT có thể tham khảo công thức sau: 
               <br />Giá trị đánh giá = α * (Số lượng VTYT /người)/(Mật độ dân cư * Cấp độ dịch). 
               <br />Với α là hệ số do chuyên viên quyết định. 
-              <br />Một tinh thành phố được đánh giá là tự cung ứng nếu 0.1 &lt; Giá trị đánh giá &lt; 0.15
-              <br />Nếu nhỏ hơn 0.1 sẽ được coi là cần hỗ trợ VTYT, nếu lớn hơn 0.15 sẽ được coi là có thể hỗ trọ VTYT tới các tỉnh thành khác.
+              <br />Một tỉnh thành phố được đánh giá là tự cung ứng nếu 0.1 &lt; Giá trị đánh giá &lt; 0.15
+              <br />Nếu nhỏ hơn 0.1 sẽ được coi là cần hỗ trợ VTYT, nếu lớn hơn 0.15 sẽ được coi là có thể hỗ trợ VTYT tới các tỉnh thành khác.
             </div> : <div className="text-blue-500 underline">Xem gợi ý đánh giá</div>}
           </div>
         </div>
