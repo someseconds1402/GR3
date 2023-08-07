@@ -6,10 +6,10 @@ import {sidebarMenu, role, PATH, SCREEN_PATH} from './../../constant/constant';
 import Login from '../login/Login';
 
 const MenuItem = (props) =>{
-    let className = "no-underline flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer ";
+    let className = "no-underline flex items-center p-2 rounded-lg text-white hover:bg-gray-700 hover:cursor-pointer ";
     let addedClass = props.className;
     if(addedClass && addedClass == 'selected') {
-        className += ' dark:bg-gray-500';
+        className += ' bg-gray-500';
     }
     return (
         <li className={className} onClick={props.func}>
@@ -80,7 +80,7 @@ const Sidebar = () => {
                 className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
                 aria-label="Sidebar"
             >
-                <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 relative">
+                <div className="h-full px-3 py-4 overflow-y-auto bg-gray-800 relative">
                     <ul className="space-y-2 text-lg"> 
                         {
                             sidebarMenu[rootRole].map((e)=>
