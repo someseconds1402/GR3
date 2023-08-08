@@ -101,7 +101,7 @@ function DistributionDisplay() {
         // console.log(data);
         if(data.listSupplyType.length > 0){
           setSupplyType(data.listSupplyType);
-          setSupplyTypeSelect(0);
+          setSupplyTypeSelect(data.listSupplyType[0].id);
         } else {
           setSupplyTypeSelect(-1);
           setSupplyType([{id: -1, name: 'Chưa có dữ liệu'}]);
@@ -204,10 +204,10 @@ function DistributionDisplay() {
               <div className='col-span-2 pl-3 h-14 flex items-center border shadow-xl rounded-r-lg bg-white'><strong>{tableData.supply_quantity}</strong></div>
 
               <div className='col-span-1 ml-5 pl-2 h-18 flex items-center border shadow-xl rounded-l-lg bg-gray-700 text-white'>
-                <strong>Số lượng VTYT hỗ trợ</strong></div>
+                <strong>Quãng đường</strong></div>
               <div className='col-span-2 pl-3 h-min-18 flex items-center border shadow-xl rounded-b-lg rounded-r-lg bg-white'>
                 <div className='mt-2'>
-                  <strong>{tableData.distance} km</strong>
+                  <strong>{tableData.distance} km</strong> (Tính theo lộ trình đường bộ)
                   {!showPath ? 
                     <p className="text-blue-500 underline cursor-pointer pl-1"onClick={()=>{setShowPath(true)}} ><strong>Xem lộ trình</strong></p>:
                     <div>
