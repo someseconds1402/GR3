@@ -166,7 +166,7 @@ function SuppliesDisplay() {
             <hr />
             <label className='text-lg flex items-center mt-2'>
               <input className='h-6 w-6' type="checkbox" checked={showAbility} onChange={(e)=> {setShowAbility(e.target.checked)}} />
-              <span className='ml-1'>Xem cấp độ dịch</span>
+              <span className='ml-1'>Xem khả năng hỗ trợ VTYT</span>
             </label>
           </div>
         </div>
