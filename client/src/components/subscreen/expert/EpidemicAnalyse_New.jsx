@@ -195,6 +195,7 @@ function EpidemicAnalyse_New() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        dispatch(enebleLoadingScreen());
         const data = await getEpidemicDataOfAllProvincesAPI(pandemicSelect, dateSelect);
         data.forEach(e=>{
           if(!e.level){
@@ -266,7 +267,8 @@ function EpidemicAnalyse_New() {
           }
         });
         console.log('res', res);
-        dispatch(changeEpidemicDataAnalyse({data: res}))
+        dispatch(changeEpidemicDataAnalyse({data: res}));
+        dispatch(disableLoadingScreen());
         
       } catch (error) {
         console.log(error);

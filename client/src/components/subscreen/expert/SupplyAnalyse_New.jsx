@@ -178,6 +178,7 @@ function SupplyAnalyse_New() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        dispatch(enebleLoadingScreen());
         const data = await getSupplyQuantityOfAllProvincesAPI(pandemicSelect);
         console.log(data, pandemicData);
         setSupplyTypeSelect(-1);
@@ -191,6 +192,7 @@ function SupplyAnalyse_New() {
         })
         setSuperData(data.data);
         
+        dispatch(disableLoadingScreen());
       } catch (error) {
         console.log(error);
       }

@@ -5,6 +5,7 @@ import { PATH } from '../../../constant/constant';
 import { getEpidemicDataAPI, getPandemicDataAPI } from '../../../service/userService'
 import { useDispatch } from 'react-redux';
 import { changeEpidemicData, changeEpidemicOption } from '../../../store/reducer/changeEpidemicDataSlice';
+import { enebleLoadingScreen, disableLoadingScreen } from '../../../store/reducer/showLoadingScreenSlice';
 // import { changePandemicData } from '../../../store/reducer/getPandemicDataSlice';
 import LineChart from '../../chart/LineChart';
 import Dropdown from '../../dropdown/Dropdown';
@@ -43,6 +44,7 @@ function EpidemicDisplay() {
   });
 
   const getEpidemicData = async (province_id, pandemic_id, date) => {
+    dispatch(enebleLoadingScreen());
     const data = await getEpidemicDataAPI(province_id, pandemic_id, date);
     console.log(data);
     dispatch(changeEpidemicData({data}));
@@ -81,6 +83,7 @@ function EpidemicDisplay() {
         }
       ]
     })
+    dispatch(disableLoadingScreen());
   }
 
   const changeOption = (order) => {
@@ -121,7 +124,6 @@ function EpidemicDisplay() {
         console.log(error);
       }
     };
-  
     fetchData();
     getEpidemicData(provinceSelect, pandemicSelect, dateSelect );
   }, [provinceSelect, pandemicSelect, dateSelect]);

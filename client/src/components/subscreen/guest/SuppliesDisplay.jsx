@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../../constant/constant';
 import { getSupplyQuantityAPI, getPandemicDataAPI } from '../../../service/userService'
 import Dropdown from '../../dropdown/Dropdown';
-import province from './../../../constant/province'
+import province from './../../../constant/province';
+import { useDispatch } from 'react-redux';
+import { enebleLoadingScreen, disableLoadingScreen } from '../../../store/reducer/showLoadingScreenSlice';
 
 function SuppliesDisplay() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [supplyQuantity, setSupplyQuantity] = useState([]);
   const [pandemicData, setPandemicData] = useState([]);
   const [provinceSelect, setProvinceSelect] = useState(1);
@@ -16,8 +19,10 @@ function SuppliesDisplay() {
   const [showAbility, setShowAbility] = useState(false);
 
   const getSupplyQuantityData = async (province_id, pandemic_id) => {
+    dispatch(enebleLoadingScreen());
     const data = await getSupplyQuantityAPI(province_id, pandemic_id);
     setSupplyQuantity(data);
+    dispatch(disableLoadingScreen());
     // console.log(data);
   }
 
