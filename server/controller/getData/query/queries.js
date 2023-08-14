@@ -1,6 +1,8 @@
 const reader = require('./../../../data/function/readfile/readfile')
 const dijkstra = require('./../../dijkstra/dijkstra')
 const Graph = require('./../../dijkstra/Graph')
+const GGraph = require('./../../dijkstra/GGraph')
+const hungarianAlgorithm = require('./../../hungarian/hungarian')
 
 const queryEpidemicData = async(province_id, pandemic_id, date) => {
     const myDate = new Date(date)
@@ -182,18 +184,53 @@ const querySupplyAbility = async(pandemic_id, supply_type_id) => {
     return supplyAbilityList;
 }
 
-const queryDistributionData = async(start, end) => {
-    const result = await dijkstra(start, end);
-    const path = [],
-        resPath = result.path;
-    for (let i = 0; i < result.path.length - 1; i++) {
-        const start = resPath[i],
-            end = resPath[i + 1];
-        path.push({ start: start, end: end, distance: Graph[start][end] })
+const createMatrix = async(listReceive, listSupport) => {
+    let result = [];
+    for (let i = 0; i < listReceive.length; i++) {
+        result[i] = [];
+        for (let j = 0; j < listSupport.length; j++) {
+            const a = listSupport[j] < listReceive[i] ? listSupport[j] : listReceive[i];
+            const b = listSupport[j] > listReceive[i] ? listSupport[j] : listReceive[i];
+            result[i][j] = GGraph[a][b];
+        }
     }
+    return result;
+}
+
+const getDistance = async(s, e) => {
+    const a = listSupport[j] < listReceive[i] ? listSupport[j] : listReceive[i];
+    const b = listSupport[j] > listReceive[i] ? listSupport[j] : listReceive[i];
+    return GGraph[a][b];
+}
+
+const queryDistributionData = async(listReceive, listSupport) => {
+    const matrix = await createMatrix(listReceive, listSupport);
+    const marks = await hungarianAlgorithm(matrix);
+    const res = {};
+    const test = async() => {
+        marks.forEach((e, index) => {
+            const recId = listReceive[index],
+                supId = listSupport[e];
+            if (e == -1) {
+                res[recId] = -1;
+            } else {
+                if (!res[recId]) {
+                    res[recId] = [supId];
+                }
+                const a = recId < supId ? recId : supId;
+                const b = recId > supId ? recId : supId;
+                res[recId].push(GGraph[a][b]);
+            }
+        })
+    }
+    await test();
+
     return {
-        distance: result.distance,
-        path: path,
+        // matrix: matrix,
+        // marks: marks,
+        // listReceive: listReceive,
+        // listSupport: listSupport,
+        res: res
     };
 }
 

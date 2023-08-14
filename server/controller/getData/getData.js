@@ -42,8 +42,8 @@ const getSupplyAbility = async(req, res) => {
 }
 
 const getDistributionData = async(req, res) => {
-    const { start, end } = req.body;
-    let result = await queries.queryDistributionData(start, end);
+    const { listReceive, listSupport } = req.body;
+    let result = await queries.queryDistributionData(listReceive, listSupport);
     res.status(200).json(result);
 }
 
